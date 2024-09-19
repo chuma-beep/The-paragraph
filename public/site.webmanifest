@@ -1,0 +1,21 @@
+{
+    "short_name": "paragragh",
+    "name": "The paragragh",
+    "icons": [
+      {
+        "src": "/favicon.gif",
+        "sizes": "192x192",
+        "type": "image/gif"
+      },
+      {
+        "src": "/favicon.gif",
+        "sizes": "512x512",
+        "type": "image/gif"
+      }
+    ],
+    "start_url": "/",
+    "background_color": "#ffffff",
+    "display": "standalone",
+    "theme_color": "#ffffff"
+  }
+  
