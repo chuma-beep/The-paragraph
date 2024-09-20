@@ -35,7 +35,7 @@ interface Post {
 
 
 
-export default function UserProfile(post: Post, index: number) {
+const UserProfile = (post: Post, index: number) => {
   const supabase = createClient();
   const { id } = useParams(); // This is the profile ID
   const [loading, setLoading] = useState(true);
@@ -249,5 +249,4 @@ export default function UserProfile(post: Post, index: number) {
 
 
 
-
-
+export default UserProfile;
