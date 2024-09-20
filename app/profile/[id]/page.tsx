@@ -35,7 +35,7 @@ interface Post {
 
 
 
-const UserProfile = (post: Post, index: number) => {
+const UserProfile = () => {
   const supabase = createClient();
   const { id } = useParams(); // This is the profile ID
   const [loading, setLoading] = useState(true);
