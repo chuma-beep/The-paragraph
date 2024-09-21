@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { Heart, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import Image from "next/image";
-import Skeleton from "react-loading-skeleton";
+
 import { UserAvatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
