@@ -49,6 +49,7 @@ interface Post {
   read_time: number;
   profiles: Profile | null;
   cover_image_url: string; 
+  profile_id: string | number;
 }
 
 export default function PostPage() {

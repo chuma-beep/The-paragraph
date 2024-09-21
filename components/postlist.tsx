@@ -17,7 +17,8 @@ To read more about using these font, please visit the Next.js documentation:
 - App Directory: https://nextjs.org/docs/app/building-your-application/optimizing/fonts
 - Pages Directory: https://nextjs.org/docs/pages/building-your-application/optimizing/fonts
 **/
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import {UserAvatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar"
+import { JSX, SVGProps } from "react"
 
 export function postlist() {
   return (
@@ -34,10 +35,10 @@ export function postlist() {
         <div className="p-6 bg-background">
           <h3 className="text-2xl font-bold mb-2">Unlocking the Secrets of Productivity</h3>
           <div className="flex items-center mb-4 text-muted-foreground">
-            <Avatar className="w-8 h-8 mr-2">
+            <UserAvatar className="w-8 h-8 mr-2">
               <AvatarImage src="/placeholder-user.jpg" alt="Author" />
               <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
+            </UserAvatar>
             <span>John Doe</span>
           </div>
           <p className="text-muted-foreground line-clamp-3">
@@ -68,10 +69,10 @@ export function postlist() {
         <div className="p-6 bg-background">
           <h3 className="text-2xl font-bold mb-2">The Art of Mindful Living</h3>
           <div className="flex items-center mb-4 text-muted-foreground">
-            <Avatar className="w-8 h-8 mr-2">
+            <UserAvatar className="w-8 h-8 mr-2">
               <AvatarImage src="/placeholder-user.jpg" alt="Author" />
               <AvatarFallback>SA</AvatarFallback>
-            </Avatar>
+            </UserAvatar>
             <span>Sarah Adams</span>
           </div>
           <p className="text-muted-foreground line-clamp-3">
@@ -102,10 +103,10 @@ export function postlist() {
         <div className="p-6 bg-background">
           <h3 className="text-2xl font-bold mb-2">The Future of Sustainable Design</h3>
           <div className="flex items-center mb-4 text-muted-foreground">
-            <Avatar className="w-8 h-8 mr-2">
+            <UserAvatar className="w-8 h-8 mr-2">
               <AvatarImage src="/placeholder-user.jpg" alt="Author" />
               <AvatarFallback>EM</AvatarFallback>
-            </Avatar>
+            </UserAvatar>
             <span>Emily Martinez</span>
           </div>
           <p className="text-muted-foreground line-clamp-3">
@@ -136,10 +137,10 @@ export function postlist() {
         <div className="p-6 bg-background">
           <h3 className="text-2xl font-bold mb-2">The Rise of Remote Work</h3>
           <div className="flex items-center mb-4 text-muted-foreground">
-            <Avatar className="w-8 h-8 mr-2">
+            <UserAvatar className="w-8 h-8 mr-2">
               <AvatarImage src="/placeholder-user.jpg" alt="Author" />
               <AvatarFallback>JD</AvatarFallback>
-            </Avatar>
+            </UserAvatar>
             <span>John Doe</span>
           </div>
           <p className="text-muted-foreground line-clamp-3">
@@ -162,7 +163,7 @@ export function postlist() {
   )
 }
 
-function HeartIcon(props) {
+function HeartIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}
@@ -182,7 +183,7 @@ function HeartIcon(props) {
 }
 
 
-function MessageCircleIcon(props) {
+function MessageCircleIcon(props: JSX.IntrinsicAttributes & SVGProps<SVGSVGElement>) {
   return (
     <svg
       {...props}

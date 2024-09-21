@@ -27,6 +27,8 @@
     "dompurify": "^3.1.6",
     "flowbite-react": "^0.10.1",
     "geist": "^1.2.1",
+    "isomorphic-dompurify": "^2.15.0",
+    "jsdom": "^25.0.0",
     "lucide-react": "^0.435.0",
     "marked": "^14.1.1",
     "next": "latest",

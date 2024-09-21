@@ -3,7 +3,13 @@
 import React, { useState } from 'react';
 import { createClient } from '@/utils/supabase/client';
 
-const CommentForm = ({ postId }) => {
+
+interface CommentFormProps {
+  postId: number | string;
+}
+
+
+const CommentForm: React.FC<CommentFormProps> = ({ postId }) => {
   const supabase = createClient();
   const [comment, setComment] = useState('');
 

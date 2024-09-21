@@ -15,7 +15,7 @@ export default function analytics() {
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6">
         <Link href="#" className="lg:hidden" prefetch={false}>
-          <Package2Icon className="h-6 w-6" />
+          <Package2Icon  />
           <span className="sr-only">Home</span>
         </Link>
         <h1 className="flex-1 text-lg font-semibold md:text-xl">Blog Analytics</h1>
@@ -29,7 +29,7 @@ export default function analytics() {
                 <CardTitle>12,345</CardTitle>
               </CardHeader>
               <CardContent>
-                <TimeseriesChart className="aspect-[4/3]" />
+                <TimeseriesChart  />
               </CardContent>
             </Card>
             <Card className="flex flex-col">
@@ -38,7 +38,7 @@ export default function analytics() {
                 <CardTitle>Top 5</CardTitle>
               </CardHeader>
               <CardContent>
-                <BarChart className="aspect-[4/3]" />
+                <BarChart />
               </CardContent>
             </Card>
             <Card className="flex flex-col">
@@ -96,9 +96,9 @@ export default function analytics() {
   )
 }
 
-function BarChart(props) {
+function BarChart() {
   return (
-    <div {...props}>
+    <div >
       <ResponsiveBar
         data={[
           { name: "Jan", count: 111 },
@@ -150,9 +150,9 @@ function BarChart(props) {
 }
 
 
-function LineChart(props) {
+function LineChart() {
   return (
-    <div {...props}>
+    <div >
       <ResponsiveLine
         data={[
           {
@@ -224,10 +224,10 @@ function LineChart(props) {
 }
 
 
-function Package2Icon(props) {
+function Package2Icon() {
   return (
     <svg
-      {...props}
+
       xmlns="http://www.w3.org/2000/svg"
       width="24"
       height="24"
@@ -246,9 +246,9 @@ function Package2Icon(props) {
 }
 
 
-function TimeseriesChart(props) {
+function TimeseriesChart() {
   return (
-    <div {...props}>
+    <div >
       <ResponsiveLine
         data={[
           {

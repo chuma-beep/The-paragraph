@@ -43,14 +43,17 @@ const UserProfile = () => {
   const [posts, setPosts] = useState<Post[]>([]);
 
 
+  const profileId = Array.isArray(id) ? id[0] : id;
+
+
   useEffect(() => {
-    if (id) {
+    if (profileId) {
       const fetchProfile = async () => {
         setLoading(true);
         const { data, error } = await supabase
           .from('profiles') // Use the correct table
           .select(`username, avatar_url, bio, full_name, website`) // Adjust columns as necessary
-          .eq('id', id) // Match by profile ID
+          .eq('id', profileId) // Match by profile ID
           .single(); // Expect a single row
 
         if (error) {
@@ -61,7 +64,7 @@ const UserProfile = () => {
         setProfile(data);
 
             
-      const fetchPosts = async (profileId: string) => {
+      const fetchPosts = async () => {
          const { data: postData, error: postError } = await supabase
             .from('posts')
             .select(`*, 
@@ -92,14 +95,14 @@ const UserProfile = () => {
 
      
 
-      fetchPosts(id);
+      fetchPosts();
       setLoading(false);
 
       };
 
       fetchProfile();
     }
-  }, [id, supabase]);
+  }, [profileId, supabase]);
 
 
   const Skeleton = () => (
