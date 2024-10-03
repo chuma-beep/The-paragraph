@@ -90,6 +90,36 @@ export type Database = {
           },
         ]
       }
+      draft_tags: {
+        Row: {
+          draft_id: string
+          tag_id: string
+        }
+        Insert: {
+          draft_id: string
+          tag_id: string
+        }
+        Update: {
+          draft_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "draft_tags_draft_id_fkey"
+            columns: ["draft_id"]
+            isOneToOne: false
+            referencedRelation: "drafts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "draft_tags_tag_id_fkey"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       drafts: {
         Row: {
           content: string | null
@@ -183,6 +213,43 @@ export type Database = {
           },
         ]
       }
+      post_tags: {
+        Row: {
+          post_id: string
+          tag_id: string
+        }
+        Insert: {
+          post_id?: string
+          tag_id: string
+        }
+        Update: {
+          post_id?: string
+          tag_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "fk_post_tags_post_id"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "fk_post_tags_tag_id"
+            columns: ["tag_id"]
+            isOneToOne: false
+            referencedRelation: "tags"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_tags_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: true
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       posts: {
         Row: {
           content: string
@@ -265,11 +332,42 @@ export type Database = {
           },
         ]
       }
+      tags: {
+        Row: {
+          id: string
+          name: string
+        }
+        Insert: {
+          id?: string
+          name: string
+        }
+        Update: {
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      get_posts_by_tag: {
+        Args: {
+          tag_name: string
+        }
+        Returns: {
+          id: string
+          title: string
+          content: string
+          created_at: string
+          read_time: number
+          likes: number
+          cover_image_url: string
+          user_id: string
+          isbookmarked: boolean
+        }[]
+      }
       hello_world: {
         Args: Record<PropertyKey, never>
         Returns: string

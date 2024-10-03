@@ -247,8 +247,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           <div className="flex-1">
           </div>
         </header>
-        <main className="flex-1 p-4 sm:px-6 sm:py-0">{children}</main>      
-        <main className="flex-1 p-4 sm:px-6 sm:py-0" />
+        <main className="flex-1 p-0 sm:px-0 sm:py-0">{children}</main>      
+        <main className="flex-1 p-0 sm:px-0 sm:py-0" />
       </div>
     </div>
   )

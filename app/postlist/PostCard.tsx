@@ -60,9 +60,9 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
     <div
       key={post.id}
       ref={isLast ? lastPostElementRef : null}
-      className="w-full max-w-full mx-auto mb-6 transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
+      className="w-full max-w-full min-w-full mx-auto mb-6 transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer"
     >
-      <Card className="w-full px-0">
+      <Card className="w-full  px-0">
         <Link href={`/post/${post.id}`} passHref>
           <span className="w-full">
             <CardHeader className="p-0">
@@ -74,7 +74,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
                 className="w-full h-60 object-cover rounded-t-lg"
               />
             </CardHeader>
-            <CardContent className="p-4">
+            <CardContent className="p-2">
               <h3 className="text-2xl font-semibold mb-2 hover:text-blue-400 transition-colors duration-300">
                 {post.title}
               </h3>
@@ -83,7 +83,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
           </span>
         </Link>
         <CardFooter className="flex justify-between items-center p-4">
-          <div className="flex flex-row items-center space-x-4">
+          <div className="flex flex-row items-center space-x-2">
             <span className="flex items-center text-gray-600">
               <PostLikeButton postId={post.id} />
             </span>

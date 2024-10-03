@@ -12,8 +12,16 @@ import { BlockNoteView } from '@blocknote/mantine';
 import '@blocknote/core/fonts/inter.css';
 import '@blocknote/mantine/style.css';
 import { PartialBlock } from '@blocknote/core';
+import { X } from 'lucide-react'
+import debounce from 'debounce';
+
+
+import { Post } from '@/types/types'; // Adjust the import path as necessary
+
 
 const supabase = createClient();
+
+const MAX_TAGS = 4; 
 
 async function uploadFile(file: File) {
   const fileExt = file.name.split('.').pop();
@@ -36,9 +44,25 @@ async function uploadFile(file: File) {
   return publicUrlData.publicUrl;
 }
 
+
+interface Tag{
+  id: string;
+  name: string;
+}
+
+
+interface HandleAddTagOptions {
+  tag: string;  
+  postId?: string;
+  draftId?: string;
+}
+
+
+
 interface EditorProps {
   initialContent: string;
   postId?: string;
+  id: string;
   draftId?: string;
   editable?: boolean;
   onChange?: (markdown: string) => void;
@@ -56,6 +80,7 @@ const Editor: React.FC<EditorProps> = ({
   const [markdown, setMarkdown] = useState('');
   const [coverImageUrl, setCoverImageUrl] = useState<string | null>(null);
   const [userId, setUserId] = useState<string | null>(null);
+  const [tags, setTags] = useState<string[]>([]);
 
   const editor = useCreateBlockNote({
     initialContent: initialContent
@@ -63,6 +88,44 @@ const Editor: React.FC<EditorProps> = ({
       : undefined,
     uploadFile: uploadFile,
   });
+
+
+  const handleEditorChange = debounce(async () => {
+
+    const markdownContent = await editor.blocksToMarkdownLossy(editor.document);
+    setMarkdown(markdownContent);
+    //save to local storage
+    localStorage.setItem('blocknoteContent', markdownContent);
+   if (onChangeProp){
+    onChangeProp(markdownContent);
+   }
+  }, 1000);
+
+
+  useEffect(() => {
+
+  const loadContent = async () => {
+  const savedContent = localStorage.getItem('blocknoteContent');
+    if (savedContent) {
+       const parsedBlocks = await editor.tryParseMarkdownToBlocks(savedContent);
+       if (parsedBlocks){
+        editor.replaceBlocks(editor.document, parsedBlocks)
+       }
+    }
+  };
+  loadContent();
+       
+    const interval = setInterval (() => {
+        handleEditorChange();
+    }, 1000)
+
+    return () => {
+      clearInterval(interval)
+    };
+
+  }, [editor]);
+
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -110,42 +173,173 @@ const Editor: React.FC<EditorProps> = ({
     return true;
   };
 
-  const sendPost = async () => {
+  const handleAddTag = async (tag: string, postId: string) => {
+    // Check tags limit
+    if (tags.length >= MAX_TAGS) {
+      toast.error(`You can only add up to ${MAX_TAGS} tags`);
+      return;
+    }
+  
+    const normalizedTag = tag.trim().toLowerCase();
+  
+  //  if(tags.includes(normalizedTag)){  
+  //   toast.error('Tag already added');  
+  //   return; 
+  //   }
+
+
+    // Check for existing tag
+    const { data: existingTag, error: getTagError } = await supabase
+      .from('tags')
+      .select('*, id')
+      .eq('name', normalizedTag)
+      .maybeSingle<Tag>();
+  
+    if (getTagError) {
+      console.error('Error fetching tag:', getTagError);
+      return;
+    }
+  
+    let tagId: string;
+  
+    if (existingTag) {
+      // If tag exists, get its ID
+      tagId = existingTag.id;
+    } else {
+      // If tag doesn't exist, insert a new tag
+      const { data: newTag, error: insertTagError } = await supabase
+        .from('tags')
+        .insert([{ name: normalizedTag }])
+        .single<Tag>();
+  
+      if (insertTagError) {
+        console.error('Error inserting tag:', insertTagError.message);
+        return;
+      }
+  
+      if (!newTag) {
+        console.error('New tag is null');
+        return;
+      }
+  
+      // Assign the new tag's ID
+      tagId = newTag.id;    
+      
+    }
+  
+    // Insert into post_tags if postId is provided
+    if (postId) {
+      const { error: insertPostTagError } = await supabase
+        .from('post_tags')
+        .insert([{ post_id: postId, tag_id: tagId }]);
+  
+      if (insertPostTagError) {
+        console.error('Error associating tag with post:', insertPostTagError.message);
+        return;
+      }
+    }
+  
+    // Update the tags state if it's not already present
+    setTags((prevTags) => {
+      if (!prevTags.includes(normalizedTag)) {
+        return [...prevTags, normalizedTag];
+      }
+      return prevTags;
+    });
+  };
+
+
+
+
+ const handleRemoveTags = (tagToRemove: string) => {
+  setTags(tags.filter((tag) => tag !== tagToRemove));
+ }
+
+
+
+
+const sendPost = async () => {
     if (!ensureAuthenticated()) return;
     setLoading(true);
-    const { data, error } = await supabase
+  
+    const { data, error} = await supabase
       .from('posts')
       .insert([{ title, content: markdown, cover_image_url: coverImageUrl, user_id: userId }])
       .select();
-
-    if (error) {
-      console.error('Error saving post:', error, error.details);
-      toast.error('Error saving post');
-    } else {
-      console.log('Post saved:', data);
+  
+    if (!error) {
+      const postId = data[0].id;
       toast.success('Post saved successfully!');
+      // Insert tags
+      for (const tag of tags) {
+          await handleAddTag(tag, postId);
+      }
+
+      
+      if(title === " " ){
+        toast.error('Title is required');
+        return(setLoading(false));
+        }
+
+      // Clear local storage
+      localStorage.removeItem('blocknoteContent');
+  
+      // Reset the editor to a blank document
+      editor.replaceBlocks(editor.document, []);
+  
+      // Clear other fields like title, tags, etc.
+      setTitle('');
+      setTags([]);
+      setCoverImageUrl(null);
     }
+      else {
+      console.error('Error saving post:', error, error.details);
+         toast.error('Please fill in all required fields');
+    }
+  
+
     setLoading(false);
   };
-
+  
+  
+  
+  
   const saveDraft = async () => {
     if (!ensureAuthenticated()) return;
     setLoading(true);
+  
     const { data, error } = await supabase
       .from('drafts')
       .insert([{ title, content: markdown, isdraft: true, cover_image_url: coverImageUrl, user_id: userId }])
       .select();
-
-    if (error) {
+  
+    if (!error) {
+      const draftId = data[0].id;
+      toast.success('Draft saved successfully!');
+      // Insert tags
+      for (const tag of tags) {
+        await handleAddTag(tag, draftId);
+      }
+  
+      // Clear local storage
+      localStorage.removeItem('blocknoteContent');
+      // Reset the editor to a blank document
+      editor.replaceBlocks(editor.document, []);
+  
+      // Clear other fields
+      setTitle('');
+      setTags([]);
+      setCoverImageUrl(null);
+    } else{
       console.error('Error saving draft:', error, error.details);
       toast.error('Error saving draft');
-    } else {
-      console.log('Draft saved:', data);
-      toast.success('Draft saved successfully!');
     }
-    setLoading(false);
+  
+    setLoading(false);                                                 
   };
 
+  
+  
   const updatePost = async () => {
     if (!ensureAuthenticated()) return;
     setLoading(true);
@@ -154,6 +348,25 @@ const Editor: React.FC<EditorProps> = ({
       .update({ title, content: markdown, cover_image_url: coverImageUrl, user_id: userId })
       .eq('id', postId);
 
+
+      if (!error) {
+        // const postId = data[0].id;
+        toast.success('Post updated successfully!');
+        for (const tag of tags) {
+      //  await handleAddTag(tag,  postId);
+        }
+    
+
+      //clear local storage
+      localStorage.removeItem('blocknoteContent');
+      editor.replaceBlocks(editor.document, []);
+      setTitle('');
+      setTags([]);
+      setCoverImageUrl(null);
+      }
+
+
+    
     if (error) {
       console.error('Error updating post:', error);
       toast.error('Error updating post');
@@ -172,6 +385,16 @@ const Editor: React.FC<EditorProps> = ({
       .update({ title, content: markdown, cover_image_url: coverImageUrl, user_id: userId })
       .eq('id', draftId);
 
+
+
+      if (!error) {
+        // const draftId = data[0].id;
+        // Insert tags
+        for (const tag of tags) {
+        // await handleAddTag(tag, draftId);
+        }
+      }
+
     if (error) {
       console.log('Error updating draft:', error);
       toast.error('Error updating draft');
@@ -189,13 +412,16 @@ const Editor: React.FC<EditorProps> = ({
 
     const { data, error } = await supabase
       .from(table)
-      .select('title, content')
+      .select('title, content, post_tags(tag_id, tags(name))')
       .eq('id', id)
       .single();
 
     if (data) {
       setTitle(data.title);
       editor.blocksToMarkdownLossy(data.content);
+
+    const fetchedTags = data.post_tags.map((postTag: any) => postTag.tags.name);
+    setTags(fetchedTags);
     } else {
       console.error(`Error fetching ${table}:`, error);
       toast.error(`Error fetching ${table}`);
@@ -283,13 +509,45 @@ const Editor: React.FC<EditorProps> = ({
               className="w-full text-5xl resize-none appearance-none overflow-hidden bg-transparent hover:border-none focus:border-none focus:outline-none"
             />
           </div>
-          <BlockNoteView
-            editor={editor}
-            editable={editable}
-            theme="light"
-            onChange={onChange}
-            className='h-full'
-          />
+          <div className="m-0">
+          <BlockNoteView
+             editor={editor}
+             onChange={onChange}
+              theme={localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}
+              className="-m-8 sm:m-0 bg-transparent text-balance text-xs sm:text-base"
+                           />
+           </div>
+
+          <div className="w-full max-w-xs ml-0 mt-6">
+          <input
+  type="text"
+  placeholder="add tags"
+  className="mb-2 mt-10 bg-transparent border-none outline-none"
+  onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && e.currentTarget.value.trim()) {
+      handleAddTag(e.currentTarget.value.trim(), postId || draftId || '');
+      e.currentTarget.value = '';
+    }
+  }}
+/>
+ 
+        <div className="flex flex-wrap gap-2">
+  {tags.map((tag, index) => (
+    <span
+      key={index}
+      className="bg-gray-200 text-gray-800 px-2 py-1 rounded-md text-sm relative group hover:border-blue-400 hover:border transition-colors"
+    >
+      {tag}
+      <button
+        onClick={() => handleRemoveTags(tag)}
+        className="absolute -top-1 -right-1 bg-destructive text-destructive-foreground rounded-full w-4 h-4 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+      >
+        <X />
+      </button>
+    </span>
+  ))}
+</div>
+    </div>
           <div className='flex justify-end mt-4'>
             <button
               onClick={handleSavePost}
@@ -313,3 +571,7 @@ const Editor: React.FC<EditorProps> = ({
 };
 
 export default Editor;
+
+
+
+

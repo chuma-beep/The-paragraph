@@ -145,7 +145,7 @@ export default function PostList() {
 
 
   return (
-    <div className="container mx-auto" >
+    <div className="" >
       {posts.length === 0 && loading && (
         <div className="flex flex-col items-center gap-6">
           {Array.from({ length: 6 }).map((_, index) => (
@@ -168,7 +168,7 @@ export default function PostList() {
       {!loading && error && (
         <div className="text-red-500">Sorry Please Try Again</div>
       )}
-          <div className="grid grid-cols-1 gap-4">
+          <div className="grid grid-cols-1 gap-4 w-full min-w-[300]">
         {posts.map((post, index) => (
           <PostCard
             key={post.id}

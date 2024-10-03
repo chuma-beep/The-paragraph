@@ -1,0 +1,90 @@
+/* Set a fluid width for the BlockNote editor */
+.blocknote-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 16px; /* Padding to avoid touching screen edges */
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .blocknote-container {
+    max-width: 750px; /* Set a fixed width for larger screens */
+    margin: 0 auto;
+  }
+}
+
+/* Ensure buttons, menus, and text adjust for mobile */
+.blocknote-toolbar button {
+  font-size: 14px; /* Adjust button size */
+  padding: 8px; /* Ensure touch-friendly button sizes */
+}
+
+.blocknote-content {
+  font-size: 16px; /* Increase text size for readability */
+  line-height: 1.5;
+}
+
+
+
+/* Hide the toolbar on small screens and show a toggle button */
+.blocknote-toolbar {
+    display: none;
+  }
+  
+  .toolbar-toggle-button {
+    display: block;
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+    background-color: #007bff;
+    color: white;
+    padding: 12px;
+    border-radius: 50%;
+  }
+  
+  @media (min-width: 768px) {
+    .blocknote-toolbar {
+      display: flex;
+    }
+    .toolbar-toggle-button {
+      display: none;
+    }
+  }
+  
+
+
+  .blocknote-content img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .blocknote-content iframe {
+    width: 100%;
+    height: auto;
+  }
+
+
+
+/* blocknote-overrides.css */
+.blocknote-container {
+  width: 100%;
+  max-width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Additional custom styles for mobile responsiveness */
+.blocknote-toolbar {
+  display: none;
+}
+
+.toolbar-toggle-button {
+  display: block;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  background-color: #007bff;
+  color: white;
+  padding: 12px;
+  border-radius: 50%;
+}

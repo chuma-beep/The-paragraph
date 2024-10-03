@@ -1,14 +1,17 @@
 'use client'
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CiMenuKebab } from "react-icons/ci";
+import { createClient } from '@/utils/supabase/client';
+
+
+
 
 // This data should be replaced with real data from your blog
-const tags = ['Next.js', 'React', 'JavaScript', 'TypeScript', 'CSS', 'HTML', 'Web Development'];
 const topPosts = [
   { id: 1, title: 'Getting Started with Next.js 13', views: 1500 },
   { id: 2, title: 'Understanding React Hooks', views: 1200 },
@@ -18,7 +21,33 @@ const topPosts = [
 ];
 
 export function ComponentsBlogSidebar() {
+  const supabase = createClient();  
   const [isSidebarOpen, setSidebarOpen] = useState(false);
+  const [tags, setTags] = useState<string[]>([]);  // State to store fetched tags
+  const [loading, setLoading] = useState(true);    // State for loading
+  const [error, setError] = useState<string | null>(null);  // State for error
+
+   // Fetch Tags from the database
+   useEffect(() => {
+    const fectchTags = async () => {
+      try{
+        const { data, error } = await supabase
+        .from('tags').select('name');
+        if(error) throw error;
+        setTags(data.map((tag: { name: string}) => tag.name));
+      }
+      catch(error: any){ 
+        setError(error.message);
+      }finally{
+        setLoading(false);
+      }
+    }
+
+     fectchTags();
+   })
+
+
+
 
   return (
     <>

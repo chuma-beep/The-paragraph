@@ -7,7 +7,7 @@ import { SearchBar } from "@/components/search-bar";
 import { WriteIcon } from "@/components/WriteIcon";
 import MainFooter from "@/components/main-footer";
 import AuthButton from "@/components/AuthButton";
-import { BlogFloatingBookmarkButton } from "@/app/post/BlogFloatingBookmarkButton";
+// import { BlogFloatingBookmarkButton } from "@/components/BlogFloatingBookmarkButton";
 
 
 // Define the layout component

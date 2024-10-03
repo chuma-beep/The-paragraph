@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 import dynamic from "next/dynamic";
 import {useEffect, useMemo, useState} from "react";
 import "react-toastify/dist/ReactToastify.css"; // Import the CSS
+import { Unica_One } from "next/font/google";
 //import TextareaAutosize from "react-textarea-autosize";
 // import { title } from "process";
 
@@ -26,7 +27,11 @@ import "react-toastify/dist/ReactToastify.css"; // Import the CSS
 
       <main className="min-h-screen">
          <div className="flex flex-col px-24 py-10 w-full">
-      <Editor onChange={handleEditorChange} initialContent={""} />
+      <Editor
+      id="editor"
+       editable={true}
+       onChange={handleEditorChange}
+       initialContent=""/>
       <ToastContainer
         position="bottom-right" 
         autoClose={3000} 
