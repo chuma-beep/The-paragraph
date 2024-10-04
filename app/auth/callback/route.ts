@@ -39,6 +39,11 @@
 
 
 
+
+
+
+
+
 import { NextResponse } from 'next/server';
 import { createClient } from '@/utils/supabase/server';
 
@@ -70,3 +75,10 @@ export async function GET(request: Request) {
   // If the code is missing or there was an error, redirect to an error page
   return NextResponse.redirect(`${baseUrl}/auth/auth-code-error`);
 }
+
+
+
+
+
+
+
