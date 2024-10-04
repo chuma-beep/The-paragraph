@@ -4,6 +4,8 @@ import MainFooter from "@/components/main-footer";
 import { SearchBar } from "@/components/search-bar";
 import PostList from "@/app/postlist/PostList"
 import  {WriteIcon}  from '@/components/WriteIcon'
+// import HomepageWelcomeText from "@/components/HomepageWelcomeText";
+
 
 export default async function Index() {
   return (
@@ -17,6 +19,7 @@ export default async function Index() {
         </div>
       </nav>
       <div className="flex-1 flex flex-col gap-20 max-w-4xl px-3">
+        {/* <HomepageWelcomeText /> */}
         <main className="flex-1 flex flex-col gap-6 px-4">
         <PostList />
         </main>

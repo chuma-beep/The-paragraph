@@ -1,21 +1,22 @@
-import { Inter as FontSans} from "next/font/google"
+// app/layout.tsx or pages/_app.tsx (depending on your Next.js version)
+import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
+import { cn } from "@/lib/utils";
 
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
-  import { cn } from "@/lib/utils"
- 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
-})
- 
+});
+
+// Use NEXT_PUBLIC_VERCEL_URL for client-side access if needed
+const defaultUrl = process.env.VERCEL_URL
+  ? `https://${process.env.VERCEL_URL}`
+  : "http://localhost:3000";
 
 export const metadata = {
   metadataBase: new URL(defaultUrl),
-  title: "The paragraph",
-  description: "Real time Blogging platform with rich text editing",
+  title: "The Paragraph",
+  description: "Real-time Blogging platform with rich text editing",
 };
 
 export default function RootLayout({
@@ -25,7 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <link rel="manifest" href="/site.webmanifest" />
+      <head>
+        <link rel="manifest" href="/site.webmanifest" />
+        {/* Add other head elements here if needed */}
+      </head>
       <body
         className={cn(
           "min-h-screen bg-background font-sans antialiased",
@@ -33,9 +37,7 @@ export default function RootLayout({
         )}
       >
         <main className="min-h-screen flex flex-col items-center">
-          
           {children}
-
         </main>
       </body>
     </html>
