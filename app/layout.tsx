@@ -13,8 +13,12 @@ const fontSans = FontSans({
 //   ? `https://${process.env.VERCEL_URL}`
 //   : "http://localhost:3000";
 
+
+const defaultUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
+
 export const metadata = {
-  // metadataBase: new URL(defaultUrl),
+  metadataBase: new URL(defaultUrl),
   title: "The Paragraph",
   description: "Real-time Blogging platform with rich text editing",
 };
