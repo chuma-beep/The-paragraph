@@ -8,13 +8,13 @@ const fontSans = FontSans({
   variable: "--font-sans",
 });
 
-// Use NEXT_PUBLIC_VERCEL_URL for client-side access if needed
-const defaultUrl = process.env.VERCEL_URL
-  ? `https://${process.env.VERCEL_URL}`
-  : "http://localhost:3000";
+// // Use NEXT_PUBLIC_VERCEL_URL for client-side access if needed
+// const defaultUrl = process.env.VERCEL_URL
+//   ? `https://${process.env.VERCEL_URL}`
+//   : "http://localhost:3000";
 
 export const metadata = {
-  metadataBase: new URL(defaultUrl),
+  // metadataBase: new URL(defaultUrl),
   title: "The Paragraph",
   description: "Real-time Blogging platform with rich text editing",
 };
