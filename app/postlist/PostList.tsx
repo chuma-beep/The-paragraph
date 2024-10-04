@@ -169,8 +169,8 @@ export default function PostList() {
         <div className="text-red-500 w-full align-middle flex flex-col justify-center min-h-full">
           <Image
            src="/404.png"
-            width={200}
-             height={200}
+            width={400}
+             height={400}
               alt="Error" />
 
           Sorry Please Try Again
