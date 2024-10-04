@@ -6,7 +6,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import PostCard from "./PostCard";
-
+import Image from "next/image";
 
 
 interface Post {
@@ -166,7 +166,15 @@ export default function PostList() {
         </div>
       )}
       {!loading && error && (
-        <div className="text-red-500">Sorry Please Try Again</div>
+        <div className="text-red-500 w-full align-middle flex flex-col justify-center min-h-full">
+          <Image
+           src="/404.png"
+            width={200}
+             height={200}
+              alt="Error" />
+
+          Sorry Please Try Again
+          </div>
       )}
           <div className="grid grid-cols-1 gap-4 w-full min-w-[300]">
         {posts.map((post, index) => (
