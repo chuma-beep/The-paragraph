@@ -47,8 +47,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
         const truncated = plainTextContent.substring(0, 100) + "...";
         setTruncatedContent(truncated);
       } catch (error) {
-        console.error("Error processing content:", error);
-        // setTruncatedContent("Error processing content");
+        // console.error("Error processing content:", error);
+        setTruncatedContent("Error processing content");
       }
     };
 
