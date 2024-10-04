@@ -173,7 +173,10 @@ export default function PostList() {
              height={400}
               alt="Error" />
 
-          Sorry Please Try Again
+        <p className="text-center">
+          
+            Sorry Please Try Again
+          </p>
           </div>
       )}
           <div className="grid grid-cols-1 gap-4 w-full min-w-[300]">
