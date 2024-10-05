@@ -56,7 +56,7 @@ export async function GET(request: Request) {
   // Retrieve the base URL from environment variables
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
-  // If the user is authenticated, redirect to the /protected route
+  // If the user is authenticated, redirect to the protected route
   if (session) {
     return NextResponse.redirect(`${baseUrl}/protected`);
   }
