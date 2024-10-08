@@ -3,10 +3,11 @@ import { ReactNode } from "react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import DeployButton from "@/components/LogoButton";
-import { SearchBar } from "@/components/search-bar";
+// import SearchBar  from "@/components/Search/SearchBar";
 import { WriteIcon } from "@/components/WriteIcon";
 import MainFooter from "@/components/main-footer";
 import AuthButton from "@/components/AuthButton";
+import Search from "@/components/Search/Search";
 // import { BlogFloatingBookmarkButton } from "@/components/BlogFloatingBookmarkButton";
 
 
@@ -17,7 +18,10 @@ export default function Layout({ children }: { children: ReactNode }) {
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
           <DeployButton />
-          <SearchBar />
+          {/* <SearchBar onSearch={function (params: { keyword: string; }): void {
+            throw new Error("Function not implemented.");
+          } } /> */}
+          <Search/>
           <WriteIcon />
           <AuthButton />
         </div>

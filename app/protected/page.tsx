@@ -3,10 +3,12 @@ import AuthButton from "@/components/AuthButton";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 import MainFooter from "@/components/main-footer";
-import { SearchBar } from "@/components/search-bar";
+// import SearchBar  from "@/components/Search/SearchBar";
+
 import PostList from "../postlist/PostList";
 import { WriteIcon } from "@/components/WriteIcon";
 import { ComponentsBlogSidebar } from "@/components/BlogSideBar";
+import Search from "@/components/Search/Search";
 
 export default async function ProtectedPage() {
   const supabase = createClient();
@@ -29,7 +31,10 @@ export default async function ProtectedPage() {
           <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
             <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
               <LogoButton />
-              <SearchBar />
+              {/* <SearchBar onSearch={function (params: { keyword: string; }): void {
+                throw new Error("Function not implemented.");
+              } } /> */}
+              <Search />
               <WriteIcon />
               <AuthButton />
             </div>

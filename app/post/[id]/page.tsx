@@ -388,7 +388,7 @@ export default function PostPage() {
       <ToastContainer />
 
       {post && (
-        <>
+        <div>
           <header className="mb-4 sm:mb-8">
             <h1 className="text-2xl sm:text-4xl font-extrabold mb-2 px-4">{post.title}</h1>
             <div className="flex items-center flex-wrap space-x-2 sm:space-x-4 mb-4 px-4">
@@ -505,7 +505,7 @@ export default function PostPage() {
               </div>
             ))}
           </section>
-        </>
+        </div>
       )}
     </article>
   );

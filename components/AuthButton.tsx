@@ -1,9 +1,7 @@
 'use client';
 
 import { createClient } from "@/utils/supabase/client";
-//import { redirect } from "next/navigation";
 import { useRouter } from "next/navigation";
-
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { UserAvatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
@@ -40,42 +38,6 @@ export default function AuthButton() {
 
     fetchUser();
   }, []); 
-
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const { data: userData, error: userError } = await supabase.auth.getUser();
-
-  //     if (userError) {
-  //       console.error('Error fetching user:', userError.message);
-  //       return;
-  //     }
-
-  //     if (userData?.user) {
-  //       setUser(userData.user);
-
-  //       const { data: profileData, error: profileError } = await supabase
-  //         .from('profiles')
-  //         .select('avatar_url')
-  //         .eq('id', userData.user.id)
-  //         .single();
-
-  //       if (profileError) {
-  //         console.error('Error fetching user profile:', profileError.message);
-  //       } else if (profileData?.avatar_url) {
-  //         // Generate the full URL for the avatar image
-  //         const { data } = supabase.storage.from('avatars').getPublicUrl(profileData.avatar_url);
-  //         if (data?.publicUrl) {
-  //           setAvatarUrl(data.publicUrl); // Set the public URL for the image
-  //         }
-  //       }
-  //     }
-  //   };
-
-  //   fetchUser();
-  // }, []);
-
-
-
 
   const signOut = async () => {
     await supabase.auth.signOut();

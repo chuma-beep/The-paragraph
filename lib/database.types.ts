@@ -260,6 +260,7 @@ export type Database = {
           likes: number | null
           profile_id: string | null
           title: string
+          tsv: unknown | null
           user_id: string | null
         }
         Insert: {
@@ -271,6 +272,7 @@ export type Database = {
           likes?: number | null
           profile_id?: string | null
           title: string
+          tsv?: unknown | null
           user_id?: string | null
         }
         Update: {
@@ -282,6 +284,7 @@ export type Database = {
           likes?: number | null
           profile_id?: string | null
           title?: string
+          tsv?: unknown | null
           user_id?: string | null
         }
         Relationships: [

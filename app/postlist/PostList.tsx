@@ -7,6 +7,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import PostCard from "./PostCard";
 import Image from "next/image";
+import { result } from "lodash";
 
 
 interface Post {
@@ -37,8 +38,6 @@ export default function PostList() {
   const [bookmarks, setBookmarks] = useState<Record<string, boolean>>({});
   const [postList, setPostList] = useState<Post[]>(posts);
 
-
-
   // Fetch all posts, comments, and bookmark statuses
   const fetchPosts = useCallback(async () => {
     if (!hasMore) return;
@@ -59,7 +58,6 @@ export default function PostList() {
         )
         .order("created_at", { ascending: false })
         .range((page - 1) * 5, page * 5 - 1);
-       console.log(postsData);
       if (postsError) throw postsError;
 
       if (postsData.length === 0) {

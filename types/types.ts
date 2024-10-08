@@ -14,3 +14,12 @@ export interface PostWithRelations extends Post {
   isbookmarked?: boolean; 
   post_tags?: Database["public"]["Tables"]["post_tags"]["Row"][];
 }
+
+// types.ts
+export interface SearchParams {
+  query: string;
+  keyword: string;
+  username: string;
+  tags?: string| null; 
+}
+
