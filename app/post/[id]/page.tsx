@@ -392,7 +392,7 @@ export default function PostPage() {
           <header className="mb-4 sm:mb-8">
             <h1 className="text-2xl sm:text-4xl font-extrabold mb-2 px-4">{post.title}</h1>
             <div className="flex items-center flex-wrap space-x-2 sm:space-x-4 mb-4 px-4">
-              <Link href={`/profile/${post.profile_id}`} className="items-center gap-2 flex flex-row" passHref>
+              <Link href={`/profile/${post.profiles?.id}`} className="items-center gap-2 flex flex-row" passHref>
                 {post.profiles?.avatar_url ? (
                   <UserAvatar>
                     <AvatarImage
