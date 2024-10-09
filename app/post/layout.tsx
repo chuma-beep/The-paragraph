@@ -1,28 +1,25 @@
-// Import necessary modules and components
 import { ReactNode } from "react";
 import "@blocknote/core/fonts/inter.css";
 import "@blocknote/mantine/style.css";
 import DeployButton from "@/components/LogoButton";
-// import SearchBar  from "@/components/Search/SearchBar";
 import { WriteIcon } from "@/components/WriteIcon";
 import MainFooter from "@/components/main-footer";
 import AuthButton from "@/components/AuthButton";
 import Search from "@/components/Search/Search";
-// import { BlogFloatingBookmarkButton } from "@/components/BlogFloatingBookmarkButton";
 
 
-// Define the layout component
+
+
 export default function Layout({ children }: { children: ReactNode }) {
   return (
     <div className="min-h-scree min-w-full flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
           <DeployButton />
-          {/* <SearchBar onSearch={function (params: { keyword: string; }): void {
-            throw new Error("Function not implemented.");
-          } } /> */}
-          <Search/>
+          <div className="flex flex-row-reverse w-full items-end mr-4 gap-2">
           <WriteIcon />
+          <Search/>
+          </div>
           <AuthButton />
         </div>
       </nav>
@@ -30,7 +27,6 @@ export default function Layout({ children }: { children: ReactNode }) {
       {/* Main content */}
       <main className="flex-grow container mx-auto px-4 py-8">
         {children}
-        {/* <BlogFloatingBookmarkButton postId="your-post-id" userId={user?.id} /> */}
       </main>
       
       {/* Footer */}

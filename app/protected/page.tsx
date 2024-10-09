@@ -31,11 +31,11 @@ export default async function ProtectedPage() {
           <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
             <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
               <LogoButton />
-              {/* <SearchBar onSearch={function (params: { keyword: string; }): void {
-                throw new Error("Function not implemented.");
-              } } /> */}
-              <Search />
+              <div className="flex flex-row-reverse w-full items-end mr-4 gap-2">
+
               <WriteIcon />
+              <Search />
+              </div>
               <AuthButton />
             </div>
           </nav>
@@ -44,7 +44,7 @@ export default async function ProtectedPage() {
         {/* Layout for sidebar and post list */}
         <div className="flex flex-row w-full max-w-5xl mx-auto px-3">
           {/* Sidebar */}
-          <div className="">
+          <div className="flex mr-5">
             <ComponentsBlogSidebar />
           </div>
           
