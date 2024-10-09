@@ -228,13 +228,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "fk_post_tags_post_id"
-            columns: ["post_id"]
-            isOneToOne: true
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "fk_post_tags_tag_id"
             columns: ["tag_id"]
             isOneToOne: false

@@ -59,7 +59,7 @@ export default function SearchContent(){
           </div>
         </PopoverTrigger>
         
-        <PopoverContent className="w-80 sm:w-full sm:justify-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
+        <PopoverContent className="sm:w-full sm:justify-center p-4 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700">
             <SearchBar onSearch={handleSearch} />
           <AnimatePresence>
             {searchResults.length > 0 && (
