@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PostCard from "../TagsPostCard";
 import { PostWithRelations, Comment, Bookmark, Profile } from "@/types/types"
 import Image from "next/image";
+import BackButton from "@/components/BackButton";
 
 
 const supabase = createClient();
@@ -132,6 +133,7 @@ export default function TagsPostsPage() {
   
   if (error) return (
   <div className="w-full flex flex-col justify-center items-center  text-center">
+    <BackButton/>
     <Image
      width={800}
      height={800}
@@ -148,6 +150,7 @@ export default function TagsPostsPage() {
   // if (posts.length === 0) return <p>No posts found for the tag "{decodedTag}".</p>;
     if (posts.length === 0) return (
       <div className="w-full flex flex-col justify-center items-center  text-center">
+        <BackButton/>
         <Image
          width={800}
          height={800}
@@ -163,6 +166,7 @@ export default function TagsPostsPage() {
 
   return (
     <article className="max-w-3xl mx-auto px-4 py-8 sm:px-0 lg:px-8">
+          <BackButton/>
       <h2 className="text-2xl font-bold mb-4">Posts tagged with "{decodedTag}"</h2>
       {posts.map((post, index) => (
         <PostCard
