@@ -1,116 +1,4 @@
 
-
-// 'use client'
-// import React, { useState, useEffect } from "react";
-// import { useParams } from "next/navigation";
-// import { createClient } from "@/utils/supabase/client";
-// import { Skeleton } from "@/components/ui/skeleton";
-// import PostCard from "../TagsPostCard";
-
-
-
-
-// interface Post {
-//   id: string ;
-//   key: string;
-//   post: Post;
-//   title: string;
-//   content: string;
-//   created_at: string;
-//   read_time: number;
-//   likes: number;
-//   cover_image_url?: string | null;
-//   profile_id: string | null; 
-//   user_id: string;
-//   isBookmarked?: boolean;
-// }
-
-
-// export default function TagsPostsPage() {
-//   const supabase = createClient();
-//   const { tag } = useParams();
-//   const decodedTag = decodeURIComponent(tag as string);
-//   const [posts, setPosts] = useState<Post[]>([]);
-//   const [loading, setLoading] = useState(true);
-//   const [error, setError] = useState<string | null>(null);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//         try {
-//           setLoading(true);
-      
-//           const { data: tagData, error: tagError } = await supabase
-//             .from("tags")
-//             .select("id")
-//             .eq("name", decodedTag)
-//             .single();
-      
-//           if (tagError || !tagData) {
-//             throw new Error("Tag not found");
-//           }
-      
-//           const tagId = tagData.id;
-      
-//           // Fetch posts associated with the tag
-//           const { data: postData, error: postError } = await supabase
-//             .from("posts")
-//             .select(`
-//               *,
-//               profiles (
-//                 username,
-//                 avatar_url
-//               ),
-//               post_tags (
-//                 tag_id
-//               )
-//             `)
-//             .eq("post_tags.tag_id", tagId);  
-//           if (postError) throw postError;
-      
-//           if (!postData || postData.length === 0) {
-//             setPosts([]);  
-//           } else {
-//             setPosts(postData);
-//           }
-//         } catch (error: any) {
-//           setError(error.message);
-//         } finally {
-//           setLoading(false);
-//         }
-//       };
-//     if (tag) {
-//       fetchData();
-//     }
-//   }, [tag, supabase]);
-
-//   if (loading) return <Skeleton className="h-12 w-4/4 mb-6" />;
-
-//   if (error) return <p>Error: {error}</p>;
-
-//   if (posts.length === 0) return <p>No posts found for the tag "{decodedTag}".</p>;
-
-
-
-
-
-//   return (
-//     <article className="max-w-3xl mx-auto px-4 py-8 sm:px-0 lg:px-8">
-//       <h2 className="text-2xl font-bold mb-4">Posts tagged with "{decodedTag}"</h2>
-//       {posts.map((post) => (
-//         <PostCard key={post.id} post={post} />
-//       ))}
-//     </article>
-//   );
-// }
-
-
-
-
-
-
-
-
-// app/tags/[tag]/page.tsx
 'use client';
 import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useParams } from "next/navigation";
@@ -118,6 +6,8 @@ import { createClient } from "@/utils/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import PostCard from "../TagsPostCard";
 import { PostWithRelations, Comment, Bookmark, Profile } from "@/types/types"
+import Image from "next/image";
+
 
 const supabase = createClient();
 
@@ -141,7 +31,6 @@ export default function TagsPostsPage() {
       ...prevBookmarks,
       [postId]: !prevBookmarks[postId],
     }));
-    // Optionally, update the bookmark status in the database here
   };
 
   // Callback for the last post element (for infinite scrolling)
@@ -149,7 +38,6 @@ export default function TagsPostsPage() {
     (node: HTMLElement | null) => {
       if (loading) return;
       if (observer.current) observer.current.disconnect();
-      
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && hasMore) {
           setPage((prevPage) => prevPage + 1);
@@ -174,7 +62,7 @@ export default function TagsPostsPage() {
           .single();
 
         if (tagError || !tagData) {
-          throw new Error("Tag not found");
+          throw new Error("Not Found");
         }
 
         const tagId = tagData.id;
@@ -240,9 +128,38 @@ export default function TagsPostsPage() {
 
   if (loading && posts.length === 0) return <Skeleton className="h-12 w-4/4 mb-6" />;
 
-  if (error) return <p>Error: {error}</p>;
+  // if (error) return <p>Error: {error}</p>;
+  
+  if (error) return (
+  <div className="w-full flex flex-col justify-center items-center  text-center">
+    <Image
+     width={800}
+     height={800}
+     alt="Error Image"
+     src={"/404.png"}
+      />
+  <p>
+     Not Found
+  </p>
+  </div>  
+);
 
-  if (posts.length === 0) return <p>No posts found for the tag "{decodedTag}".</p>;
+
+  // if (posts.length === 0) return <p>No posts found for the tag "{decodedTag}".</p>;
+    if (posts.length === 0) return (
+      <div className="w-full flex flex-col justify-center items-center  text-center">
+        <Image
+         width={800}
+         height={800}
+         alt="Error Image"
+         src={"/404.png"}
+          />
+      <p>
+         Not Found
+         {decodedTag}
+      </p>
+      </div>  
+    );
 
   return (
     <article className="max-w-3xl mx-auto px-4 py-8 sm:px-0 lg:px-8">
