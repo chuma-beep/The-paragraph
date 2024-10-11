@@ -5,6 +5,7 @@ export default function LogoButton() {
     <span
       className="w-12 h-12 mt-2 flex items-center justify-center rounded-full no-underline hover:bg-btn-background-hover border"
     >
+      <h3>The Paragraph</h3>
       <ParagraphLogo />
     </span>
   );
