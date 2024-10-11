@@ -34,7 +34,7 @@ export default function Login({ searchParams }: { searchParams: Message }) {
   };
 
   return (
-    <div className="flex flex-col flex-1 p-4 w-full items-center">
+    <div   className="flex flex-col flex-1 p-4 w-full items-center">
       <Link
         href="/"
         className="absolute left-8 top-8 py-2 px-4 rounded-md no-underline text-foreground bg-btn-background hover:bg-btn-background-hover flex items-center group text-sm"
@@ -64,19 +64,19 @@ export default function Login({ searchParams }: { searchParams: Message }) {
           className="mb-6 lg:mb-0 hidden lg:block"
         />
 
-      <div className="flex flex-col">
+      <div   className="flex flex-col">
       <form className="flex mt-40 flex-col w-full justify-center gap-2 text-foreground [&>input]:mb-6 max-w-md p-4">
         <h1 className="text-2xl font-medium">Log in</h1>
-        <p className="text-sm text-foreground/60">
+        <p   className="text-sm text-foreground/60">
           Don't have an account?{" "}
-          <Link className="text-blue-600 font-medium underline" href="/signup">
+          <Link data-testid="signup-link"  className="text-blue-600 font-medium underline" href="/signup">
             Sign up
           </Link>
         </p>
-        <div className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
+        <div   className="flex flex-col gap-2 [&>input]:mb-3 mt-8">
           <Label htmlFor="email">Email</Label>
-          <Input name="email" placeholder="you@example.com" required />
-          <div className="flex justify-between items-center">
+          <Input data-testid="email-input" name="email" placeholder="you@example.com" required />
+          <div  className="flex justify-between items-center">
             <Label htmlFor="password">Password</Label>
 
             <Link
@@ -87,12 +87,13 @@ export default function Login({ searchParams }: { searchParams: Message }) {
             </Link>
           </div>
           <Input
+            data-testid="password-input"
             type="password"
             name="password"
             placeholder="••••••••"
             required
             />
-          <SubmitButton formAction={login} pendingText="Signing In...">
+          <SubmitButton data-testid="login-button"  formAction={login} pendingText="Signing In...">
             Log in
           </SubmitButton>
           <FormMessage message={searchParams} />

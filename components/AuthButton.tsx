@@ -45,10 +45,12 @@ export default function AuthButton() {
   };
 
   return user ? (
-    <DropdownMenu>
+    <DropdownMenu             data-test="User-Avatar"
+    >
       <DropdownMenuTrigger asChild>
         <UserAvatar className="h-9 w-9">
           <AvatarImage
+            data-test="User-Avatar"
             src={avatarUrl || '/placeholder.svg'}
             alt="User Avatar"
           />
@@ -77,7 +79,7 @@ export default function AuthButton() {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <div className="flex gap-2">
+    <div  data-testid="Login" className="flex gap-2">
       <Link href="/login" className="h-8 flex items-center justify-center rounded-md no-underline text-sm font-medium px-4">
         Login
       </Link>

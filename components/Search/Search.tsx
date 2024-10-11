@@ -2,6 +2,9 @@ import SearchContent from "./SearchContent";
 
 export default function Search(){
   return(
-    <SearchContent/>
+    <div data-testid="Search" >
+
+      <SearchContent/>
+    </div>
   )
 }

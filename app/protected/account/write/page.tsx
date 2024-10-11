@@ -26,7 +26,7 @@ import { Unica_One } from "next/font/google";
   return (
 
       <main className="min-h-screen">
-         <div className="flex flex-col px-24 py-10 w-full">
+         <div  className="flex flex-col px-24 py-10 w-full">
       <Editor
       id="editor"
        editable={true}

@@ -13,7 +13,7 @@ import Search from '@/components/Search/Search'
 export default function Index() {
 
   return (
-    <div className="w-full flex flex-col gap-20 items-center">
+    <div data-testid="Home"  className="w-full flex flex-col gap-20 items-center">
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex items-center text-sm gap-0">
           <DeployButton />

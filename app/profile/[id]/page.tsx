@@ -106,7 +106,7 @@ const UserProfile = () => {
 
 
   const Skeleton = () => (
-    <div className="animate-pulse p-16">
+    <div  className="animate-pulse p-16">
       <div className="p-8 bg-white shadow mt-24">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
@@ -146,7 +146,7 @@ const UserProfile = () => {
   }
 
   return (
-    <div className="p-16">
+    <div  className="p-16">
           <BackButton/>
       <div className="p-8 bg-white shadow mt-24">
         <div className="grid grid-cols-1 md:grid-cols-3">
@@ -160,8 +160,8 @@ const UserProfile = () => {
               <p className="text-gray-400">Comments</p>
             </div> */}
           </div>
-          <div className="relative">
-            <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+          <div  className="relative">
+            <div  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
               {profile.avatar_url ? (
                 <Image
                   src={profile.avatar_url}
@@ -181,8 +181,8 @@ const UserProfile = () => {
             </button>
           </div>
         </div>
-        <div className="mt-20 text-center border-b pb-12">
-          <h1 className="text-4xl font-medium text-gray-700">
+        <div  className="mt-20 text-center border-b pb-12">
+          <h1 data-testid="user-name"  className="text-4xl font-medium text-gray-700">
             {profile?.full_name || 'User Name'}
           </h1>
           <p className="mt-8 text-gray-500">Username: {profile?.username || 'No username provided'}</p>

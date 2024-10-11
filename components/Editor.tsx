@@ -16,6 +16,8 @@ import { X } from 'lucide-react'
 import debounce from 'debounce';
 
 
+
+
 import { Post } from '@/types/types'; // Adjust the import path as necessary
 
 
@@ -501,7 +503,7 @@ const sendPost = async () => {
             />
           </div>
 
-          <div className="flex items-center justify-between mb-4">
+          <div data-testid="post-title"  className="flex items-center justify-between mb-4">
             <TextareaAutosize
               placeholder="Post Title"
               value={title}
@@ -509,7 +511,7 @@ const sendPost = async () => {
               className="w-full text-5xl resize-none appearance-none overflow-hidden bg-transparent hover:border-none focus:border-none focus:outline-none"
             />
           </div>
-          <div className="m-0">
+          <div data-testid="post-content"  className="m-0">
           <BlockNoteView
              editor={editor}
              onChange={onChange}
@@ -548,8 +550,9 @@ const sendPost = async () => {
   ))}
 </div>
     </div>
-          <div className='flex justify-end mt-4'>
+          <div  className='flex justify-end mt-4'>
             <button
+              
               onClick={handleSavePost}
               className={`ml-2 p-2 ${loading || !userId ? 'bg-gray-400' : 'bg-blue-500'} text-white rounded`}
               disabled={loading || !userId}

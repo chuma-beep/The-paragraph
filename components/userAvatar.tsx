@@ -7,7 +7,7 @@ export function Avatar() {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <UserAvatar className="h-9 w-9">
-          <AvatarImage src="/placeholder-user.jpg" alt="@shadcn" />
+          <AvatarImage src="/placeholder-user.jpg" alt="AvatarImage" />
           <AvatarFallback>JP</AvatarFallback>
           <span className="sr-only">Toggle user menu</span>
         </UserAvatar>

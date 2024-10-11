@@ -143,7 +143,7 @@ export default function PostList() {
 
 
   return (
-    <div className="" >
+    <div data-testid="PostList"  className="" >
       {posts.length === 0 && loading && (
         <div className="flex flex-col items-center gap-6">
           {Array.from({ length: 6 }).map((_, index) => (
