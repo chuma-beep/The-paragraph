@@ -34,6 +34,9 @@ jobs:
           npx playwright install firefox --with-deps
           npx playwright install webkit --with-deps
       - name: Run tests
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
         run: npm run test:coverage && npm run test:e2e
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
