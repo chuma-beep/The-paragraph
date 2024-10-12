@@ -20,7 +20,7 @@ export default function LogoButton() {
             <ParagraphLogo />
           </span>
         </div>
-        <h1 className="text-sm  sm:text-lg font-semibold text-blue-400 text-center sm:text-left">The Paragraph</h1>
+        <h1 className="text-xs sm:text-lg font-semibold text-blue-400 text-center sm:text-left">The Paragraph</h1>
               </div>
     </div>
       
