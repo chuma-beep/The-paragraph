@@ -17,7 +17,7 @@ export default function Index() {
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex items-center text-sm gap-0">
           <DeployButton />
-          <div className="flex flex-row-reverse w-full items-end   ">
+          <div className="flex flex-row-reverse w-full mr-1 items-end">
                   <WriteIcon />
               <Search/>
           </div>
