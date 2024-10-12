@@ -13,7 +13,7 @@ export default function LogoButton() {
       <h3>The Paragraph</h3>
         </div> */}
         
-        <div className="w-full max-w-md mx-auto ">
+        <div className="w-full max-w-md mx-2 ">
       <div className="flex items-center">
         <div className="flex-shrink-0">
           <span className="inline-flex items-center justify-center w-12 h-12 rounded-full transition-colors duration-200 cursor-pointer hover:border-blue-400">

@@ -13,10 +13,9 @@ export function WriteIcon() {
       href="/protected/account/write"     
       >
     <GiNotebook
-     className="w-6 h-6 "  
+        className="w-5 h-5 "  
     
     />
-      {/* <TfiWrite /> */}
       </Link>
     </Button>
   </div>
