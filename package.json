@@ -3,6 +3,8 @@
   "scripts": {
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "test": "cypress open", 
+    "test:coverage": "cypress run",
     "dev": "next dev",
     "build": "next build",
     "start": "next start"
@@ -70,3 +72,4 @@
     "encoding": "^0.1.13"
   }
 }
+
