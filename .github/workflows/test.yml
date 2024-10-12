@@ -1,4 +1,57 @@
+# name: Test
+# on:
+#   push:
+#     branches:
+#       - '*'
+#   pull_request:
+#     branches:
+#       - '*'
+# defaults:
+#   run:
+#     working-directory: ./
+# jobs:
+#   build:
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         node-version: [20]
+#     steps:
+#       - name: Checkout the Repository
+#         uses: actions/checkout@v4
+
+#       - name: Setup Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: ${{ matrix.node-version }}
+#           registry-url: 'https://registry.npmjs.org'
+#           cache: 'npm'
+
+#       - name: Install dependencies
+#         run: |
+#           npm install
+#           npm run build
+
+#       - name: Install Playwright browsers
+#         run: |
+#           npx playwright install chromium --with-deps
+#           npx playwright install firefox --with-deps
+#           npx playwright install webkit --with-deps
+
+#       - name: Run tests
+#         env:
+#           NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+#           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+#         run: npm run test:coverage && npm run test:e2e
+
+#       - name: Upload coverage reports to Codecov
+#         uses: codecov/codecov-action@v4
+#         env:
+#           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
+
+
 name: Test
+
 on:
   push:
     branches:
@@ -6,15 +59,29 @@ on:
   pull_request:
     branches:
       - '*'
+
 defaults:
   run:
     working-directory: ./
+
 jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [20]
+    env:
+      # Server-Side Environment Variables
+      SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+      SUPABASE_API_KEY: ${{ secrets.SUPABASE_API_KEY }}
+
+      # Client-Side Environment Variables
+      NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      # Codecov Token
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
     steps:
       - name: Checkout the Repository
         uses: actions/checkout@v4
@@ -29,6 +96,9 @@ jobs:
       - name: Install dependencies
         run: |
           npm install
+
+      - name: Build the app
+        run: |
           npm run build
 
       - name: Install Playwright browsers
@@ -38,10 +108,9 @@ jobs:
           npx playwright install webkit --with-deps
 
       - name: Run tests
-        env:
-          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-        run: npm run test:coverage && npm run test:e2e
+        run: |
+          npm run test:coverage
+          npm run test:e2e
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v4
