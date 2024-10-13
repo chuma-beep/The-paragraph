@@ -515,7 +515,7 @@ const sendPost = async () => {
           <BlockNoteView
              editor={editor}
              onChange={onChange}
-              theme={localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}
+              // theme={localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}
               className="-m-8 sm:m-0 bg-transparent text-balance text-xs sm:text-base"
                            />
            </div>
