@@ -61,18 +61,18 @@ export default function AuthButton() {
         </UserAvatar>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <Link href="/protected/account" className="flex items-center gap-2 w-full py-2 hover:bg-slate-200 text-sm">
+        <Link href="/protected/account" className="flex items-center gap-2 w-full py-2 text-sm">
           <div className="h-4 w-4" />
           <span>Profile</span>
         </Link>
-        <Link href="/protected/account/account-settings" className="flex items-center gap-2 py-2 hover:bg-slate-200 text-sm">
+        <Link href="/protected/account/account-settings" className="flex items-center gap-2 py-2  text-sm">
           <div className="h-4 w-4" />
           <span>Settings</span>
         </Link>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>
           <div className="h-4 w-4" />
-          <button className="py-2 px-4 text-sm text-left pl-6 gap-2 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover hover:bg-slate-200 w-full">
+          <button className="py-2 px-4 text-sm text-left pl-6 gap-2 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover w-full">
             Logout
           </button>
         </DropdownMenuItem>
@@ -80,11 +80,11 @@ export default function AuthButton() {
     </DropdownMenu>
   ) : (
     <div  data-testid="Login" className="flex gap-2">
-      <Link href="/login" className="h-8 flex items-center justify-center rounded-md no-underline text-sm font-medium px-4">
+      <Link href="/login" className="h-8 flex items-center justify-center rounded-md no-underline text-sm font-medium px-2">
         Login
       </Link>
-      <Link href="/signup" className="h-8 flex items-center justify-center rounded-md no-underline bg-black text-white text-sm font-medium px-4">
-        Sign up
+      <Link href="/signup" className="h-8 flex items-center justify-center rounded-md no-underline text-sm font-medium px-2">
+        SignUp
       </Link>
     </div>
   );
