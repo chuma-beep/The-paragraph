@@ -9,6 +9,7 @@ import PostList from "../postlist/PostList";
 import { WriteIcon } from "@/components/WriteIcon";
 import { ComponentsBlogSidebar } from "@/components/BlogSideBar";
 import Search from "@/components/Search/Search";
+import { ModeToggle } from "@/components/toggle-theme";
 
 export default async function ProtectedPage() {
   const supabase = createClient();
@@ -32,7 +33,7 @@ export default async function ProtectedPage() {
             <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
               <LogoButton />
               <div className="flex flex-row-reverse w-full items-end mr-4 gap-2">
-
+              <ModeToggle/>
               <WriteIcon />
               <Search />
               </div>
