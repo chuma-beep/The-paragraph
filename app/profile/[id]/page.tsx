@@ -205,7 +205,7 @@ const UserProfile = () => {
           <Link key={post.id} href={`/post/${post.id}`}
           className='transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer"'
           >
-          <Card  className="flex flex-col">
+          <Card  className="flex flex-col bg-transparent">
             <CardHeader>
               <CardTitle>{post.title}</CardTitle>
               <CardDescription>
