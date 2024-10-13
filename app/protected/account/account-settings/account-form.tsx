@@ -101,7 +101,7 @@ export default function AccountForm({ user, href }: { user: User | null; href: s
   };
 
   return (
-    <div className="relative flex flex-col w-full min-w-0 mb-6 break-words border border-dashed bg-clip-border rounded-2xl border-stone-200 bg-light/30">
+    <div className="relative flex flex-col w-full min-w-0 mb-6 break-words border rounded-2xl bg-light/30">
       <div className="px-9 pt-9 flex-auto min-h-[70px] pb-0 bg-transparent">
         {loading ? (
           // Enhanced Skeleton loader
@@ -221,7 +221,7 @@ export default function AccountForm({ user, href }: { user: User | null; href: s
                     <button
                       type="button"
                       onClick={() => updateProfile({ username, bio, fullname, website, avatar_url })}
-                      className="inline-block px-6 py-3 text-base font-medium leading-normal align-middle transition-colors duration-150 ease-in-out border-0 shadow-none cursor-pointer rounded-2xl bg-primary hover:bg-primary-dark active:bg-primary-dark focus:bg-primary-dark"
+                      className="inline-block px-6 py-3 text-base font-medium leading-normal align-middle transition-colors duration-150 ease-in-out border-0 shadow-none cursor-pointer rounded-2xl bg-tranparent hover:bg-slate-500"
                       disabled={loading}
                     >
                       {loading ? 'Loading ...' : 'Update'}
