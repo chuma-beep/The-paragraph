@@ -194,7 +194,7 @@ const UserProfile = () => {
           </p>
           {/* Additional Section */}
           <div className="max-w-4xl w-full mt-10">
-            <div className="bg-white shadow-md rounded-lg p-6">
+            <div className="bg-tranparent shadow-md rounded-lg p-6">
     <div className="container mx-auto py-8">
       <div className='w-full justify-center text-center'>
 
