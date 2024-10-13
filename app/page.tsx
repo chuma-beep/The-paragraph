@@ -7,6 +7,7 @@ import PostList from "@/app/postlist/PostList";
 import { WriteIcon } from '@/components/WriteIcon';
 import Search from '@/components/Search/Search'
 import { ComponentsBlogSidebar } from "@/components/BlogSideBar";
+import { ModeToggle } from "@/components/toggle-theme";
 
 
 
@@ -18,7 +19,8 @@ export default function Index() {
       <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
         <div className="w-full max-w-4xl flex items-center text-sm gap-0">
           <DeployButton />
-          <div className="flex flex-row-reverse w-full mr-1 items-end">
+          <div className="flex flex-row-reverse w-full mr-1 items-end gap-1">
+               <ModeToggle/>
                   <WriteIcon />
               <Search/>
           </div>

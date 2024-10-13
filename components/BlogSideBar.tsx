@@ -62,7 +62,7 @@ export function ComponentsBlogSidebar() {
 
       {/* Sidebar */}
       <aside
-        className={`fixed top-0 left-0 z-40 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
+        className={`fixed top-0 left-0 z-40 h-full w-64 bg-transparent shadow-lg transform transition-transform duration-300 ease-in-out
         ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} md:translate-x-0 md:relative md:top-auto md:left-auto md:shadow-none md:block md:w-64`}
       >
         <div className="space-y-6 p-4">
