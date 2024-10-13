@@ -97,24 +97,24 @@ export default function Profile() {
   const Skeleton = () => (
 
     <div className="animate-pulse p-16">
-      <div className="p-8 bg-white shadow mt-24">
+      <div className="p-8 bg-slate-400 shadow mt-24">
         <div className="grid grid-cols-1 md:grid-cols-3">
           <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
-            <div className="h-6 bg-gray-200 rounded w-16 mx-auto"></div>
-            <div className="h-6 bg-gray-200 rounded w-16 mx-auto"></div>
+            <div className="h-6 bg-gray-400 rounded w-16 mx-auto"></div>
+            <div className="h-6 bg-gray-400 rounded w-16 mx-auto"></div>
           </div>
           <div className="relative">
-            <div className="w-48 h-48 bg-gray-200 rounded-full mx-auto"></div>
+            <div className="w-48 h-48 bg-gray-400 rounded-full mx-auto"></div>
           </div>
           <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-            <div className="h-8 bg-gray-200 rounded w-32"></div>
+            <div className="h-8 bg-gray-400 rounded w-32"></div>
           </div>
         </div>
         <div className="mt-20 text-center border-b pb-12">
-          <div className="h-8 bg-gray-200 rounded w-40 mx-auto"></div>
-          <div className="h-4 bg-gray-200 rounded w-24 mx-auto mt-4"></div>
-          <div className="h-6 bg-gray-200 rounded w-64 mx-auto mt-8"></div>
-          <div className="h-4 bg-gray-200 rounded w-48 mx-auto mt-2"></div>
+          <div className="h-8 bg-gray-400 rounded w-40 mx-auto"></div>
+          <div className="h-4 bg-gray-400 rounded w-24 mx-auto mt-4"></div>
+          <div className="h-6 bg-gray-400 rounded w-64 mx-auto mt-8"></div>
+          <div className="h-4 bg-gray-400 rounded w-48 mx-auto mt-2"></div>
         </div>
       </div>
     </div>
