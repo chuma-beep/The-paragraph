@@ -16,6 +16,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { LuPanelLeftOpen } from "react-icons/lu";
 import Image from "next/image";
 import { GiNotebook } from "react-icons/gi";
+import { ModeToggle } from "@/components/toggle-theme";
 //import { useEffect, useState } from "react";
 
 import LoggedInUser from "./LoggedInUser";
@@ -121,6 +122,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </TooltipTrigger>
               <TooltipContent side="right">Analytics</TooltipContent>
             </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Link
+                  href=""
+                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:h-8 md:w-8"
+                  prefetch={false}
+                >
+                  <ModeToggle/>
+                  <span className="sr-only">Theme</span>
+                </Link>
+              </TooltipTrigger>
+              <TooltipContent side="right">Theme</TooltipContent>
+            </Tooltip>
           </TooltipProvider>
         </nav>
         <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
@@ -225,7 +239,16 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   Analytics
                 </Link>
                 <Link
-                  href="/protected/account/analytics"
+                  href=""
+                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
+                  prefetch={false}
+                >
+
+                  <ModeToggle/>
+                  Theme
+                </Link>
+                <Link
+                  href="/protected/account/"
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   prefetch={false}
                 >
