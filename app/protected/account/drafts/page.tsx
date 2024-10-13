@@ -159,7 +159,10 @@ export default function Drafts() {
               <div className="flex items-center justify-between">
                 <div className="flex flex-row flex-wrap gap-10">
                   <h3 className="text-lg font-semibold">{draft.title || "Untitled"}</h3>
-                  <p className="text-muted-foreground text-sm">Last updated {draft.updated_at || "N/A"}</p>
+                  {/* <p className="text-muted-foreground text-sm">Last updated {draft.updated_at || "N/A"}</p> */}
+                  <time className="text-xs sm:text-sm text-gray-500">
+                  {new Date(draft.updated_at || 'N/A').toLocaleDateString()}
+                </time>
                 </div>
               </div>
             </CardHeader>
