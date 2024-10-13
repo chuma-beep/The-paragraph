@@ -161,7 +161,7 @@ const UserProfile = () => {
             </div> */}
           </div>
           <div  className="relative">
-            <div  className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
+            <div  className="w-48 h-48 bg-transparent mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
               {profile.avatar_url ? (
                 <Image
                   src={profile.avatar_url}
