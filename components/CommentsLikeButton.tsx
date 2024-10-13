@@ -62,7 +62,7 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
   return (
     <button
       onClick={handleLike}
-      className={`group relative transition-all duration-300 ease-out bg-white hover:bg-gray-100 text-gray-700 ${
+      className={`group relative transition-all duration-300 ease-out bg-transparent hover:bg-transparent text-gray-700 ${
         isLiking ? 'cursor-not-allowed opacity-70' : ''
       }`}
       disabled={isLiking}
