@@ -439,7 +439,7 @@ export default function PostPage() {
           )}
 
           <BlockNoteView
-            theme={lightDefaultTheme}
+            // theme={}
             editor={editor}
             editable={false}
             autoFocus={false}

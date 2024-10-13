@@ -26,12 +26,12 @@ export default function Index() {
         </div>
       </nav>
       <div className="flex-1 flex flex-col gap-20 max-w-4xl px-3">
-         {/* Sidebar */}
-         <div className="flex mr-12">
-            <ComponentsBlogSidebar />
-          </div>
           
-        <main className="flex-1 flex flex-col gap-6 px-4">
+        <main className="flex-1 flex flex-row gap-5 px-4">
+          <span className="mr-5 h-fit">
+
+        <ComponentsBlogSidebar />
+          </span>
           <PostList />
         </main>
       </div>

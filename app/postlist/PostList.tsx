@@ -1,13 +1,12 @@
+
 "use client";
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+import { Skeleton } from "@/components/ui/skeleton"; 
 import PostCard from "./PostCard";
 import Image from "next/image";
-import { result } from "lodash";
 
 
 interface Post {
@@ -18,7 +17,7 @@ interface Post {
   user_id: string;
   likes: number;
   cover_image_url?: string | null;
-  isBookmarked?: boolean ;
+  isBookmarked?: boolean;
   profiles?: {
     id: string;
     username: string;
@@ -84,8 +83,6 @@ export default function PostList() {
         );
         setComments((prevComments) => ({ ...prevComments, ...commentsData }));
 
-      
-
         // Fetch bookmark statuses for the new posts
         const { data: bookmarkData, error: bookmarkError } = await supabase
           .from("bookmarks")
@@ -137,27 +134,24 @@ export default function PostList() {
     }));
   };
 
-
-
-
-
-
   return (
-    <div data-testid="PostList"  className="" >
+    <div data-testid="PostList" className="">
       {posts.length === 0 && loading && (
         <div className="flex flex-col items-center gap-6">
           {Array.from({ length: 6 }).map((_, index) => (
             <Card key={index} className="w-full max-w-full min-w-[60vw] mx-auto mb-6 p-4">
               <CardHeader className="p-0">
-                <Skeleton height={300} width="100%" />
+                <Skeleton className=" h-[200px] w-full" /> 
               </CardHeader>
               <CardContent className="p-4">
-                <Skeleton height={30} width="80%" />
-                <Skeleton height={20} count={3} />
+                <Skeleton className="h-8 w-4/5 mb-4" /> 
+                <Skeleton className="h-5 mb-2" />
+                <Skeleton className="h-5 mb-2" />
+                <Skeleton className="h-5" />
               </CardContent>
               <CardFooter className="flex justify-between items-center p-4">
-                <Skeleton width={50} />
-                <Skeleton width={50} />
+                <Skeleton className="h-4 w-12" /> 
+                <Skeleton className="h-4 w-12" /> 
               </CardFooter>
             </Card>
           ))}
@@ -165,19 +159,12 @@ export default function PostList() {
       )}
       {!loading && error && (
         <div className="text-red-500 w-full align-middle flex flex-col justify-center min-h-full">
-          <Image
-           src="/404.png"
-            width={400}
-             height={400}
-              alt="Error" />
+          <Image src="/404.png" width={400} height={400} alt="Error" />
 
-        <p className="text-center">
-          
-            Sorry Please Try Again
-          </p>
-          </div>
+          <p className="text-center">Sorry, please try again.</p>
+        </div>
       )}
-          <div className="grid grid-cols-1 gap-4 w-full min-w-[300]">
+      <div className="grid grid-cols-1 gap-4 w-full min-w-[300px]">
         {posts.map((post, index) => (
           <PostCard
             key={post.id}
@@ -190,9 +177,13 @@ export default function PostList() {
           />
         ))}
       </div>
-      {loading && posts.length > 0 && <Skeleton count={3} height={150} />}
+      {loading && posts.length > 0 && (
+        <div className="flex flex-col items-center gap-4 mt-4">
+          <Skeleton className="h-36 w-full max-w-xl" />
+          <Skeleton className="h-36 w-full max-w-xl" />
+          <Skeleton className="h-36 w-full max-w-xl" />
+        </div>
+      )}
     </div>
   );
 }
-
-

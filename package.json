@@ -3,7 +3,7 @@
   "scripts": {
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "cypress open", 
+    "test": "cypress open",
     "test:coverage": "cypress run",
     "dev": "next dev",
     "build": "next build",
@@ -45,6 +45,7 @@
     "lucide-react": "^0.435.0",
     "marked": "^14.1.1",
     "next": "latest",
+    "next-themes": "^0.3.0",
     "postcss": "8.4.33",
     "react": "^18.2.0",
     "react-dom": "18.2.0",
@@ -72,4 +73,3 @@
     "encoding": "^0.1.13"
   }
 }
-

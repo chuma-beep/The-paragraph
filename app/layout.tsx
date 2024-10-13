@@ -1,4 +1,4 @@
-// app/layout.tsx or pages/_app.tsx (depending on your Next.js version)
+import { ThemeProvider } from "@/components/theme-provider"
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
@@ -7,11 +7,6 @@ const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
-
-// // Use NEXT_PUBLIC_VERCEL_URL for client-side access if needed
-// const defaultUrl = process.env.VERCEL_URL
-//   ? `https://${process.env.VERCEL_URL}`
-//   : "http://localhost:3000";
 
 
 const defaultUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
@@ -29,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="manifest" href="/site.webmanifest" />
         {/* Add other head elements here if needed */}
@@ -41,7 +36,14 @@ export default function RootLayout({
         )}
       >
         <main className="min-h-screen flex flex-col items-center">
-          {children}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+          </ThemeProvider>
         </main>
       </body>
     </html>

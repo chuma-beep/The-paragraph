@@ -85,7 +85,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
         </Link>
         <CardFooter className="flex justify-between items-center p-4">
           <div className="flex flex-row items-center space-x-2">
-            <span className="flex items-center text-gray-600">
+            <span className="flex items-center text-gray-600 bg-transparent">
               <PostLikeButton postId={post.id} />
             </span>
             <span className="flex items-center text-gray-600">

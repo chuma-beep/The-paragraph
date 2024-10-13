@@ -54,7 +54,7 @@ const PostLikeButton = ({ postId }: LikeButtonProps) => {
     <button
      data-testid="Like-Post"
       onClick={handleLike}
-      className={`group relative transition-all duration-300 ease-out bg-white hover:bg-gray-100 text-gray-700 ${
+      className={`group relative transition-all duration-300 ease-out bg-tranparent hover:bg-transparent text-gray-700 ${
         isLiking ? 'cursor-not-allowed opacity-70' : ''
       }`}
       disabled={isLiking}
