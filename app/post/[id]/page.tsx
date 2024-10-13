@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView, lightDefaultTheme } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
+ 
 import '@blocknote/core/fonts/inter.css';
 import { Skeleton } from "@/components/ui/skeleton";
 import { MdOutlineDelete } from "react-icons/md";
@@ -20,6 +21,7 @@ import CommentsLikeButton from "@/components/CommentsLikeButton";
 import PostLikeButton from "@/components/PostLikeButton";
 import Link from "next/link";
 import { PostTagsComponent } from '@/components/TagsComponent';
+
 // Removed unused import
 // import TagsPostsPage from '../../tags/[tag]/page';
 
@@ -439,10 +441,10 @@ export default function PostPage() {
           )}
 
           <BlockNoteView
-            // theme={}
             editor={editor}
             editable={false}
             autoFocus={false}
+          
             className="mt-10 sm:m-6 bg-transparent text-balance text-xs sm:text-base"
           />
 
