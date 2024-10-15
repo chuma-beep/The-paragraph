@@ -63,7 +63,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
     <div
       key={post.id}
       ref={isLast ? lastPostElementRef : null}
-      className="w-full max-w-full min-w-full mx-auto mb-6 transition-transform duration-300 ease-in-out transform hover:scale-105 hover:ml-4 cursor-pointer"
+      className="w-full max-w-full min-w-full mx-auto mb-6 transition-transform duration-300 ease-in-out transform hover:scale-105 sm:hover:ml-4 cursor-pointer"
     >
       <Card className="w-full  px-0">
         <Link href={`/post/${post.id}`} passHref>
