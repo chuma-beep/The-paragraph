@@ -33,7 +33,6 @@ const PostCard: React.FC<TagsPostCardProps> = ({
   useEffect(() => {
     const processContent = async () => {
       try {
-        // const htmlContent = marked(String(post.content));
         const htmlContent = await Promise.resolve(marked(String(post.content)));
         const sanitizedHtmlContent = DOMPurify.sanitize(htmlContent);
         const plainTextContent = sanitizedHtmlContent.replace(/<[^>]*>?/gm, "");

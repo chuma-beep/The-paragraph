@@ -29,12 +29,17 @@ export default function Index() {
       </nav>
       <div className="flex-1 flex flex-col gap-20 max-w-4xl px-3">
           
-        <main className="flex-1 flex flex-row gap-5 px-4">
-          <span className="mr-5 h-fit">
+        <main className="flex flex-row  justify-between">
+          <span className="h-fit">
 
         <ComponentsBlogSidebar />
           </span>
+          <span
+           className=""
+          >
+
           <PostList />
+          </span>
         </main>
       </div>
       <div>

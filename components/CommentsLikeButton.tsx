@@ -5,6 +5,8 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
+import { MdFavorite } from 'react-icons/md';
+
 
 interface CommentsLikeButtonProps {
   commentId: string | number; // Ensure this matches your usage
@@ -13,6 +15,7 @@ interface CommentsLikeButtonProps {
 const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
   const supabase = createClient();
   const [likesCount, setLikesCount] = useState<number>(0);
+  const [isLiked, setIsLiked] = useState<boolean>(false);
   const [isLiking, setIsLiking] = useState<boolean>(false); // Manage loading state
 
   useEffect(() => {
@@ -29,6 +32,13 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
         } else if (comments) {
           setLikesCount(comments.likes || 0); // Default to 0 if likes is null
         }
+
+       const likedComments = JSON.parse(localStorage.getItem('likedPosts') || '{}');
+       if(likedComments[commentId]){
+        setIsLiked(true)
+       }
+
+        
       } catch (err) {
         console.error('Fetch Error:', err);
       }
@@ -38,6 +48,8 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
   }, [commentId, supabase]);
 
   const handleLike = async () => {
+    if(isLiking) return;
+
     setIsLiking(true); // Set loading state
 
     try {
@@ -47,6 +59,11 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
         .update({ likes: likesCount + 1 })
         .eq('id', commentId);
 
+       const likedComments = JSON.parse(localStorage.getItem('likedComments') || '{}');
+       likedComments[commentId]  = true
+       localStorage.setItem('likedComments', JSON.stringify(likedComments));
+
+      setIsLiked(true)
       if (error) {
         console.error('Update Error:', error.message);
       } else {
@@ -68,17 +85,11 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
       disabled={isLiking}
     >
       <span className="relative z-10 flex items-center justify-center">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          className="w-5 h-5 text-red-500 scale-110 transition-all duration-300"
-        >
-          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-        </svg>
-        <span className="ml-2 font-medium text-red-500">
+        <MdFavorite className={`w-6 h-6 transition-colors duration-300 ${
+          isLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'
+          }`}/>
+        <span className="ml-2 font-medium text-gray-700">
           {likesCount} 
-          {/* {likesCount === 1 ? 'Like' : 'Likes'} */}
         </span>
       </span>
     </button>

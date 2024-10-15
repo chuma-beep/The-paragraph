@@ -157,7 +157,7 @@ export default function Drafts() {
             )}
             <CardHeader>
               <div className="flex items-center justify-between">
-                <div className="flex flex-row flex-wrap gap-10">
+                <div className="flex flex-row flex-wrap gap-10 text-center">
                   <h3 className="text-lg font-semibold">{draft.title || "Untitled"}</h3>
                   {/* <p className="text-muted-foreground text-sm">Last updated {draft.updated_at || "N/A"}</p> */}
                   <time className="text-xs sm:text-sm text-gray-500">

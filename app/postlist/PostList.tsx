@@ -139,7 +139,7 @@ export default function PostList() {
       {posts.length === 0 && loading && (
         <div className="flex flex-col items-center gap-6">
           {Array.from({ length: 6 }).map((_, index) => (
-            <Card key={index} className="w-full max-w-full min-w-[60vw] mx-auto mb-6 p-4">
+            <Card key={index} className="w-full max-w-full min-w-[35vw] mx-auto mb-6 p-4">
               <CardHeader className="p-0">
                 <Skeleton className=" h-[200px] w-full" /> 
               </CardHeader>
@@ -179,9 +179,21 @@ export default function PostList() {
       </div>
       {loading && posts.length > 0 && (
         <div className="flex flex-col items-center gap-4 mt-4">
-          <Skeleton className="h-36 w-full max-w-xl" />
-          <Skeleton className="h-36 w-full max-w-xl" />
-          <Skeleton className="h-36 w-full max-w-xl" />
+          <Card  className="w-full max-w-full min-w-[35vw] mx-auto mb-6 p-4">
+           <CardHeader className="p-0">
+                <Skeleton className=" h-[200px] w-full" /> 
+              </CardHeader>
+              <CardContent className="p-4">
+                <Skeleton className="h-8 w-4/5 mb-4" /> 
+                <Skeleton className="h-5 mb-2" />
+                <Skeleton className="h-5 mb-2" />
+                <Skeleton className="h-5" />
+              </CardContent>
+              <CardFooter className="flex justify-between items-center p-4">
+                <Skeleton className="h-4 w-12" /> 
+                <Skeleton className="h-4 w-12" /> 
+              </CardFooter>
+              </Card>
         </div>
       )}
     </div>
