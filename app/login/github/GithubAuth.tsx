@@ -29,7 +29,7 @@ export default function GithubAuth() {
       action={signIn}
       className="flex items-center"
     >
-      <button className="hover:bg-gray-400 bg-gray-500 p-7 rounded-xl">
+      <button className="hover:bg-gray-300 bg-gray-400 p-7 rounded-xl">
         <Image
           className="mx-auto mb-3"
           src="/code.png"

@@ -29,7 +29,7 @@ export default function GoogleAuthButton() {
       action={signIn}
       className="flex items-center"
     >
-      <button className="hover:bg-gray-400 bg-gray-500 p-8 rounded-xl" 
+      <button className="hover:bg-gray-300 bg-gray-400 p-8 rounded-xl" 
       type="submit"
       >
         <Image
