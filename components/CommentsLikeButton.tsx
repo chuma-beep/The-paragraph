@@ -88,7 +88,7 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
         <MdFavorite className={`w-6 h-6 transition-colors duration-300 ${
           isLiked ? 'text-red-500' : 'text-gray-300 hover:text-red-500'
           }`}/>
-        <span className="ml-2 font-medium text-gray-700">
+        <span className="ml-2 font-medium text-gray-300">
           {likesCount} 
         </span>
       </span>

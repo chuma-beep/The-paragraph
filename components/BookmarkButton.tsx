@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button } from "@/components/ui/button";
+// import { Button } from "@/components/ui/button";
 import { FaBookmark, FaRegBookmark } from 'react-icons/fa'; 
 
 
@@ -63,18 +63,17 @@ const BookmarkButton: React.FC<BookmarkButtonProps> = ({
   };
 
   return (
-    <Button
-    variant='ghost'
-      size="sm"
+    <button
+
       className={`flex items-center justify-center gap-2 transition-colors ${
-        bookmarked ? 'text-blue-600 hover:text-blue-700' : 'text-gray-300   hover:text-blue-500'
+        bookmarked ? 'text-blue-600 hover:text-blue-700' : 'text-gray-300  hover:text-blue-500'
       }`}
       onClick={() => handleToggleBookmark(postId)} // Corrected prop name from onToggleBookmark to onClick
       disabled={loading}
     >
       {bookmarked ? <FaBookmark /> : <FaBookmark />}
       {loading ? 'Loading...' : bookmarked ? 'Bookmarked' : ''}
-    </Button>
+    </button>
   );
 };
 

@@ -66,7 +66,6 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
         <Tooltip>
           <TooltipTrigger asChild>
             <button
-              className="p-2 bg-background text-foreground rounded-full shadow-lg transition-all duration-300 ease-in-out hover:bg-blue-400 hover:text-white active:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onClick={handleBookmark}
@@ -74,9 +73,9 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
             >
               <Bookmark
                 size={20}
-                className={`transition-all duration-300 ${
+                className={`transition-all duration-300 mt-2 ${
                   isHovered ? 'scale-110' : 'scale-100'
-                } ${isBookmarked ? 'fill-blue-400 text-blue-400' : 'text-muted-foreground'}`}
+                } ${isBookmarked ? 'fill-blue-400 text-blue-400' : ' fill-gray-300 text-gray-300 hover:fill-blue-400 hover:text-blue-400'}`}
               />
             </button>
           </TooltipTrigger>
