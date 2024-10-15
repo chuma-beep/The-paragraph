@@ -67,7 +67,7 @@ const PostLikeButton = ({ postId }: LikeButtonProps) => {
     <button
       data-testid="Like-Post"
       onClick={handleLike}
-      className={`group relative transition-all duration-300 ease-out bg-transparent hover:bg-transparent text-gray-700 ${
+      className={`group relative transition-all duration-300 ease-out bg-transparent hover:bg-transparent text-gray-300 ${
         isLiking ? 'cursor-not-allowed opacity-70' : ''
       }`}
       disabled={isLiking} // Disable while the like is being processed

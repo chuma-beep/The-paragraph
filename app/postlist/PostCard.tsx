@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
-import { MessageCircle } from "lucide-react";
+// import { MessageCircle } from "lucide-react";
+import { BiSolidMessageRounded } from "react-icons/bi";
+
 import Image from "next/image";
 
 import { UserAvatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -88,8 +90,8 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
             <span className="flex items-center text-gray-600 bg-transparent">
               <PostLikeButton postId={post.id} />
             </span>
-            <span className="flex items-center text-gray-600">
-              <MessageCircle className="w-5 h-5 mr-1" />
+            <span className="flex items-center text-gray-300">
+              <BiSolidMessageRounded  className="w-5 h-5 mr-1 fill-gray-300" />
               {comments[post.id]?.length || 0}
             </span>
             <div className="relative">
@@ -97,6 +99,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
                 postId={post.id}
                 isBookmarked={bookmarks[post.id] || post.isBookmarked}
                 onToggleBookmark={onToggleBookmark}
+                
               />
             </div>
           </div>

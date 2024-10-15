@@ -79,14 +79,14 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
   return (
     <button
       onClick={handleLike}
-      className={`group relative transition-all duration-300 ease-out bg-transparent hover:bg-transparent text-gray-700 ${
+      className={`group relative transition-all duration-300 ease-out bg-transparent hover:bg-transparent text-gray-300 ${
         isLiking ? 'cursor-not-allowed opacity-70' : ''
       }`}
       disabled={isLiking}
     >
       <span className="relative z-10 flex items-center justify-center">
         <MdFavorite className={`w-6 h-6 transition-colors duration-300 ${
-          isLiked ? 'text-red-500' : 'text-gray-400 hover:text-red-500'
+          isLiked ? 'text-red-500' : 'text-gray-300 hover:text-red-500'
           }`}/>
         <span className="ml-2 font-medium text-gray-700">
           {likesCount} 
