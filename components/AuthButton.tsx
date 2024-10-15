@@ -6,14 +6,27 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { UserAvatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-
+import { LogIn, LogOut, User } from "lucide-react"
+import { Button } from "./ui/button";
 const supabase = createClient();
 
 export default function AuthButton() {
   const [avatarUrl, setAvatarUrl] = useState<string | null>(null);
   const [user, setUser] = useState<any>(null);
+  const [isMobile, setIsMobile] =useState(false)
   const router = useRouter();
+
+  useEffect(() => {
+    const checkScreenSize =()=> {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+   checkScreenSize()
+   window.addEventListener("resize", checkScreenSize)
+
+  },[])
+
+
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -45,7 +58,8 @@ export default function AuthButton() {
   };
 
   return user ? (
-    <DropdownMenu             data-test="User-Avatar"
+    <DropdownMenu             
+    data-test="User-Avatar"
     >
       <DropdownMenuTrigger asChild>
         <UserAvatar className="h-9 w-9">
@@ -79,13 +93,29 @@ export default function AuthButton() {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-    <div  data-testid="Login" className="flex gap-2">
-      <Link href="/login" className="h-8 flex items-center justify-center rounded-md no-underline text-sm font-medium px-2">
+
+    <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <Button variant="ghost" size="icon">
+        <User className="h-5 w-5" />
+        <span className="sr-only">Toggle auth menu</span>
+      </Button>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent align="end">
+      <DropdownMenuItem >
+        <Link href={'/login'} className="flex flex-row flex-nowrap text-center" >
+        <LogIn className="mr-2 h-4 w-4" />
         Login
-      </Link>
-      <Link href="/signup" className="h-8 flex items-center justify-center rounded-md no-underline text-sm font-medium px-2">
-        SignUp
-      </Link>
-    </div>
+        </Link>
+      </DropdownMenuItem>
+      <DropdownMenuItem >
+        <Link href={'/signup'} className="flex flex-row flex-nowrap text-center " >
+        <LogOut className="mr-2 h-4 w-4" />
+        Signup
+        </Link>
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
   );
+
 }
