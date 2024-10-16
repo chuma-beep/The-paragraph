@@ -498,11 +498,11 @@ export default function PostPage() {
                   <div className="mt-2 flex items-center space-x-1 sm:space-x-2">
                     <CommentsLikeButton commentId={comment.id} />
                   </div>
-                </div>
                 {/* Optionally add delete button if user is authorized */}
                 <button onClick={() => handleDeleteComment(comment.id)}>
                   <MdOutlineDelete />
                 </button>
+                </div>
                
               </div>
             ))}
