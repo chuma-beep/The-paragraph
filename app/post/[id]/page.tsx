@@ -493,13 +493,18 @@ export default function PostPage() {
                     <p className="text-xs sm:text-sm font-semibold">{comment.profiles?.username}</p>
                   </Link>
                 </div>
+                <div  className="flex flex-row justify-between">
                 <div className="grid gap-1.5">
                   <p className="text-xs sm:text-sm text-gray-600">{comment.content}</p>
                   <div className="mt-2 flex items-center space-x-1 sm:space-x-2">
                     <CommentsLikeButton commentId={comment.id} />
                   </div>
                 {/* Optionally add delete button if user is authorized */}
-                <button onClick={() => handleDeleteComment(comment.id)}>
+
+                </div>
+                <button
+                 className="self-end"
+                onClick={() => handleDeleteComment(comment.id)}>
                   <MdOutlineDelete />
                 </button>
                 </div>
