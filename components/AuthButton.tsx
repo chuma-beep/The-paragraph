@@ -103,13 +103,14 @@ export default function AuthButton() {
     </DropdownMenuTrigger>
     <DropdownMenuContent align="end">
       <DropdownMenuItem >
-        <Link href={'/login'} className="flex flex-row flex-nowrap text-center" >
+        <Link href={'/login'}
+         className="flex flex-row flex-nowrap text-center" >
         <LogIn className="mr-2 h-4 w-4" />
         Login
         </Link>
       </DropdownMenuItem>
       <DropdownMenuItem >
-        <Link href={'/signup'} className="flex flex-row flex-nowrap text-center " >
+        <Link href={'/signup'} className="flex flex-row flex-nowrap text-center" >
         <LogOut className="mr-2 h-4 w-4" />
         Signup
         </Link>

@@ -386,7 +386,8 @@ export default function PostPage() {
   }
 
   return (
-    <article className="max-w-3xl mx-auto px-2 py-4 sm:px-4 lg:px-8">
+      <div className="flex flex-col justify-center xs:pl-18" >
+    <article className="max-w-full py-4 sm:px-32 px-12">
       <ToastContainer />
 
       {post && (
@@ -510,5 +511,6 @@ export default function PostPage() {
         </div>
       )}
     </article>
+    </div>
   );
 }

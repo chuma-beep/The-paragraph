@@ -1,0 +1,18 @@
+--bn-colors-editor-text: #3f3f3f;
+/* --bn-colors-editor-background: #ffffff; */
+.bn-container[data-theme] .bn-editor * {
+    background-color: transparent;
+  }
+
+
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) and (-webkit-device-pixel-ratio: 2) {
+  .main-cont{
+    padding: 20px;
+  }
+}
+/* 
+@media only screen and (min-device-width: 320px) and (max-device-width: 568px) 
+and (-webkit-device-pixel-ratio: 2) and (orientation: portrait) {
+
+} */
