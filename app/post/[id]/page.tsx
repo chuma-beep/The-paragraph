@@ -304,7 +304,7 @@ export default function PostPage() {
       const { data: userData, error: userError } = await supabase.auth.getUser();
       if (userError) {
         // console.error("User Error: ", userError.message);
-        toast.error("error fetching user");
+        toast.error("error");
         return;
       }
 
@@ -500,7 +500,6 @@ export default function PostPage() {
                   </div>
                 </div>
                 {/* Optionally add delete button if user is authorized */}
-                Uncomment and implement authorization logic if needed
                 <button onClick={() => handleDeleteComment(comment.id)}>
                   <MdOutlineDelete />
                 </button>
