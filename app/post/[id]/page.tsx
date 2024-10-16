@@ -303,14 +303,14 @@ export default function PostPage() {
     try {
       const { data: userData, error: userError } = await supabase.auth.getUser();
       if (userError) {
-        console.error("User Error: ", userError.message);
-        toast.error("Error fetching user");
+        // console.error("User Error: ", userError.message);
+        toast.error("error fetching user");
         return;
       }
 
       const userId = userData?.user?.id;
       if (!userId) {
-        toast.error("User not authenticated");
+        toast.error("you can't delete another users comment");
         return;
       }
 
@@ -322,7 +322,7 @@ export default function PostPage() {
         .single();
 
       if (commentError) {
-        console.error("Comment Error: ", commentError.message);
+        // console.error("Comment Error: ", commentError.message);
         toast.error("Error fetching comment data");
         return;
       }
@@ -338,7 +338,7 @@ export default function PostPage() {
         .eq("id", commentId);
 
       if (deleteError) {
-        console.error("Delete Error: ", deleteError.message);
+        // console.error("Delete Error: ", deleteError.message);
         toast.error("Error deleting comment");
       } else {
         setComments((prevComments) =>
@@ -347,7 +347,7 @@ export default function PostPage() {
         toast.success("Comment deleted successfully");
       }
     } catch (error: any) {
-      console.error("Delete Error: ", error.message);
+      // console.error("Delete Error: ", error.message);
       toast.error("An unexpected error occurred");
     }
   };
@@ -500,11 +500,11 @@ export default function PostPage() {
                   </div>
                 </div>
                 {/* Optionally add delete button if user is authorized */}
-                {/* Uncomment and implement authorization logic if needed
+                Uncomment and implement authorization logic if needed
                 <button onClick={() => handleDeleteComment(comment.id)}>
                   <MdOutlineDelete />
                 </button>
-                */}
+               
               </div>
             ))}
           </section>
