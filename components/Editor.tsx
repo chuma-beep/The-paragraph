@@ -527,7 +527,6 @@ const sendPost = async () => {
              editor={editor}
              onChange={onChange}
               theme={customTheme}
-              // theme={localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}
               className="-m-8 sm:m-0 bg-transparent text-balance text-xs sm:text-base"
                            />
            </div>
