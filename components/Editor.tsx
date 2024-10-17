@@ -461,6 +461,17 @@ const sendPost = async () => {
     }
   };
 
+  const customTheme = {
+    colors: {
+        editor: {
+            background: 'rgba(255, 255, 255, 0)', // Fully transparent editor background
+            text: "#757575"
+            // text: "#616161"
+        },
+    },
+}
+
+
   useEffect(() => {
     onChange();
   }, [editor]);
@@ -515,6 +526,7 @@ const sendPost = async () => {
           <BlockNoteView
              editor={editor}
              onChange={onChange}
+              theme={customTheme}
               // theme={localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'}
               className="-m-8 sm:m-0 bg-transparent text-balance text-xs sm:text-base"
                            />

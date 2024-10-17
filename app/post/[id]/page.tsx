@@ -13,6 +13,8 @@ import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView, lightDefaultTheme } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
  
+
+
 import '@blocknote/core/fonts/inter.css';
 import { Skeleton } from "@/components/ui/skeleton";
 import { MdOutlineDelete } from "react-icons/md";
@@ -21,6 +23,8 @@ import CommentsLikeButton from "@/components/CommentsLikeButton";
 import PostLikeButton from "@/components/PostLikeButton";
 import { PostTagsComponent } from '@/components/TagsComponent';
 import Link from "next/link";
+// import * as Card  from "@/components/ui/card";
+// import Markdown from 'markdown-to-jsx'
 
 // Removed unused import
 // import TagsPostsPage from '../../tags/[tag]/page';
@@ -132,8 +136,8 @@ export default function PostPage() {
       // Fetch tags for the post by joining the post_tags and tags tables
       const { data: tagsData, error: tagsError } = await supabase
         .from("post_tags")
-        .select(`*, tags(name)`) // Adjusted select to match the PostTag interface
-        .eq("post_id", postId); // **Fixed Variable Name**
+        .select(`*, tags(name)`) 
+        .eq("post_id", postId);
 
       if (tagsError) throw tagsError;
 
@@ -172,6 +176,21 @@ export default function PostPage() {
     }
   }, [postId]);
 
+
+
+  const customTheme = {
+    colors: {
+        editor: {
+            background: 'rgba(255, 255, 255, 0)', // Fully transparent editor background
+            text: "#757575"
+            // text: "#616161"
+        },
+    },
+};
+
+
+
+
   // Convert markdown content to blocks when post is loaded
   useEffect(() => {
     if (post && post.content) {
@@ -180,11 +199,11 @@ export default function PostPage() {
   }, [post, convertMarkdownToBlocks]);
 
   // Display error toast when an error occurs
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-  }, [error]);
+  // useEffect(() => {
+  //   if (error) {
+  //     toast.error(error);
+  //   }
+  // }, [error]);
 
   /**
    * Fetches likes for a post or comment.
@@ -263,7 +282,7 @@ export default function PostPage() {
       const { data: newCommentData, error } = await supabase
         .from("comments")
         .insert([{
-          post_id: postId, // Use 'postId' instead of 'id'
+          post_id: postId, 
           content: newComment.trim(),
           profile_id: profileId, 
           user_id: userId
@@ -445,7 +464,8 @@ export default function PostPage() {
             editor={editor}
             editable={false}
             autoFocus={false}
-          
+            theme={customTheme}
+            // theme={'light' | 'dark' | undefined}
             className="mt-10 sm:m-6 bg-transparent text-balance text-xs sm:text-base"
           />
 
