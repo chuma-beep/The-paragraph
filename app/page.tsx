@@ -8,6 +8,10 @@ import { WriteIcon } from '@/components/WriteIcon';
 import Search from '@/components/Search/Search'
 import { ComponentsBlogSidebar } from "@/components/BlogSideBar";
 import { ModeToggle } from "@/components/toggle-theme";
+// import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
+import * as Tooltip from "@radix-ui/react-tooltip"
+import Write from './protected/account/write/page';
+
 
 
 
@@ -20,9 +24,51 @@ export default function Index() {
         <div className="w-full max-w-4xl flex items-center text-sm gap-0">
           <DeployButton />
           <div className="flex flex-row-reverse w-full mr-1 items-end gap-1">
-               <ModeToggle/>
-                  <WriteIcon />
-              <Search/>
+          <Tooltip.Provider>
+			<Tooltip.Root>
+				<Tooltip.Trigger asChild>
+					<span className="IconButton">
+						<WriteIcon />
+					</span>
+				</Tooltip.Trigger>
+				<Tooltip.Portal>
+					<Tooltip.Content className="TooltipContent" sideOffset={5}>
+						  Write
+						{/* <Tooltip.Arrow className="TooltipArrow" /> */}
+					</Tooltip.Content>
+				</Tooltip.Portal>
+			</Tooltip.Root>
+		</Tooltip.Provider>
+    <Tooltip.Provider>
+			<Tooltip.Root>
+				<Tooltip.Trigger asChild>
+					<span className="IconButton">
+          <ModeToggle/>
+					</span>
+				</Tooltip.Trigger>
+				<Tooltip.Portal>
+					<Tooltip.Content className="TooltipContent" sideOffset={5}>
+						  Theme
+						{/* <Tooltip.Arrow className="TooltipArrow" /> */}
+					</Tooltip.Content>
+				</Tooltip.Portal>
+			</Tooltip.Root>
+		</Tooltip.Provider>
+    <Tooltip.Provider>
+			<Tooltip.Root>
+				<Tooltip.Trigger asChild>
+					<span className="IconButton">
+						<Search />
+					</span>
+				</Tooltip.Trigger>
+				<Tooltip.Portal>
+					<Tooltip.Content className="TooltipContent" sideOffset={5}>
+                          Search
+						{/* <Tooltip.Arrow className="TooltipArrow" /> */}
+					</Tooltip.Content>
+				</Tooltip.Portal>
+			</Tooltip.Root>
+		</Tooltip.Provider>
           </div>
           <AuthButton />
         </div>
