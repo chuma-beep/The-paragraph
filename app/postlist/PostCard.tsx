@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 // import { MessageCircle } from "lucide-react";
 import { BiSolidMessageRounded } from "react-icons/bi";
-
 import Image from "next/image";
 
 import { UserAvatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -65,7 +64,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
       ref={isLast ? lastPostElementRef : null}
       className="w-full max-w-full min-w-full mx-auto mb-6 transition-transform duration-300 ease-in-out transform hover:scale-105 sm:hover:ml-4 cursor-pointer"
     >
-      <Card className="w-full  px-0">
+      <Card className="w-full px-0">
         <Link href={`/post/${post.id}`} passHref>
           <span className="w-full">
             <CardHeader className="p-0">
@@ -78,7 +77,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
               />
             </CardHeader>
             <CardContent className="p-2">
-              <h3 className="text-2xl font-semibold mb-2  transition-colors duration-300">
+              <h3 className="text-2xl font-semibold mb-2 transition-colors duration-300">
                 {post.title}
               </h3>
               <p className="text-gray-700 line-clamp-3">{truncatedContent}</p>
@@ -91,7 +90,7 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
               <PostLikeButton postId={post.id} />
             </span>
             <span className="flex items-center text-gray-300">
-              <BiSolidMessageRounded  className="w-5 h-5 mr-1 fill-gray-300" />
+              <BiSolidMessageRounded className="w-5 h-5 mr-1 fill-gray-300" />
               {comments[post.id]?.length || 0}
             </span>
             <div className="relative">

@@ -179,9 +179,9 @@ export default function PostList() {
       </div>
       {loading && posts.length > 0 && (
         <div className="flex flex-col items-center gap-4 mt-4">
-          <Card  className="w-full max-w-full min-w-[35vw] mx-auto mb-6 p-4">
+          <Card className="w-full max-w-full min-w-[35vw] mx-auto mb-6 p-4">
            <CardHeader className="p-0">
-                <Skeleton className=" h-[200px] w-full" /> 
+                <Skeleton className="h-[200px] w-full" /> 
               </CardHeader>
               <CardContent className="p-4">
                 <Skeleton className="h-8 w-4/5 mb-4" /> 
