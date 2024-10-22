@@ -134,7 +134,7 @@ export default function TagsPostsPage() {
   // if (error) return <p>Error: {error}</p>;
   
   if (error) return (
-  <div className="w-full flex flex-col justify-center items-center  text-center">
+  <div className="w-full flex flex-col justify-center items-center text-center z-30">
     <BackButton/>
     <Image
      width={800}
