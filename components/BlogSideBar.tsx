@@ -27,12 +27,12 @@ export function ComponentsBlogSidebar() {
   const [loading, setLoading] = useState(true);    // State for loading
   const [error, setError] = useState<string | null>(null);  // State for error
 
-   // Fetch Tags from the database
+  //  Fetch Tags from the database
    useEffect(() => {
     const fectchTags = async () => {
       try{
         const { data, error } = await supabase
-        .from('tags').select('name');
+        .from('tags').select('*,name');
         if(error) throw error;
         setTags(data.map((tag: { name: string}) => tag.name));
       }
@@ -43,7 +43,7 @@ export function ComponentsBlogSidebar() {
       }
     }
      fectchTags();
-   })
+   },[])
 
 
 
