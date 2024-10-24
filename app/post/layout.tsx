@@ -141,7 +141,7 @@ export default function Layout({ children }: { children: ReactNode }) {
       </main>
       
       {/* Footer */}
-      <footer className="bg-gray-100 dark:bg-gray-800 py-4 mt-8">
+      <footer className="bg-gray-100 dark:bg-gray-800 py-4 mt-8 items-center">
         <div className="flex px-4 text-center text-sm">
         <MainFooter />
         </div>

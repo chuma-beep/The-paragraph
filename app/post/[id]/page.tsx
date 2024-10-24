@@ -250,8 +250,8 @@ export default function PostPage() {
     if (newComment.trim()) {
       const { data: userData, error: userError } = await supabase.auth.getUser();
       if (userError) {
-        console.error("User Error: ", userError.message);
-        toast.error("Error fetching user");
+        // console.error("User Error: ", userError.message);
+        toast.error("Login to comment");
         return;
       }
 
@@ -323,7 +323,7 @@ export default function PostPage() {
       const { data: userData, error: userError } = await supabase.auth.getUser();
       if (userError) {
         // console.error("User Error: ", userError.message);
-        toast.error("error");
+        toast.error("unauthorized");
         return;
       }
 
