@@ -7,6 +7,7 @@ import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card"
 import { marked } from "marked";
 import DOMPurify from 'dompurify';
 import { toast, ToastContainer } from 'react-toastify';
+import Link from 'next/link';
 
 // Define the type for the draft objects
 type Draft = {
@@ -103,7 +104,6 @@ export default function Drafts() {
       if (insertError) {
         throw new Error(insertError.message);
       }
-
       const { error: deleteError } = await supabase
         .from('drafts')
         .delete()
@@ -138,7 +138,7 @@ export default function Drafts() {
       <ToastContainer />
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold">Drafts</h1>
-        <Button size="sm">Add New</Button>
+        {/* <Button size="sm">Add New</Button> */}
       </div>
       <div className="grid gap-4">
         {drafts.map((draft) => (
@@ -172,7 +172,16 @@ export default function Drafts() {
               </p>
             </CardContent>
             <CardFooter className="flex justify-end gap-2">
-              <Button variant="outline" size="sm">Edit</Button>
+
+              <Button 
+              variant="outline"
+               size="sm"
+              //  onClick={()=> handleEdit(draft.id)} 
+              >
+             <Link href={`/protected/account/drafts/edit/${draft.id}`} passHref>
+                Edit
+               </Link>
+              </Button>
               <Button
                 variant="outline"
                 size="sm"

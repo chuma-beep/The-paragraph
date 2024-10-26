@@ -36,13 +36,6 @@ export type Database = {
             referencedRelation: "posts"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "bookmarks_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
         ]
       }
       comments: {
@@ -128,6 +121,7 @@ export type Database = {
           id: string
           is_published: boolean | null
           isdraft: boolean | null
+          profile_id: string | null
           title: string | null
           updated_at: string | null
           user_id: string | null
@@ -139,6 +133,7 @@ export type Database = {
           id?: string
           is_published?: boolean | null
           isdraft?: boolean | null
+          profile_id?: string | null
           title?: string | null
           updated_at?: string | null
           user_id?: string | null
@@ -150,16 +145,17 @@ export type Database = {
           id?: string
           is_published?: boolean | null
           isdraft?: boolean | null
+          profile_id?: string | null
           title?: string | null
           updated_at?: string | null
           user_id?: string | null
         }
         Relationships: [
           {
-            foreignKeyName: "drafts_user_id_fkey"
-            columns: ["user_id"]
+            foreignKeyName: "drafts_profile_id_fkey"
+            columns: ["profile_id"]
             isOneToOne: false
-            referencedRelation: "users"
+            referencedRelation: "profiles"
             referencedColumns: ["id"]
           },
         ]
@@ -318,15 +314,7 @@ export type Database = {
           username?: string | null
           website?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "fk_user"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       tags: {
         Row: {
@@ -471,4 +459,19 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
+    : never
+
+export type CompositeTypes<
+  PublicCompositeTypeNameOrOptions extends
+    | keyof PublicSchema["CompositeTypes"]
+    | { schema: keyof Database },
+  CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
+    schema: keyof Database
+  }
+    ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
+    : never = never,
+> = PublicCompositeTypeNameOrOptions extends { schema: keyof Database }
+  ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
+  : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
+    ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
