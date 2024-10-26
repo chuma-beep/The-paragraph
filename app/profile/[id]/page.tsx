@@ -72,7 +72,7 @@ const UserProfile = () => {
               comments (id)
               `)      
             .eq('profile_id', profileId)
-            .range(0, 5)  
+            // .range(0, 5)  
 
           if (postError){
             console.error('Error fetching posts:', postError);
