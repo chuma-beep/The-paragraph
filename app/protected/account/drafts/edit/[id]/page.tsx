@@ -13,6 +13,7 @@ import "@blocknote/mantine/style.css";
 import '@blocknote/core/fonts/inter.css';
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
+import { useRouter } from 'next/navigation'
 
 interface Profile {
   username: string;
@@ -38,12 +39,20 @@ const isValidUuid = (id: string): boolean => {
 };
 
 export default function EditPage() {
+  const router = useRouter();
   const supabase = createClient();
   const { id } = useParams();
   const draftId = Array.isArray(id) ? id[0] : id;
   const [drafts, setDrafts] = useState<Drafts | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+
+
+
+  // const handleBackClick = () => {
+  //   router.back();
+  // }
 
   const editor = useCreateBlockNote();
 
@@ -208,7 +217,7 @@ export default function EditPage() {
         )}
       </article>
       <div className="flex justify-end">
-        <Button variant="outline" size="sm">Go Back</Button>
+        <Button variant="outline" size="sm" onClick={() => router.back()} >Go Back</Button>
         <Button variant="outline" size="sm" onClick={() => handlePublish(drafts?.id || '')}>Publish</Button>
       </div>
     </div>
