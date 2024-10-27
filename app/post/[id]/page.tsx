@@ -12,9 +12,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useCreateBlockNote } from "@blocknote/react";
 import { BlockNoteView, lightDefaultTheme } from "@blocknote/mantine";
 import "@blocknote/mantine/style.css";
- 
-
-
 import '@blocknote/core/fonts/inter.css';
 import { Skeleton } from "@/components/ui/skeleton";
 import { MdOutlineDelete } from "react-icons/md";
@@ -28,6 +25,13 @@ import Link from "next/link";
 
 // Removed unused import
 // import TagsPostsPage from '../../tags/[tag]/page';
+
+
+
+interface User{
+  id: string | number;
+}
+
 
 interface Profile {
   username: string;
@@ -79,6 +83,8 @@ export default function PostPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [tags, setTags] = useState<string[]>([]);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
+
 
   const editor = useCreateBlockNote();
 
@@ -92,7 +98,7 @@ export default function PostPage() {
       return;
     }
 
-    if (!isValidUuid(postId)) { // Validate UUID format
+    if (!isValidUuid(postId)) { 
       setError("Invalid Post ID format");
       return;
     }
@@ -120,6 +126,12 @@ export default function PostPage() {
       }
 
       setPost(postData as Post);
+
+      //analytics
+
+  
+
+
 
       // Fetch comments for the post
       const { data: commentsData, error: commentsError } = await supabase
@@ -279,6 +291,11 @@ export default function PostPage() {
         return;
       }
 
+
+     await supabase.from('comments')
+
+
+
       const { data: newCommentData, error } = await supabase
         .from("comments")
         .insert([{
@@ -327,6 +344,7 @@ export default function PostPage() {
         return;
       }
 
+
       const userId = userData?.user?.id;
       if (!userId) {
         toast.error("you can't delete another users comment");
@@ -370,6 +388,30 @@ export default function PostPage() {
       toast.error("An unexpected error occurred");
     }
   };
+
+
+
+   
+  async function logPostView() {
+    if (!currentUser) return;
+  
+    const { error } = await supabase
+      .from('views')
+      .insert([{ post_id: postId, user_id: currentUser.id }]);
+  
+    if (error) {
+      console.error("Error logging view:", error);
+    }
+  }
+  
+  useEffect(() => {
+    if (post) {
+      logPostView();
+    }
+  }, [post]);
+  
+
+
 
   // Render loading skeletons while data is being fetched
   if (loading) {

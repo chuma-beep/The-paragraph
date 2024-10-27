@@ -50,10 +50,7 @@ export default function EditPage() {
 
 
 
-  // const handleBackClick = () => {
-  //   router.back();
-  // }
-
+  
   const editor = useCreateBlockNote();
 
   const fetchDrafts = async () => {

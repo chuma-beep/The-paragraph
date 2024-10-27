@@ -331,11 +331,57 @@ export type Database = {
         }
         Relationships: []
       }
+      views: {
+        Row: {
+          id: string
+          post_id: string | null
+          user_id: string | null
+          viewed_at: string | null
+        }
+        Insert: {
+          id?: string
+          post_id?: string | null
+          user_id?: string | null
+          viewed_at?: string | null
+        }
+        Update: {
+          id?: string
+          post_id?: string | null
+          user_id?: string | null
+          viewed_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "views_post_id_fkey"
+            columns: ["post_id"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "views_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      fetch_analytics_data: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          post_id: string
+          post_title: string
+          view_count: number
+          top_posts: Json
+          recent_comments: Json
+        }[]
+      }
       get_posts_by_tag: {
         Args: {
           tag_name: string

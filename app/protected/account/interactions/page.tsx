@@ -108,7 +108,7 @@ export default function Interactions() {
             ? Array.from({ length: 6 }).map((_, index) => <PostSkeleton key={index} />)
             : posts.map((post) => (
                 <Link key={post.id} href={`/post/${post.id}`}>
-                  <Card>
+                  <Card className="transition-transform transform hover:scale-105 hover:shadow-lg"                  >
                     <img
                       src={post.cover_image_url || "/placeholder.svg"}
                       alt={post.title}
