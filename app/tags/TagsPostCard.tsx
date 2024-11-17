@@ -7,7 +7,7 @@ import Image from "next/image";
 import { UserAvatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
-import BookmarkButton from "@/components/BookmarkButton";
+import { BlogBookmarkButton } from "@/components/BlogFloatingBookmarkButton";
 import PostLikeButton from "@/components/PostLikeButton";
 import { PostWithRelations, Comment } from "@/types/types";
 
@@ -82,11 +82,7 @@ const PostCard: React.FC<TagsPostCardProps> = ({
               <MessageCircle className="w-5 h-5 mr-1" />
               {comments[post.id]?.length || 0}
             </span>
-            <BookmarkButton
-              postId={post.id}
-              isBookmarked={bookmarks[post.id] || post.isbookmarked}
-              onToggleBookmark={onToggleBookmark}
-            />
+           <BlogBookmarkButton postId={post.id} />
           </div>
           <Link href={`/profile/${post.profiles?.id}`} passHref>
             <span className="flex items-center space-x-2 hover:underline">
