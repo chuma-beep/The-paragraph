@@ -1,67 +1,189 @@
-'use client'
+// 'use client'
 
-import { useState, useEffect } from 'react'
-import { Bookmark } from 'lucide-react'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import { createClient } from '@/utils/supabase/client'
+// import { useState, useEffect } from 'react'
+// import { Bookmark } from 'lucide-react'
+// import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+// import { createClient } from '@/utils/supabase/client'
+
+// interface BlogBookmarkButtonProps {
+//   postId: string;
+// }
+
+// export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
+//   const [isBookmarked, setIsBookmarked] = useState(false)
+//   const [isHovered, setIsHovered] = useState(false)
+//   const supabase = createClient()
+
+//   useEffect(() => {
+//     const checkBookmark = async () => {
+//       const { data, error } = await supabase
+//         .from('bookmarks')
+//         .select('id')
+//         .eq('post_id', postId)
+//         .single()
+
+//       if (error) {
+//         console.error('Error checking bookmark status:', error.message)
+//         return
+//       }
+
+//        const bookmarkedPosts = JSON.parse(localStorage.getItem('bookmarkedPosts') || '{}');
+//        if (bookmarkedPosts[postId]) {
+//         setIsBookmarked(true)
+//        }
+
+
+//     }
+
+//     checkBookmark()
+//   }, [postId, supabase])
+
+//   const handleBookmark = async () => {
+//     if (isBookmarked) {
+//       const { error } = await supabase
+//         .from('bookmarks')
+//         .delete()
+//         .eq('post_id', postId)
+
+//       if (error) {
+//         console.error('Error removing bookmark:', error.message)
+//         return
+//       }
+
+//       setIsBookmarked(false)
+//     } else {
+//       const { error } = await supabase
+//         .from('bookmarks')
+//         .insert({ post_id: postId })
+
+//       if (error) {
+//         console.error('Error adding bookmark:', error.message)
+//         return
+//       }
+//         const bookmarkedPosts = JSON.parse(localStorage.getItem('bookmarkedPosts') || '{}');
+//         bookmarkedPosts[postId] = true;
+//         localStorage.setItem('bookmarkPosts', JSON.stringify(bookmarkedPosts))
+
+//       setIsBookmarked(true)
+//     }
+//   }
+
+//   return (
+//     <div className="inline-block"> 
+//       <TooltipProvider>
+//         <Tooltip>
+//           <TooltipTrigger asChild>
+//             <button
+//               onMouseEnter={() => setIsHovered(true)}
+//               onMouseLeave={() => setIsHovered(false)}
+//               onClick={handleBookmark}
+//               aria-label={isBookmarked ? "Remove bookmark" : "Bookmark this post"}
+//             >
+//               <Bookmark
+//                 size={20}
+//                 className={`transition-all duration-300 mt-2 ${
+//                   isHovered ? 'scale-110' : 'scale-100'
+//                 } ${isBookmarked ? 'fill-blue-400 text-blue-400' : ' fill-gray-300 text-gray-300 hover:fill-blue-400 hover:text-blue-400'}`}
+//               />
+//             </button>
+//           </TooltipTrigger>
+//           <TooltipContent side="top" className="bg-popover text-popover-foreground">
+//             <p>{isBookmarked ? 'Bookmarked!' : 'Bookmark this post'}</p>
+//           </TooltipContent>
+//         </Tooltip>
+//       </TooltipProvider>
+//     </div>
+//   )
+// }
+
+
+
+
+'use client';
+
+import { useState, useEffect } from 'react';
+import { Bookmark } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { createClient } from '@/utils/supabase/client';
 
 interface BlogBookmarkButtonProps {
   postId: string;
 }
 
 export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
-  const [isBookmarked, setIsBookmarked] = useState(false)
-  const [isHovered, setIsHovered] = useState(false)
-  const supabase = createClient()
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const supabase = createClient();
 
   useEffect(() => {
-    const checkBookmark = async () => {
+    const initializeBookmarkState = async () => {
+      // Check local storage
+      const bookmarkedPosts = JSON.parse(localStorage.getItem('bookmarkedPosts') || '{}');
+      if (bookmarkedPosts[postId]) {
+        setIsBookmarked(true);
+        return; // No need to check the database if local storage is valid
+      }
+
+      // Fallback: Check the database
       const { data, error } = await supabase
         .from('bookmarks')
         .select('id')
         .eq('post_id', postId)
-        .single()
+        .maybeSingle();
 
       if (error) {
-        console.error('Error checking bookmark status:', error.message)
-        return
+        console.error('Error checking bookmark status:', error.message);
+        return;
       }
 
-      setIsBookmarked(!!data)
-    }
+      if (data) {
+        setIsBookmarked(true);
+        // Update local storage to reflect the database state
+        bookmarkedPosts[postId] = true;
+        localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkedPosts));
+      }
+    };
 
-    checkBookmark()
-  }, [postId, supabase])
+    initializeBookmarkState();
+  }, [postId, supabase]);
 
   const handleBookmark = async () => {
+    const bookmarkedPosts = JSON.parse(localStorage.getItem('bookmarkedPosts') || '{}');
+
     if (isBookmarked) {
+      // Remove bookmark
       const { error } = await supabase
         .from('bookmarks')
         .delete()
-        .eq('post_id', postId)
+        .eq('post_id', postId);
 
       if (error) {
-        console.error('Error removing bookmark:', error.message)
-        return
+        console.error('Error removing bookmark:', error.message);
+        return;
       }
 
-      setIsBookmarked(false)
+      delete bookmarkedPosts[postId];
+      localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkedPosts));
+      setIsBookmarked(false);
     } else {
+      // Add bookmark
       const { error } = await supabase
         .from('bookmarks')
-        .insert({ post_id: postId })
+        .insert({ post_id: postId });
 
       if (error) {
-        console.error('Error adding bookmark:', error.message)
-        return
+        console.error('Error adding bookmark:', error.message);
+        return;
       }
 
-      setIsBookmarked(true)
+      bookmarkedPosts[postId] = true;
+      localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkedPosts));
+      setIsBookmarked(true);
     }
-  }
+  };
 
   return (
-    <div className="inline-block"> {/* Adjust the class to fit your layout */}
+    <div className="inline-block">
       <TooltipProvider>
         <Tooltip>
           <TooltipTrigger asChild>
@@ -69,13 +191,13 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               onClick={handleBookmark}
-              aria-label={isBookmarked ? "Remove bookmark" : "Bookmark this post"}
+              aria-label={isBookmarked ? 'Remove bookmark' : 'Bookmark this post'}
             >
               <Bookmark
                 size={20}
                 className={`transition-all duration-300 mt-2 ${
                   isHovered ? 'scale-110' : 'scale-100'
-                } ${isBookmarked ? 'fill-blue-400 text-blue-400' : ' fill-gray-300 text-gray-300 hover:fill-blue-400 hover:text-blue-400'}`}
+                } ${isBookmarked ? 'fill-blue-400 text-blue-400' : 'fill-gray-300 text-gray-300 hover:fill-blue-400 hover:text-blue-400'}`}
               />
             </button>
           </TooltipTrigger>
@@ -85,5 +207,5 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
         </Tooltip>
       </TooltipProvider>
     </div>
-  )
+  );
 }

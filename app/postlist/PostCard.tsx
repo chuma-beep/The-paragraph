@@ -4,13 +4,10 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 // import { MessageCircle } from "lucide-react";
 import { BiSolidMessageRounded } from "react-icons/bi";
 import Image from "next/image";
-
 import { UserAvatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { marked } from "marked";
 import DOMPurify from "dompurify";
-// import { BlogBookmarkButton } from "../../../components/BlogFloatingBookmarkButton";
 import { BlogBookmarkButton } from "@/components/BlogFloatingBookmarkButton";
-// import BookmarkButton from "@/components/BookmarkButton";
 import PostLikeButton from "@/components/PostLikeButton";
 
 interface Post {
@@ -97,12 +94,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
             </span>
             <div className="relative">
             <BlogBookmarkButton postId={post.id} />
-              {/* <BookmarkButton
-                postId={post.id}
-                isBookmarked={bookmarks[post.id] || post.isBookmarked}
-                onToggleBookmark={onToggleBookmark}
-                
-              /> */}
             </div>
           </div>
 
