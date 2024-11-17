@@ -4,9 +4,11 @@ import { useState, useEffect } from 'react';
 import { Bookmark } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { createClient } from '@/utils/supabase/client';
+import {toast, ToastContainer} from 'react-toastify'
 
 interface BlogBookmarkButtonProps {
   postId: string;
+  // id: string;
 }
 
 export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
@@ -47,39 +49,65 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
   }, [postId, supabase]);
 
   const handleBookmark = async () => {
-    const bookmarkedPosts = JSON.parse(localStorage.getItem('bookmarkedPosts') || '{}');
-
-    if (isBookmarked) {
-      // Remove bookmark
-      const { error } = await supabase
-        .from('bookmarks')
-        .delete()
-        .eq('post_id', postId);
-
-      if (error) {
-        console.error('Error removing bookmark:', error.message);
+    try {
+      // Fetch user data
+      const { data: userData, error: userError } = await supabase.auth.getUser();
+  
+      if (userError) {
+        console.error('Error fetching user:', userError.message);
+        toast.error('Failed to fetch user information.');
         return;
       }
-
-      delete bookmarkedPosts[postId];
-      localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkedPosts));
-      setIsBookmarked(false);
-    } else {
-      // Add bookmark
-      const { error } = await supabase
-        .from('bookmarks')
-        .insert({ post_id: postId });
-
-      if (error) {
-        console.error('Error adding bookmark:', error.message);
+  
+      const userId = userData?.user?.id;
+      if (!userId) {
+        console.error('User not logged in');
+        toast.error('Log in to bookmark');
         return;
       }
-
-      bookmarkedPosts[postId] = true;
-      localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkedPosts));
-      setIsBookmarked(true);
+  
+      // Get bookmarks from localStorage
+      const bookmarkedPosts = JSON.parse(localStorage.getItem('bookmarkedPosts') || '{}');
+  
+      if (isBookmarked) {
+        // Remove bookmark
+        const { error: deleteError } = await supabase
+          .from('bookmarks')
+          .delete()
+          .eq('post_id', postId)
+          .eq('user_id', userId); // Ensure user-specific deletion
+  
+        if (deleteError) {
+          console.error('Error removing bookmark:', deleteError.message);
+          return;
+        }
+  
+        // Update localStorage and state
+        delete bookmarkedPosts[postId];
+        localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkedPosts));
+        setIsBookmarked(false);
+      } else {
+        // Add bookmark
+        const { error: insertError } = await supabase
+          .from('bookmarks')
+          .insert({ post_id: postId, user_id: userId }); // Associate with user
+  
+        if (insertError) {
+          console.error('Error adding bookmark:', insertError.message);
+          return;
+        }
+  
+        // Update localStorage and state
+        bookmarkedPosts[postId] = true;
+        localStorage.setItem('bookmarkedPosts', JSON.stringify(bookmarkedPosts));
+        setIsBookmarked(true);
+      }
+    } catch (err) {
+      console.error('Unexpected error:', err);
+      toast.error('Something went wrong. Please try again.');
     }
   };
+
 
   return (
     <div className="inline-block">
