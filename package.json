@@ -60,6 +60,7 @@
     "react-loading-skeleton": "^3.4.0",
     "react-markdown": "^9.0.1",
     "react-toastify": "^10.0.5",
+    "react-tooltip": "^5.28.0",
     "server-only": "^0.0.1",
     "supabase": "^1.192.5",
     "tailwind-merge": "^2.5.3",

@@ -20,11 +20,7 @@ import CommentsLikeButton from "@/components/CommentsLikeButton";
 import PostLikeButton from "@/components/PostLikeButton";
 import { PostTagsComponent } from '@/components/TagsComponent';
 import Link from "next/link";
-// import * as Card  from "@/components/ui/card";
-// import Markdown from 'markdown-to-jsx'
 
-// Removed unused import
-// import TagsPostsPage from '../../tags/[tag]/page';
 
 
 
@@ -436,7 +432,6 @@ export default function PostPage() {
     );
   }
 
-  // Fix the error rendering by using parentheses
   if (error) {
     return (
       <div className="w-full flex flex-col items-center justify-center">

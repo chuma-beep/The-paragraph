@@ -6,6 +6,7 @@
 import { useState, useEffect } from 'react';
 import { createClient } from '@/utils/supabase/client';
 import { MdFavorite } from 'react-icons/md';
+import { toast } from 'react-toastify';
 
 
 interface CommentsLikeButtonProps {
@@ -16,7 +17,8 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
   const supabase = createClient();
   const [likesCount, setLikesCount] = useState<number>(0);
   const [isLiked, setIsLiked] = useState<boolean>(false);
-  const [isLiking, setIsLiking] = useState<boolean>(false); // Manage loading state
+  const [isLiking, setIsLiking] = useState<boolean>(false); 
+  
 
   useEffect(() => {
     const fetchLikes = async () => {
@@ -28,7 +30,8 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
           .single();
 
         if (error) {
-          console.error('Fetch Error:', error.message);
+          // console.error('Fetch Error:', error.message);
+          toast.error('Failed to fetch likes');
         } else if (comments) {
           setLikesCount(comments.likes || 0); // Default to 0 if likes is null
         }
@@ -50,7 +53,7 @@ const CommentsLikeButton = ({ commentId }: CommentsLikeButtonProps) => {
   const handleLike = async () => {
     if(isLiking) return;
 
-    setIsLiking(true); // Set loading state
+    setIsLiking(true); 
 
     try {
       // Increase the like count in the 'comments' table

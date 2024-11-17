@@ -10,10 +10,11 @@ interface LikeButtonProps {
 const PostLikeButton = ({ postId }: LikeButtonProps) => {
   const supabase = createClient();
   const [likesCount, setLikesCount] = useState<number>(0);
-  const [isLiked, setIsLiked] = useState<boolean>(false); // Track whether the post is liked
-  const [isLiking, setIsLiking] = useState<boolean>(false); // Prevent multiple clicks during the request
+  const [isLiked, setIsLiked] = useState<boolean>(false); 
+  const [isLiking, setIsLiking] = useState<boolean>(false); 
 
-  // Fetch likes from Supabase and check localStorage for the liked state
+
+  //fecth likes check is post is liked and set the like count 
   useEffect(() => {
     const fetchLikes = async () => {
       const { data: post } = await supabase
@@ -23,13 +24,12 @@ const PostLikeButton = ({ postId }: LikeButtonProps) => {
         .single();
 
       if (post) {
-        setLikesCount(post.likes || 0); // Default to 0 if likes is null
+        setLikesCount(post.likes || 0); 
       }
 
-      // Retrieve liked state from localStorage
       const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '{}');
       if (likedPosts[postId]) {
-        setIsLiked(true); // Set the liked state from localStorage
+        setIsLiked(true); 
       }
     };
 
@@ -39,7 +39,7 @@ const PostLikeButton = ({ postId }: LikeButtonProps) => {
   const handleLike = async () => {
     if (isLiking) return; 
 
-    setIsLiking(true); // Disable button during request
+    setIsLiking(true); 
 
     try {
       // Increase the like count in the 'posts' table
@@ -48,18 +48,18 @@ const PostLikeButton = ({ postId }: LikeButtonProps) => {
         .update({ likes: likesCount + 1 })
         .eq('id', postId);
 
-      setLikesCount(likesCount + 1); // Update the like count in the UI
+      setLikesCount(likesCount + 1); 
 
       // Save liked state in localStorage
       const likedPosts = JSON.parse(localStorage.getItem('likedPosts') || '{}');
       likedPosts[postId] = true;
       localStorage.setItem('likedPosts', JSON.stringify(likedPosts));
 
-      setIsLiked(true); // Update the liked state in the component
+      setIsLiked(true); 
     } catch (error) {
       console.error('Error handling like:', error);
     } finally {
-      setIsLiking(false); // Re-enable the button
+      setIsLiking(false); 
     }
   };
 
@@ -70,7 +70,7 @@ const PostLikeButton = ({ postId }: LikeButtonProps) => {
       className={`group relative transition-all duration-300 ease-out bg-transparent hover:bg-transparent text-gray-300 ${
         isLiking ? 'cursor-not-allowed opacity-70' : ''
       }`}
-      disabled={isLiking} // Disable while the like is being processed
+      disabled={isLiking} 
     >
       <span className="relative z-10 flex items-center justify-center">
 
