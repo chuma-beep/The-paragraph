@@ -10,6 +10,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import Link from 'next/link';
 
 // Define the type for the draft objects
+
 type Draft = {
   id: string;
   title: string | null;

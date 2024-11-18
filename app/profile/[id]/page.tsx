@@ -37,7 +37,7 @@ interface Post {
 
 const UserProfile = () => {
   const supabase = createClient();
-  const { id } = useParams(); // This is the profile ID
+  const { id } = useParams(); 
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<any>(null);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -51,14 +51,14 @@ const UserProfile = () => {
       const fetchProfile = async () => {
         setLoading(true);
         const { data, error } = await supabase
-          .from('profiles') // Use the correct table
-          .select(`username, avatar_url, bio, full_name, website`) // Adjust columns as necessary
-          .eq('id', profileId) // Match by profile ID
-          .single(); // Expect a single row
+          .from('profiles') 
+          .select(`username, avatar_url, bio, full_name, website`) 
+          .eq('id', profileId) 
+          .single(); 
 
         if (error) {
           console.error('Error fetching profile:', error);
-          setLoading(false); // Set loading to false on error
+          setLoading(false); 
           return;
         } 
         setProfile(data);
