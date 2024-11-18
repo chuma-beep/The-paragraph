@@ -184,7 +184,7 @@ export default function EditPage() {
           </div>
         )}
       </article>
-      <div className="flex justify-end">
+      <div className="flex justify-end gap-4 p-4">
         <Button variant="outline" size="sm" onClick={() => router.back()}>
           Go Back
         </Button>

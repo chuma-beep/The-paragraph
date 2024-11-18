@@ -153,7 +153,7 @@ export default function BookmarkComponent() {
                 />
               </div>
             )}
-                <div className="flex-1">
+                <div className="flex-1 p-4">
                   <h3 className="text-lg font-semibold truncate">{bookmark.title}</h3>
                   <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
                     {bookmark.content}
