@@ -251,6 +251,7 @@ export type Database = {
           title: string
           tsv: unknown | null
           user_id: string | null
+          views_count: number | null
         }
         Insert: {
           content: string
@@ -263,6 +264,7 @@ export type Database = {
           title: string
           tsv?: unknown | null
           user_id?: string | null
+          views_count?: number | null
         }
         Update: {
           content?: string
@@ -275,6 +277,7 @@ export type Database = {
           title?: string
           tsv?: unknown | null
           user_id?: string | null
+          views_count?: number | null
         }
         Relationships: [
           {
@@ -333,22 +336,25 @@ export type Database = {
       }
       views: {
         Row: {
-          id: string
+          id: number
           post_id: string | null
           user_id: string | null
           viewed_at: string | null
+          views_count: number | null
         }
         Insert: {
-          id?: string
+          id?: number
           post_id?: string | null
           user_id?: string | null
           viewed_at?: string | null
+          views_count?: number | null
         }
         Update: {
-          id?: string
+          id?: number
           post_id?: string | null
           user_id?: string | null
           viewed_at?: string | null
+          views_count?: number | null
         }
         Relationships: [
           {
@@ -372,14 +378,18 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      fetch_analytics_data: {
-        Args: Record<PropertyKey, never>
+      fetch_analytics: {
+        Args: {
+          user_id: string
+        }
         Returns: {
           post_id: string
           post_title: string
-          view_count: number
-          top_posts: Json
-          recent_comments: Json
+          total_views: number
+          total_likes: number
+          total_comments: number
+          total_bookmarks: number
+          recent_views: string
         }[]
       }
       get_posts_by_tag: {
@@ -398,6 +408,20 @@ export type Database = {
           isbookmarked: boolean
         }[]
       }
+      get_user_post_analytics: {
+        Args: {
+          user_id: string
+        }
+        Returns: {
+          post_id: string
+          post_title: string
+          total_views: number
+          total_likes: number
+          total_comments: number
+          total_bookmarks: number
+          recent_views: string
+        }[]
+      }
       hello_world: {
         Args: Record<PropertyKey, never>
         Returns: string
@@ -414,6 +438,12 @@ export type Database = {
           id: string
         }
         Returns: undefined
+      }
+      post_performance: {
+        Args: {
+          post_id: string
+        }
+        Returns: Json
       }
     }
     Enums: {
