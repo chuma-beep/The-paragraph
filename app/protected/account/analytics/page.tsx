@@ -50,6 +50,8 @@ import { ResponsiveLine } from "@nivo/line";
 import { ResponsiveBar } from "@nivo/bar";
 import { createClient } from "@/utils/supabase/client";
 import { MdOutlineAnalytics } from "react-icons/md";
+import { toast, ToastContainer } from "react-toastify";
+import LatestComments from "./comments";
 
 interface AnalyticsData {
   post_id: string;
@@ -63,11 +65,9 @@ interface AnalyticsData {
 
 
 
-
 export default function Analytics() {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
-  // const [selectCard, setSelectCart] = useState(cardTypes[0].value)
   const [selectedDataType, setSelectedDataType] = useState<'views' | 'likes' | 'comments'>('views');
 
 
@@ -81,18 +81,18 @@ export default function Analytics() {
         if (userError || !user) throw new Error("User not authenticated");
   
         const { data, error } = await supabase.rpc("get_user_post_analytics", { user_id: user.id });
-        console.log("RPC data:", data);
 
         if (error) throw error;
   
         if (Array.isArray(data)) {
           setAnalyticsData(data);
-          console.log("Analytics Data set:", data);
         } else {
-          console.error("Unexpected RPC response:", data);
+          // console.error("Unexpected RPC response:", data);
+          toast.error("Error fetching data")
         }
       } catch (error) {
-        console.error("Error fetching analytics data:", error);
+        // console.error("Error fetching analytics data:", error);
+        toast.error("Error fetching data")
       } finally {
         setLoading(false);
       }
@@ -138,6 +138,7 @@ export default function Analytics() {
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
+      <ToastContainer/>
       <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4">
         <span className="lg:hidden">
           <MdOutlineAnalytics className="w-6 h-6" />
@@ -237,14 +238,14 @@ export default function Analytics() {
                 )}
               </CardContent>
             </Card>
-
             <Card className="flex flex-col">
               <CardHeader>
-                <CardDescription>Recent Views</CardDescription>
-                <CardTitle>Latest Activity</CardTitle>
+                <CardDescription>Comments</CardDescription>
               </CardHeader>
               <CardContent>
-                {loading ? <SkeletonChart /> : <TimeseriesChart data={analyticsData} />}
+                {loading ? <SkeletonChart /> : 
+                <LatestComments />
+                }
               </CardContent>
             </Card>
           </div>

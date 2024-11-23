@@ -333,21 +333,21 @@ export type Database = {
       }
       views: {
         Row: {
-          created_at: string | null
+          created_at: string
           id: string
-          post_id: string | null
+          post_id: string
           user_id: string | null
         }
         Insert: {
-          created_at?: string | null
+          created_at?: string
           id?: string
-          post_id?: string | null
+          post_id: string
           user_id?: string | null
         }
         Update: {
-          created_at?: string | null
+          created_at?: string
           id?: string
-          post_id?: string | null
+          post_id?: string
           user_id?: string | null
         }
         Relationships: [
@@ -386,6 +386,30 @@ export type Database = {
           recent_views: string
         }[]
       }
+      get_latest_comments:
+        | {
+            Args: Record<PropertyKey, never>
+            Returns: {
+              comment_id: string
+              comment_text: string
+              post_title: string
+              created_at: string
+              commenter_name: string
+            }[]
+          }
+        | {
+            Args: {
+              user_id: string
+            }
+            Returns: {
+              id: string
+              post_id: string
+              content: string
+              created_at: string
+              commenter_name: string
+              avatar_url: string
+            }[]
+          }
       get_posts_by_tag: {
         Args: {
           tag_name: string
