@@ -406,8 +406,8 @@ export type Database = {
               post_id: string
               content: string
               created_at: string
-              commenter_name: string
               avatar_url: string
+              post_title: string
             }[]
           }
       get_posts_by_tag: {

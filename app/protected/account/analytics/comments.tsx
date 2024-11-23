@@ -30,13 +30,13 @@ const LatestComments = () => {
 
         const { data, error } = await supabase.rpc("get_latest_comments", { user_id: user.id });
         if (error) throw error;
-        console.log("Fetched comments:", data);
+        // console.log("Fetched comments:", data);
 
 
 
         setComments(data || []);
       } catch (err) {
-        console.error("Error fetching comments:", err);
+        // console.error("Error fetching comments:", err);
         toast.error("Error fetching comment data");
       } finally {
         setLoading(false);
