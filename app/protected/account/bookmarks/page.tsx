@@ -159,12 +159,13 @@ export default function BookmarkComponent() {
                     {bookmark.content}
                   </p>
                   <div className="flex items-center mt-2 space-x-2">
-                    <Badge variant="secondary">{new Date(bookmark.date).toLocaleDateString()}</Badge>
+                  <time className="text-xs sm:text-sm text-gray-500 pt-2 lg:pb-4">
+                      {new Date(bookmark.date).toLocaleDateString()}</time>
                   </div>
                 </div>
             </Link>
                  {/* <div className="flex flex-row mt-3 sm:mt-0 sm:ml-4 space-x-2"> */}
-                  <CardFooter className="flex justify-end gap-2">
+                  <CardFooter className="flex justify-end gap-2 p-4">
                   <Button
                     variant="destructive"
                     size="sm"

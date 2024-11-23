@@ -8,6 +8,7 @@ import { marked } from "marked";
 import DOMPurify from 'dompurify';
 import { toast, ToastContainer } from 'react-toastify';
 import Link from 'next/link';
+import { Badge } from '@/components/ui/badge';
 
 // Define the type for the draft objects
 
@@ -158,12 +159,8 @@ export default function Drafts() {
             )}
             <CardHeader>
               <div className="flex items-center justify-between">
-                <div className="flex flex-row flex-wrap gap-10 text-center">
+                <div className="flex flex-row flex-wrap gap-2 text-center">
                   <h3 className="text-lg font-semibold">{draft.title || "Untitled"}</h3>
-                  {/* <p className="text-muted-foreground text-sm">Last updated {draft.updated_at || "N/A"}</p> */}
-                  <time className="text-xs sm:text-sm text-gray-500">
-                  {new Date(draft.updated_at || 'N/A').toLocaleDateString()}
-                </time>
                 </div>
               </div>
             </CardHeader>
@@ -171,9 +168,11 @@ export default function Drafts() {
               <p className="text-muted-foreground line-clamp-2">
                 {truncatedContents[draft.id]}
               </p>
+                <time className="text-xs sm:text-sm text-gray-500 pt-2 lg:pb-4">
+                  {new Date(draft.updated_at || 'N/A').toLocaleDateString()}
+                </time>
             </CardContent>
             <CardFooter className="flex justify-end gap-2 p-4">
-
               <Button 
               variant="outline"
                size="sm"
