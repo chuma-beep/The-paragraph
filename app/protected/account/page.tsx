@@ -6,7 +6,9 @@ import { createClient } from '@/utils/supabase/client';
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Skeleton } from '@/components/ui/skeleton'; // Import shadcn Skeleton
+import { Skeleton } from '@/components/ui/skeleton'; 
+import { SlLink } from "react-icons/sl";
+
 
 interface Profile {
   full_name: string;
@@ -48,14 +50,6 @@ export default function Profile() {
             console.error('Error fetching user profile:', profileError.message);
           } else {
             setProfile(profileData);
-
-            // if (profileData?.avatar_url) {
-            //   // Generate the full URL for the avatar image
-            //   const { data } = supabase.storage.from('avatars').getPublicUrl(profileData.avatar_url);
-            //   if (data?.publicUrl) {
-            //     setAvatarUrl(data.publicUrl); // Set the public URL for the image
-            //   }
-            // }
             if (profileData) {
               setAvatarUrl(profileData.avatar_url);
             } else {
@@ -66,7 +60,7 @@ export default function Profile() {
       } catch (error) {
         console.error('Error:', error);
       } finally {
-        setLoading(false); // Set loading to false when data fetching is complete
+        setLoading(false); 
       }
     };
 
@@ -136,11 +130,14 @@ export default function Profile() {
             {profile?.full_name || 'User Name'}
           </h1>
           <p className="mt-8 text-gray-500">Username: {profile?.username || 'No username provided'}</p>
-          <p className="mt-8 text-gray-500">{profile?.website || 'No website provided'}</p>
+          <span className='flex mt-8 flex-row justify-center text-center gap-2'>
+          <SlLink className='mt-1' />
+          <p className="text-gray-500"> {profile?.website || 'No website provided'}</p>
+          </span>
         </div>
         <div className="mt-12 flex flex-col justify-center">
           <p className="text-gray-600 text-center font-light lg:px-16">
-            {profile?.bio || 'No bio available.'}
+           {profile?.bio || 'No bio available.'}
           </p>
           <Link href="/protected/account/account-settings" className="justify-center align-middle w-full flex">
             <button className="text-indigo-500 py-2 px-4 font-medium mt-4">
