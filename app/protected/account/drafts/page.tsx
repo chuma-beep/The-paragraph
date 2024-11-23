@@ -172,7 +172,7 @@ export default function Drafts() {
                 {truncatedContents[draft.id]}
               </p>
             </CardContent>
-            <CardFooter className="flex justify-end gap-2">
+            <CardFooter className="flex justify-end gap-2 p-4">
 
               <Button 
               variant="outline"
