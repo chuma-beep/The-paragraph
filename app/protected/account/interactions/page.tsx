@@ -118,13 +118,11 @@ export default function Interactions() {
                     />
                     <CardContent className="p-4">
                       <h3 className="text-lg font-bold mb-2">{post.title}</h3>
-                      <div className="flex items-center mb-2">
-                        <CiHeart className="w-4 h-4 mr-1" />
-                        <span className="text-muted-foreground">{post.likes_count}</span>
-                      </div>
                       <div className="flex items-center">
                         <LuMessageCircle />
                         <span className="text-muted-foreground">{post.comments_count}</span>
+                        <CiHeart className="w-4 h-4 ml-2" />
+                        <span className="text-muted-foreground">{post.likes_count}</span>
                       </div>
                     </CardContent>
                   </Card>

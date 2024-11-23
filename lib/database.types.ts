@@ -251,7 +251,6 @@ export type Database = {
           title: string
           tsv: unknown | null
           user_id: string | null
-          views_count: number | null
         }
         Insert: {
           content: string
@@ -264,7 +263,6 @@ export type Database = {
           title: string
           tsv?: unknown | null
           user_id?: string | null
-          views_count?: number | null
         }
         Update: {
           content?: string
@@ -277,7 +275,6 @@ export type Database = {
           title?: string
           tsv?: unknown | null
           user_id?: string | null
-          views_count?: number | null
         }
         Relationships: [
           {
@@ -336,25 +333,22 @@ export type Database = {
       }
       views: {
         Row: {
-          id: number
+          created_at: string | null
+          id: string
           post_id: string | null
           user_id: string | null
-          viewed_at: string | null
-          views_count: number | null
         }
         Insert: {
-          id?: number
+          created_at?: string | null
+          id?: string
           post_id?: string | null
           user_id?: string | null
-          viewed_at?: string | null
-          views_count?: number | null
         }
         Update: {
-          id?: number
+          created_at?: string | null
+          id?: string
           post_id?: string | null
           user_id?: string | null
-          viewed_at?: string | null
-          views_count?: number | null
         }
         Relationships: [
           {
@@ -416,10 +410,10 @@ export type Database = {
           post_id: string
           post_title: string
           total_views: number
-          total_likes: number
+          recent_views: number
           total_comments: number
-          total_bookmarks: number
-          recent_views: string
+          recent_comments: number
+          total_likes: number
         }[]
       }
       hello_world: {
@@ -444,6 +438,12 @@ export type Database = {
           post_id: string
         }
         Returns: Json
+      }
+      update_view_count: {
+        Args: {
+          post_id: string
+        }
+        Returns: undefined
       }
     }
     Enums: {

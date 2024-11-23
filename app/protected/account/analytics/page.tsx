@@ -1,23 +1,51 @@
-
-
 'use client';
 
 import { useState, useEffect } from "react";
+import { TrendingUp } from 'lucide-react';
+import { Button } from "@/components/ui/button"
+import { RadialChartCard } from "./RadialBarChart";
+
+
+
+import
+ { 
+  Area,
+  AreaChart,
+  Line,
+  LineChart,
+  CartesianGrid,
+  XAxis, Label, 
+  PolarGrid, 
+  PolarRadiusAxis,
+  RadialBar,
+  RadialBarChart  
+} from "recharts";
+
+import 
+{ 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select"
+
 import {
   Card,
   CardHeader,
   CardDescription,
   CardTitle,
   CardContent,
+  CardFooter,
 } from "@/components/ui/card";
+
 import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-} from "@/components/ui/table";
+   ChartConfig,
+   ChartContainer,
+   ChartTooltip,
+   ChartTooltipContent,
+} from "@/components/ui/chart"
+
 import { ResponsiveLine } from "@nivo/line";
 import { ResponsiveBar } from "@nivo/bar";
 import { createClient } from "@/utils/supabase/client";
@@ -33,46 +61,80 @@ interface AnalyticsData {
   recent_views: string;
 }
 
+
+
+
 export default function Analytics() {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
+  // const [selectCard, setSelectCart] = useState(cardTypes[0].value)
+  const [selectedDataType, setSelectedDataType] = useState<'views' | 'likes' | 'comments'>('views');
+
 
   useEffect(() => {
-    const supabase = createClient();
-
     const fetchData = async () => {
       setLoading(true);
-
+      const supabase = createClient();
+  
       try {
-        // Get the logged-in user's ID
-        const {
-          data: { user },
-          error: userError,
-        } = await supabase.auth.getUser();
+        const { data: { user }, error: userError } = await supabase.auth.getUser();
+        if (userError || !user) throw new Error("User not authenticated");
+  
+        const { data, error } = await supabase.rpc("get_user_post_analytics", { user_id: user.id });
+        console.log("RPC data:", data);
 
-        if (userError || !user) {
-          console.error("Error fetching user:", userError);
-          setLoading(false);
-          return;
-        }
-
-        // Fetch analytics data from the custom function
-        const { data, error } = await supabase.rpc("get_user_post_analytics", {
-          user_id: user.id,
-        });
-
-        if (error) {
-          console.error("Error fetching analytics data:", error);
+        if (error) throw error;
+  
+        if (Array.isArray(data)) {
+          setAnalyticsData(data);
+          console.log("Analytics Data set:", data);
         } else {
-          setAnalyticsData(data || []);
+          console.error("Unexpected RPC response:", data);
         }
+      } catch (error) {
+        console.error("Error fetching analytics data:", error);
       } finally {
         setLoading(false);
       }
     };
-
+  
     fetchData();
   }, []);
+
+
+  // date
+  const date = new Date();
+  const showMonth = new Intl.DateTimeFormat('en-US', {month: 'long'}).format(date);
+  const showYear = date.getUTCFullYear()
+
+
+
+   //card types
+     const cardTypes = [
+      { value: "views", label: "views Card" },
+      { value: "comments", label: "comments Card" },
+      { value: "likes", label: "likes Card" },
+     ]
+
+
+  // const views total_views"
+  
+  const ChartConfig = {
+    comments: {
+      label: "comments" ,
+      color: "hsl(var(--chart-1))",
+    },
+    likes: {
+      label: "likes" ,
+      color: "hsl(var(--chart-2))",
+    },
+    views:{
+      label: "views",
+      color: "hsl(var(--chart-3))",
+    }
+  } satisfies ChartConfig;
+
+
 
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
@@ -87,26 +149,95 @@ export default function Analytics() {
         <div className="grid gap-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Blog Analytics */}
-            <Card className="flex flex-col">
+            <Card className="flex flex-col justify-center">
               <CardHeader>
                 <CardDescription>Blog Performance</CardDescription>
-                <CardTitle>Total Posts: {analyticsData.length}</CardTitle>
+                <CardTitle>Trend of  Activities</CardTitle>
               </CardHeader>
               <CardContent>
                 {loading ? (
                   <SkeletonChart />
                 ) : (
-                  <BarChart
-                    data={analyticsData.map((item) => ({
-                      name: item.post_title,
-                      count: item.total_views,
-                    }))}
-                  />
+                 <ChartContainer config={ChartConfig} >
+                   <LineChart
+                   accessibilityLayer
+                   data={analyticsData}
+                   margin={{
+                     left: 12,
+                     right: 12,
+                   }}
+                   >
+                    <CartesianGrid vertical={false}/>
+                    <XAxis
+                     dataKey="post_title"
+                     tickLine={false}
+                     axisLine={false}
+                     tickMargin={8}
+                     tickFormatter={(value) => value.slice(0, 10) + '...'}
+                     />
+                     <ChartTooltip
+                     cursor={false}
+                     content={<ChartTooltipContent indicator="dot" />}
+                     />
+                     <Line
+                     dataKey="total_likes"
+                     type="natural"
+                     fill="var(--color-likes)"
+                     fillOpacity={0.4}
+                     stroke="var(--color-likes)"
+                    //  stackId="a"
+                     />
+                     <Line
+                     dataKey="total_comments"
+                     type="natural"
+                     fill="var(--color-comments)"
+                     fillOpacity={0.4}
+                     stroke="var(--color-comments)"
+                    //  stackId="a"
+                     />
+                     <Line
+                     dataKey="total_views"
+                     type="natural"
+                     fill="var(--color-views)"
+                     fillOpacity={0.4}
+                     stroke="var(--color-views)"
+                    //  stackId="a"
+                     />
+                   </LineChart>
+                 </ChartContainer>
                 )}
               </CardContent>
             </Card>
 
-            {/* Recent Views */}
+                 {/* Radial Chart Card */}
+            <Card className="flex flex-col">
+              <CardHeader>
+                <CardDescription>Data Distribution</CardDescription>
+                <CardTitle>Select Data Type</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <Select onValueChange={(value) => setSelectedDataType(value as 'views' | 'likes' | 'comments')} defaultValue={selectedDataType}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a data type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {cardTypes.map((cardType) => (
+                      <SelectItem key={cardType.value} value={cardType.value}>
+                        {cardType.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                {loading ? (
+                  <SkeletonChart />
+                ) : (
+                  <RadialChartCard 
+                  data={analyticsData}
+                   dataType={selectedDataType} />
+                )}
+              </CardContent>
+            </Card>
+
             <Card className="flex flex-col">
               <CardHeader>
                 <CardDescription>Recent Views</CardDescription>
@@ -139,25 +270,6 @@ function SkeletonChart() {
   );
 }
 
-function BarChart({ data }: { data: { name: string; count: number }[] }) {
-  return (
-    <ResponsiveBar
-      data={data}
-      keys={["count"]}
-      indexBy="name"
-      margin={{ top: 0, right: 0, bottom: 40, left: 40 }}
-      padding={0.3}
-      colors={["#2563eb"]}
-      axisBottom={{ tickSize: 0, tickPadding: 16 }}
-      axisLeft={{ tickSize: 0, tickValues: 4, tickPadding: 16 }}
-      theme={{
-        grid: { line: { stroke: "#f3f4f6" } },
-        tooltip: { container: { fontSize: "12px", borderRadius: "6px" } },
-      }}
-    />
-  );
-}
-
 function TimeseriesChart({ data }: { data: AnalyticsData[] }) {
   return (
     <ResponsiveLine
@@ -185,3 +297,4 @@ function TimeseriesChart({ data }: { data: AnalyticsData[] }) {
     />
   );
 }
+
