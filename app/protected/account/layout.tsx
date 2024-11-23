@@ -49,6 +49,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   alt="The Paragraph"
                   width={42}
                   height={42}
+                  priority
                   className="h-5 w-5"         
                   />
               <span className="sr-only">The Paragraph</span>

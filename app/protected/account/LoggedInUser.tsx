@@ -42,8 +42,8 @@ export default function LoggedInUser() {
   return (
     <div className="flex items-center">
           <div className="flex items-center cursor-pointer">
-            <Image
-              src={avatarUrl || '/avatar.png'} 
+            <img
+              src={avatarUrl || '/placeholder-user.jpg'} 
               alt="Avatar"
               width={24}
               height={24}

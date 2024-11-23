@@ -49,12 +49,17 @@ export default function Profile() {
           } else {
             setProfile(profileData);
 
-            if (profileData?.avatar_url) {
-              // Generate the full URL for the avatar image
-              const { data } = supabase.storage.from('avatars').getPublicUrl(profileData.avatar_url);
-              if (data?.publicUrl) {
-                setAvatarUrl(data.publicUrl); // Set the public URL for the image
-              }
+            // if (profileData?.avatar_url) {
+            //   // Generate the full URL for the avatar image
+            //   const { data } = supabase.storage.from('avatars').getPublicUrl(profileData.avatar_url);
+            //   if (data?.publicUrl) {
+            //     setAvatarUrl(data.publicUrl); // Set the public URL for the image
+            //   }
+            // }
+            if (profileData) {
+              setAvatarUrl(profileData.avatar_url);
+            } else {
+              console.error('Error fetching user profile:', profileError);
             }
           }
         }
@@ -111,12 +116,12 @@ export default function Profile() {
           </div>
           <div className="relative">
             <div className="w-48 h-48 bg-transparent mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-              <Image
-                src={avatarUrl || '/avatar.png'}
+              <img
+                src={avatarUrl || '/placeholder-user.jpg'} 
                 alt="Profile Avatar"
                 width={192}
                 height={192}
-                className="rounded-full h-48 w-48 object-cover"
+                className="rounded-full h-48 w-48 object-cover justify-center"
               />
             </div>
           </div>
