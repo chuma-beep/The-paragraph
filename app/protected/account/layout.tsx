@@ -76,7 +76,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               <TooltipTrigger asChild>
                 <Link
                   href="/protected/account/bookmarks"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg bg-accent text-accent-foreground transition-colors hover:bg-accent/90 hover:text-accent-foreground md:h-8 md:w-8"
+                  className="flex h-9 w-9 items-center justify-center rounded-lg transition-colors hover:bg-accent/90 hover:text-accent-foreground md:h-8 md:w-8"
                   prefetch={false}
                 >
 
@@ -212,7 +212,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                   <span className="sr-only">write</span>
 
                 </Link>
-                <Link href="/protected/account/bookmarks" className="flex items-center gap-4 px-2.5 text-foreground" prefetch={false}>
+                <Link href="/protected/account/bookmarks" className="flex items-center gap-4 px-2.5" prefetch={false}>
                   <BookmarkIcon className="h-5 w-5" />  
                   Bookmarks   
                 </Link>
