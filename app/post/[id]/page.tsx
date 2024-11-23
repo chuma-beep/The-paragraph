@@ -559,9 +559,6 @@ export default function PostPage() {
                           src={comment.profiles.avatar_url}
                           alt={comment.profiles.username}
                         />
-                        <AvatarFallback>
-                          {comment.profiles.username.charAt(0).toUpperCase()}
-                        </AvatarFallback>
                       </UserAvatar>
                     ) : (
                       <Skeleton className="h-5 w-5 sm:h-6 sm:w-6 rounded-full" />
