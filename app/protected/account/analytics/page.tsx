@@ -121,15 +121,15 @@ export default function Analytics() {
   
   const ChartConfig = {
     comments: {
-      label: "comments" ,
+      label: "total_comments" ,
       color: "hsl(var(--chart-1))",
     },
     likes: {
-      label: "likes" ,
+      label: "total_likes" ,
       color: "hsl(var(--chart-2))",
     },
     views:{
-      label: "views",
+      label: "total_views",
       color: "hsl(var(--chart-3))",
     }
   } satisfies ChartConfig;
@@ -150,12 +150,12 @@ export default function Analytics() {
         <div className="grid gap-6">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {/* Blog Analytics */}
-            <Card className="flex flex-col justify-center">
+            <Card className="flex flex-col">
               <CardHeader>
                 <CardDescription>Blog Performance</CardDescription>
                 <CardTitle>Trend of  Activities</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent >
                 {loading ? (
                   <SkeletonChart />
                 ) : (
@@ -181,20 +181,19 @@ export default function Analytics() {
                      content={<ChartTooltipContent indicator="dot" />}
                      />
                      <Line
-                     dataKey="total_likes"
-                     type="natural"
-                     fill="var(--color-likes)"
-                     fillOpacity={0.4}
-                     stroke="var(--color-likes)"
-                    //  stackId="a"
-                     />
-                     <Line
                      dataKey="total_comments"
                      type="natural"
                      fill="var(--color-comments)"
                      fillOpacity={0.4}
                      stroke="var(--color-comments)"
-                    //  stackId="a"
+                     strokeWidth={2}
+                     />
+                     <Line
+                      dataKey="total_likes"
+                      type="natural"
+                      fill="var(--color-likes)"
+                      fillOpacity={0.4}
+                      stroke="var(--color-likes)"
                      />
                      <Line
                      dataKey="total_views"
@@ -202,7 +201,6 @@ export default function Analytics() {
                      fill="var(--color-views)"
                      fillOpacity={0.4}
                      stroke="var(--color-views)"
-                    //  stackId="a"
                      />
                    </LineChart>
                  </ChartContainer>
@@ -271,31 +269,7 @@ function SkeletonChart() {
   );
 }
 
-function TimeseriesChart({ data }: { data: AnalyticsData[] }) {
-  return (
-    <ResponsiveLine
-      data={[
-        {
-          id: "Views",
-          data: data.map((item) => ({
-            x: new Date(item.recent_views).toISOString(),
-            y: item.total_views,
-          })),
-        },
-      ]}
-      margin={{ top: 10, right: 20, bottom: 40, left: 40 }}
-      xScale={{ type: "time", format: "%Y-%m-%d", precision: "day" }}
-      xFormat="time:%Y-%m-%d"
-      yScale={{ type: "linear", min: 0 }}
-      axisBottom={{ tickSize: 0, tickPadding: 16 }}
-      axisLeft={{ tickSize: 0, tickPadding: 16 }}
-      colors={["#2563eb"]}
-      useMesh
-      theme={{
-        grid: { line: { stroke: "#f3f4f6" } },
-        tooltip: { container: { fontSize: "12px", borderRadius: "6px" } },
-      }}
-    />
-  );
-}
+
+
+
 
