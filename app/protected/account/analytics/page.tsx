@@ -236,9 +236,11 @@ export default function Analytics() {
                 )}
               </CardContent>
             </Card>
-            <Card className="flex flex-col">
+            <Card className="flex flex-col max-h-96">
               <CardHeader>
-                <CardDescription>Comments</CardDescription>
+                <CardDescription>
+                        <h2 className="text-lg font-semibold">Latest Comments</h2>
+                </CardDescription>
               </CardHeader>
               <CardContent>
                 {loading ? <SkeletonChart /> : 

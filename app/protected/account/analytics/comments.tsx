@@ -3,6 +3,7 @@ import { createClient } from "@/utils/supabase/client";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserAvatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CommentData {
   comment_id: string;
@@ -49,24 +50,29 @@ const LatestComments = () => {
   return (
     <div className="latest-comments">
       <ToastContainer />
-      <h2 className="text-lg font-semibold">Latest Comments</h2>
       {loading ? (
-        <p>Loading comments...</p>
+        <div className="flex items-center space-x-4">
+        <Skeleton className="h-12 w-12 rounded-full" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[250px]" />
+          <Skeleton className="h-4 w-[200px]" />
+        </div>
+      </div>
       ) : comments.length > 0 ? (
         <ul className="space-y-4">
-          {comments.map((comment) => (
+          {comments.slice(0, 3).map((comment) => (
             <li
             key={`${comment.comment_id}-${comment.created_at}`} 
-              className="p-4 border rounded-md flex items-start space-x-4">
+              className="p-1 border-none flex items-start space-x-4">
               {/* Avatar */}
               <UserAvatar>
                 <AvatarImage src={comment.avatar_url} alt={comment.commenter_name} />
               </UserAvatar>
               {/* Comment Details */}
               <div>
-                <h3 className="font-bold">{comment.post_title}</h3>
+                <h4 className="font-bold">{comment.post_title}</h4>
                 <p>{comment.content}</p>
-                <small className="text-muted">
+                <small className="w-full text-gray-400 items-end">
                   {comment.commenter_name} - {new Date(comment.created_at).toLocaleString()}
                 </small>
               </div>
