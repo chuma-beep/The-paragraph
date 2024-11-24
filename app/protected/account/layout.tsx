@@ -102,19 +102,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Link
-                  href="/protected/account/interactions"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:h-8 md:w-8"
-                  prefetch={false}
-                >
-                  <FiUsers className="h-5 w-5" /> 
-                  <span className="sr-only">Interactions</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Interactions</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
                   href="/protected/account/analytics"
                   className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:h-8 md:w-8"
                   prefetch={false}
@@ -137,42 +124,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 </Link>
               </TooltipTrigger>
               <TooltipContent side="right">Theme</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </nav>
-        <nav className="mt-auto flex flex-col items-center gap-4 px-2 sm:py-5">
-          <TooltipProvider>
-          <Tooltip>
-              <TooltipTrigger asChild>
-              </TooltipTrigger>
-              <TooltipContent side="right">Analytics</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="/protected/account"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:h-8 md:w-8"
-                  prefetch={false}
-                >
-                  
-                  <LoggedInUser  />
-                  <span className="sr-only">Profile Page</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Profile</TooltipContent>
-            </Tooltip>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Link
-                  href="/protected/account/account-settings"
-                  className="flex h-9 w-9 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-accent hover:text-accent-foreground md:h-8 md:w-8"
-                  prefetch={false}
-                >
-                  <IoSettingsOutline className="h-5 w-5" /> 
-                  <span className="sr-only">Settings</span>
-                </Link>
-              </TooltipTrigger>
-              <TooltipContent side="right">Settings</TooltipContent>
             </Tooltip>
           </TooltipProvider>
         </nav>
@@ -223,14 +174,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
                 >
                   <HiOutlineSaveAs className="h-5 w-5" /> 
                   Drafts    
-                </Link>
-                <Link
-                  href="/protected/account/interactions"
-                  className="flex items-center gap-4 px-2.5 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
-                  prefetch={false}
-                >
-                  <FiUsers className="h-5 w-5" />
-                  interactions
                 </Link>
                 <Link
                   href="/protected/account/analytics"
