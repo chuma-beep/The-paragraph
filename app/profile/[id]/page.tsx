@@ -1,255 +1,172 @@
-
-
-"use client";
+'use client';
 
 import { useEffect, useState } from 'react';
-import { createClient } from '@/utils/supabase/client';
 import { useParams } from 'next/navigation';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { CalendarIcon } from "lucide-react"
+import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';
-import BackButton from '@/components/BackButton';
-import DOMPurify from "dompurify";
-import ReactMarkdown from 'react-markdown';
 import Link from 'next/link';
-import { Heart, MessageCircle } from "lucide-react";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { CalendarIcon, Heart, MessageCircle } from 'lucide-react';
+import ReactMarkdown from 'react-markdown';
+import BackButton from '@/components/BackButton';
 
+interface Profile {
+  username: string;
+  avatar_url: string;
+  bio: string;
+  full_name: string;
+  website: string;
+}
 
-
-
-
-// Updated interface to include tags instead of category
 interface Post {
   id: number | string;
   title: string;
-  date: string;
-  tags: string[];
+  // date: string;
   content: string;
   likes_count: number;
   comments_count: number;
   created_at: string;
 }
 
+const supabase = createClient();
 
+async function fetchProfile(profileId: string): Promise<Profile | null> {
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('username, avatar_url, bio, full_name, website')
+    .eq('id', profileId)
+    .single();
 
+  if (error) {
+    console.error('Error fetching profile:', error);
+    return null;
+  }
+  return data;
+}
 
+async function fetchPosts(profileId: string): Promise<Post[]> {
+  const { data: postData, error } = await supabase
+    .from('posts')
+    .select('id, title, content, created_at, likes (id), comments (id)')
+    .eq('profile_id', profileId);
 
-const UserProfile = () => {
-  const supabase = createClient();
-  const { id } = useParams(); 
-  const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState<any>(null);
-  const [posts, setPosts] = useState<Post[]>([]);
-
-
-  const profileId = Array.isArray(id) ? id[0] : id;
-
-
-  useEffect(() => {
-    if (profileId) {
-      const fetchProfile = async () => {
-        setLoading(true);
-        const { data, error } = await supabase
-          .from('profiles') 
-          .select(`username, avatar_url, bio, full_name, website`) 
-          .eq('id', profileId) 
-          .single(); 
-
-        if (error) {
-          console.error('Error fetching profile:', error);
-          setLoading(false); 
-          return;
-        } 
-        setProfile(data);
-
-            
-      const fetchPosts = async () => {
-         const { data: postData, error: postError } = await supabase
-            .from('posts')
-            .select(`*, 
-              likes (id),
-              comments (id)
-              `)      
-            .eq('profile_id', profileId)
-            // .range(0, 5)  
-
-          if (postError){
-            console.error('Error fetching posts:', postError);
-            return;
-          }
-
-
-          const postsWithCounts = postData.map((post) => ({
-            ...post,
-            likes_count: post.likes ? post.likes.length : 0,
-            comments_count: post.comments ? post.comments.length : 0,
-          }));
-        
-           
-
-
-           setPosts(postsWithCounts || []);
-
-      };
-
-     
-
-      fetchPosts();
-      setLoading(false);
-
-      };
-
-      fetchProfile();
-    }
-  }, [profileId, supabase]);
-
-
-  const Skeleton = () => (
-    <div  className="animate-pulse p-16">
-      <div className="p-8 bg-transparent shadow mt-24">
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
-            <div className="h-6 bg-gray-200 rounded w-16 mx-auto"></div>
-            <div className="h-6 bg-gray-200 rounded w-16 mx-auto"></div>
-          </div>
-          <div className="relative">
-            <div className="w-48 h-48 bg-gray-200 rounded-full mx-auto"></div>
-          </div>
-          <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-            <div className="h-8 bg-gray-200 rounded w-32"></div>
-          </div>
-        </div>
-        <div className="mt-20 text-center border-b pb-12">
-          <div className="h-8 bg-gray-200 rounded w-40 mx-auto"></div>
-          <div className="h-4 bg-gray-200 rounded w-24 mx-auto mt-4"></div>
-          <div className="h-6 bg-gray-200 rounded w-64 mx-auto mt-8"></div>
-          <div className="h-4 bg-gray-200 rounded w-48 mx-auto mt-2"></div>
-        </div>
-      </div>
-    </div>
-  );
-
-  if (loading) {
-    return <Skeleton />;
+  if (error) {
+    console.error('Error fetching posts:', error);
+    return [];
   }
 
-  if (!profile) {
-    return( 
-    <>
-   <div className="container mx-auto py-8">   
-    <BackButton/>
-    <p>Profile Not Found</p>
-    </div>
-    </>
-    );
-  }
+  return postData.map((post) => ({
+    ...post,
+    likes_count: post.likes ? post.likes.length : 0,
+    comments_count: post.comments ? post.comments.length : 0,
+  }));
+}
 
+function ProfileHeader({ profile }: { profile: Profile }) {
   return (
-    <div  className="p-16">
-          <BackButton/>
-      <div className="p-8 bg-tranparent shadow mt-24">
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
-            {/* <div>
-              <p className="font-bold text-gray-700 text-xl">22</p>
-              <p className="text-gray-400">Friends</p>
-            </div>
-            <div>
-              <p className="font-bold text-gray-700 text-xl">89</p>
-              <p className="text-gray-400">Comments</p>
-            </div> */}
-          </div>
-          <div  className="relative">
-            <div  className="w-48 h-48 bg-transparent mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-              {profile.avatar_url ? (
-                <Image
-                  src={profile.avatar_url}
-                  alt={`${profile.full_name}'s avatar`}
-                  width={192}
-                  height={192}
-                  className="rounded-full h-48 w-48"
-                />
-              ) : (
-                <div className="w-48 h-48 bg-transparent rounded-full"></div>
-              )}
-            </div>
-          </div>
-          <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-            <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-              Contact
-            </button>
+    <div className="p-8 shadow mt-24">
+      <div className="flex flex-col items-center text-center gap-6">
+        <div className="relative">
+          <div className="bg-gray-200 rounded-full shadow-xl">
+            {profile.avatar_url ? (
+              <Image
+                src={profile.avatar_url}
+                alt={`${profile.full_name}'s avatar`}
+                width={192}
+                height={200}
+                className="rounded-full h-48 w-48"
+              />
+            ) : (
+              <div className="w-48 h-48 rounded-full bg-gray-300"></div>
+            )}
           </div>
         </div>
-        <div  className="mt-20 text-center border-b pb-12">
-          <h1 data-testid="user-name"  className="text-4xl font-medium text-gray-700">
-            {profile?.full_name || 'User Name'}
-          </h1>
-          <p className="mt-8 text-gray-500">Username: {profile?.username || 'No username provided'}</p>
-          <p className="mt-8 text-gray-500">{profile?.website || 'No website provided'}</p>
-        </div>
-        <div className="mt-12 flex flex-col justify-center">
-          <p className="text-gray-600 text-center font-light lg:px-16">
-            {profile?.bio || 'No bio available.'}
-          </p>
-          {/* Additional Section */}
-          <div className="max-w-4xl w-full mt-10">
-            <div className="bg-tranparent shadow-md rounded-lg p-6">
-    <div className="container mx-auto py-8">
-      <div className='w-full justify-center text-center'>
-
-      <h2 className="text-3xl font-bold mb-8">Paragraphs</h2>
-      </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {posts.map((post) => (
-          <Link key={post.id} href={`/post/${post.id}`}
-          className='transition-transform duration-300 ease-in-out transform hover:scale-105 cursor-pointer"'
-          >
-          <Card  className="flex flex-col bg-transparent">
-            <CardHeader>
-              <CardTitle>{post.title}</CardTitle>
-              <CardDescription>
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <CalendarIcon className="mr-1 h-3 w-3" />
-                  {new Date(post.created_at).toLocaleDateString()}
-                </div>
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="flex-grow">
-            <ReactMarkdown>
-          {post.content.length > 100 ? post.content.substring(0, 50) + "..." : post.content}
-        </ReactMarkdown>
-            </CardContent>
-            <CardFooter>
-<div className="flex items-center space-x-2 text-sm text-muted-foreground">
-    <Heart className="mr-1 h-3 w-3" />
-    <span>{post.likes_count || 0}</span>
-    <MessageCircle className="ml-2 mr-1 h-3 w-3" />
-    <span>{post.comments_count || 0}</span>
-  </div>
-
-              {/* <div className="flex flex-wrap gap-2">
-                {post.tags.map((tag, index) => (
-                  <Badge key={index} variant="secondary" className="text-xs">
-                    {tag}
-                  </Badge>
-                ))}
-              </div> */}
-            </CardFooter>
-          </Card>
-          </Link>
-        ))}
-      </div>
-    </div>
-                   
-            </div>
-          </div>
-        </div>
+        <h1 className="text-3xl font-medium">{profile.full_name || 'User Name'}</h1>
+        <p className="text-gray-500">Username: {profile.username || 'No username provided'}</p>
+        <p className="text-gray-500">{profile.website || 'No website provided'}</p>
+        <p className="text-gray-600">{profile.bio || 'No bio available.'}</p>
+        <button className="text-white py-2 px-6 rounded bg-blue-500 hover:bg-blue-600 transition">
+          Follow
+        </button>
       </div>
     </div>
   );
 }
 
+function PostList({ posts }: { posts: Post[] }) {
+  return (
+    <div className="container mx-auto py-8">
+      <h2 className="text-center text-3xl font-bold mb-8">Posts</h2>
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => (
+          <Link key={post.id} href={`/post/${post.id}`} className="transition-transform hover:scale-105">
+            <Card>
+              <CardHeader>
+                <CardTitle>{post.title}</CardTitle>
+                <CardDescription className="flex items-center text-sm text-muted-foreground">
+                  <CalendarIcon className="mr-1 h-3 w-3" />
+                  {new Date(post.created_at).toLocaleDateString()}
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <ReactMarkdown>
+                  {post.content.length > 100 ? post.content.substring(0, 100) + "..." : post.content}
+                </ReactMarkdown>
+              </CardContent>
+              <CardFooter className="flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Heart className="h-4 w-4 text-gray-500" />
+                  <span>{post.likes_count}</span>
+                  <MessageCircle className="h-4 w-4 ml-3 text-gray-500" />
+                  <span>{post.comments_count}</span>
+                </div>
+              </CardFooter>
+            </Card>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
 
+export default function UserProfile() {
+  const { id } = useParams();
+  const [loading, setLoading] = useState(true);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [posts, setPosts] = useState<Post[]>([]);
 
-export default UserProfile;
+  useEffect(() => {
+    if (id) {
+      (async () => {
+        setLoading(true);
+        const profileData = await fetchProfile(id);
+        const postsData = await fetchPosts(id);
+
+        setProfile(profileData);
+        setPosts(postsData);
+        setLoading(false);
+      })();
+    }
+  }, [id]);
+
+  if (loading) {
+    return <p className="text-center py-16">Loading...</p>;
+  }
+
+  if (!profile) {
+    return (
+      <div className="text-center py-16">
+        <BackButton />
+        <p>Profile not found.</p>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <BackButton />
+      <ProfileHeader profile={profile} />
+      <PostList posts={posts} />
+    </div>
+  );
+}

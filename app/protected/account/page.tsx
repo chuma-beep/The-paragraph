@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -6,8 +5,9 @@ import { createClient } from '@/utils/supabase/client';
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Skeleton } from '@/components/ui/skeleton'; 
+import { Skeleton } from '@/components/ui/skeleton';
 import { SlLink } from "react-icons/sl";
+import { FiUser } from "react-icons/fi";
 
 
 interface Profile {
@@ -52,15 +52,13 @@ export default function Profile() {
             setProfile(profileData);
             if (profileData) {
               setAvatarUrl(profileData.avatar_url);
-            } else {
-              console.error('Error fetching user profile:', profileError);
             }
           }
         }
       } catch (error) {
         console.error('Error:', error);
       } finally {
-        setLoading(false); 
+        setLoading(false);
       }
     };
 
@@ -71,23 +69,11 @@ export default function Profile() {
     return (
       <div className="p-16">
         <div className="p-8 bg-transparent shadow mt-24 animate-pulse">
-          <div className="grid grid-cols-1 md:grid-cols-3">
-            <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
-              <Skeleton className="h-6 w-16 mx-auto rounded" />
-              <Skeleton className="h-6 w-16 mx-auto rounded" />
-            </div>
-            <div className="relative">
-              <Skeleton className="w-48 h-48 bg-gray-400 rounded-full mx-auto" />
-            </div>
-            <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-              <Skeleton className="h-8 w-32 rounded" />
-            </div>
-          </div>
-          <div className="mt-20 text-center border-b pb-12">
-            <Skeleton className="h-8 w-40 mx-auto rounded" />
-            <Skeleton className="h-4 w-24 mx-auto mt-4 rounded" />
-            <Skeleton className="h-6 w-64 mx-auto mt-8 rounded" />
-            <Skeleton className="h-4 w-48 mx-auto mt-2 rounded" />
+          <div className="flex flex-col items-center space-y-4">
+            <Skeleton className="w-48 h-48 rounded-full" />
+            <Skeleton className="h-8 w-40 rounded" />
+            <Skeleton className="h-6 w-24 rounded" />
+            <Skeleton className="h-4 w-48 rounded" />
           </div>
         </div>
       </div>
@@ -95,55 +81,45 @@ export default function Profile() {
   }
 
   return (
-    <div className="p-16">
-      <div className="p-8 bg-transparent shadow mt-24">
-        <div className="grid grid-cols-1 md:grid-cols-3">
-          <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
-            <div>
-              {/* <p className="font-bold text-gray-700 text-xl">22</p> */}
-              {/* <p className="text-gray-400">Friends</p> */}
-            </div>
-            <div>
-              {/* <p className="font-bold text-gray-500 text-xl">89</p>
-              <p className="text-gray-400">Comments</p> */}
-            </div>
-          </div>
+    <div className="p-8">
+      <div className="bg-transparent shadow rounded-md">
+        <div className="flex flex-col items-center space-y-6 mt-8">
           <div className="relative">
-            <div className="w-48 h-48 bg-transparent mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
-              <img
-                src={avatarUrl || '/placeholder-user.jpg'} 
+            <div className="w-48 h-48 rounded-full overflow-hidden">
+              <Image
+                src={avatarUrl || '/placeholder-user.jpg'}
                 alt="Profile Avatar"
                 width={192}
                 height={192}
-                className="rounded-full h-48 w-48 object-cover justify-center"
+                className="object-cover"
               />
             </div>
           </div>
-          <div className="space-x-8 flex justify-between mt-32 md:mt-0 md:justify-center">
-            <button className="text-gray-300 py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
-              Contact
-            </button>
+          <h1 className="text-3xl font-medium text-gray-700">
+              {profile?.full_name || 'User Name'}
+          </h1>
+          {/* <h2 className="text-gray-500">{profile?.username || 'No username provided'}</h2> */}
+          <div className="flex items-center space-x-2">
+            <SlLink className="text-gray-500" />
+            <p className="text-gray-500">{profile?.website || 'No website provided'}</p>
           </div>
         </div>
-        <div className="mt-20 text-center border-b pb-12">
-          <h1 className="text-4xl font-medium text-gray-700">
-            {profile?.full_name || 'User Name'}
-          </h1>
-          <p className="mt-8 text-gray-500">Username: {profile?.username || 'No username provided'}</p>
-          <span className='flex mt-8 flex-row justify-center text-center gap-2'>
-          <SlLink className='mt-1' />
-          <p className="text-gray-500"> {profile?.website || 'No website provided'}</p>
-          </span>
-        </div>
-        <div className="mt-12 flex flex-col justify-center">
-          <p className="text-gray-600 text-center font-light lg:px-16">
-           {profile?.bio || 'No bio available.'}
+
+        <div className="mt-8 text-center">
+          <p className="text-gray-600 font-light">
+            {profile?.bio || 'No bio available.'}
           </p>
-          <Link href="/protected/account/account-settings" className="justify-center align-middle w-full flex">
-            <button className="text-indigo-500 py-2 px-4 font-medium mt-4">
+          <Link href="/protected/account/account-settings">
+            <button className="mt-6 px-6 py-2 bg-indigo-500 text-white rounded-lg shadow hover:bg-indigo-600 transition">
               Edit Profile
             </button>
           </Link>
+        </div>
+
+        <div className="flex justify-center mt-8">
+          <button className="px-6 py-2 text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600 transition">
+            followers
+          </button>
         </div>
       </div>
     </div>
