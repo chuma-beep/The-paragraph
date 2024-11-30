@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { CalendarIcon, Heart, MessageCircle } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import BackButton from '@/components/BackButton';
+import { useRouter } from 'next/router'
 
 interface Profile {
   username: string;
@@ -130,10 +131,12 @@ function PostList({ posts }: { posts: Post[] }) {
 }
 
 export default function UserProfile() {
-  const { id } = useParams();
+   const { query } = useRouter()
+  const id = Array.isArray(query.id) ? query.id[0] : query.id;
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
+
 
   useEffect(() => {
     if (id) {
