@@ -11,6 +11,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { CalendarIcon, Heart, MessageCircle } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import BackButton from '@/components/BackButton';
+import { isString } from 'lodash';
 
 interface Profile {
   username: string;
@@ -180,6 +181,7 @@ function PostList({ posts }: { posts: Post[] }) {
 
 export default function UserProfile() {
   const { id } = useParams();
+  const idString = Array.isArray(id) ? id[0]: id;
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
@@ -188,8 +190,8 @@ export default function UserProfile() {
     if (id) {
       (async () => {
         setLoading(true);
-        const profileData = await fetchProfile(id);
-        const postsData = await fetchPosts(id);
+        const profileData = await fetchProfile(idString);
+        const postsData = await fetchPosts(idString);
 
         setProfile(profileData);
         setPosts(postsData);
