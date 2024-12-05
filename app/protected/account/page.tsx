@@ -18,6 +18,7 @@ interface Profile {
   bio: string;
 }
 
+
 const supabase = createClient();
 
 export default function Profile() {
@@ -25,6 +26,7 @@ export default function Profile() {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
+  // const []
 
   useEffect(() => {
     const fetchUserAndProfile = async () => {

@@ -5,11 +5,12 @@ import { useParams } from 'next/navigation';
 import { createClient } from '@/utils/supabase/client';
 import Image from 'next/image';
 import Link from 'next/link';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, Heart, MessageCircle } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import BackButton from '@/components/BackButton';
-import { useRouter } from 'next/router'
 
 interface Profile {
   username: string;
@@ -22,7 +23,6 @@ interface Profile {
 interface Post {
   id: number | string;
   title: string;
-  // date: string;
   content: string;
   likes_count: number;
   comments_count: number;
@@ -63,6 +63,21 @@ async function fetchPosts(profileId: string): Promise<Post[]> {
   }));
 }
 
+function ProfileHeaderSkeleton() {
+  return (
+    <div className="p-8 shadow mt-24">
+      <div className="flex flex-col items-center text-center gap-6">
+        <Skeleton circle width={192} height={192} />
+        <Skeleton width={200} height={30} />
+        <Skeleton width={150} />
+        <Skeleton width={250} />
+        <Skeleton width={300} height={20} />
+        <Skeleton width={100} height={40} />
+      </div>
+    </div>
+  );
+}
+
 function ProfileHeader({ profile }: { profile: Profile }) {
   return (
     <div className="p-8 shadow mt-24">
@@ -89,6 +104,39 @@ function ProfileHeader({ profile }: { profile: Profile }) {
         <button className="text-white py-2 px-6 rounded bg-blue-500 hover:bg-blue-600 transition">
           Follow
         </button>
+      </div>
+    </div>
+  );
+}
+
+function PostListSkeleton() {
+  return (
+    <div className="container mx-auto py-8">
+      <h2 className="text-center text-3xl font-bold mb-8">
+        <Skeleton width={250} />
+      </h2>
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+        {Array.from({ length: 6 }).map((_, index) => (
+          <Card key={index}>
+            <CardHeader>
+              <CardTitle><Skeleton width={200} /></CardTitle>
+              <CardDescription className="flex items-center text-sm text-muted-foreground">
+                <Skeleton width={220} />
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Skeleton count={3} />
+            </CardContent>
+            <CardFooter className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Skeleton width={40} height={20} circle />
+                <Skeleton width={40} />
+                <Skeleton width={40} height={20} circle />
+                <Skeleton width={40} />
+              </div>
+            </CardFooter>
+          </Card>
+        ))}
       </div>
     </div>
   );
@@ -131,12 +179,10 @@ function PostList({ posts }: { posts: Post[] }) {
 }
 
 export default function UserProfile() {
-   const { query } = useRouter()
-  const id = Array.isArray(query.id) ? query.id[0] : query.id;
+  const { id } = useParams();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
-
 
   useEffect(() => {
     if (id) {
@@ -153,7 +199,13 @@ export default function UserProfile() {
   }, [id]);
 
   if (loading) {
-    return <p className="text-center py-16">Loading...</p>;
+    return (
+      <div>
+        <BackButton />
+        <ProfileHeaderSkeleton />
+        <PostListSkeleton />
+      </div>
+    );
   }
 
   if (!profile) {
