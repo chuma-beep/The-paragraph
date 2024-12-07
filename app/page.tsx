@@ -12,6 +12,8 @@ import { ModeToggle } from "@/components/toggle-theme";
 import * as Tooltip from "@radix-ui/react-tooltip"
 import Write from './protected/account/write/page';
 
+// import { Tooltip } from "@/components/ui/tooltip";
+
 
 
 
@@ -34,7 +36,7 @@ export default function Index() {
 				<Tooltip.Portal>
 					<Tooltip.Content className="TooltipContent" sideOffset={5}>
 						  Write
-						{/* <Tooltip.Arrow className="TooltipArrow" /> */}
+						{/* <Tooltip.Arrow className="TooltipArrow" > */}
 					</Tooltip.Content>
 				</Tooltip.Portal>
 			</Tooltip.Root>

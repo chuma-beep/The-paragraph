@@ -101,10 +101,15 @@ function ProfileHeader({ profile }: { profile: Profile }) {
         <h1 className="text-3xl font-medium">{profile.full_name || 'User Name'}</h1>
         <p className="text-gray-500">Username: {profile.username || 'No username provided'}</p>
         <p className="text-gray-500">{profile.website || 'No website provided'}</p>
-        <p className="text-gray-600">{profile.bio || 'No bio available.'}</p>
-        <button className="text-white py-2 px-6 rounded bg-blue-500 hover:bg-blue-600 transition">
+        <p className="text-gray-600 font-semibold">{profile.bio || 'No bio available.'}</p>
+        <span className='flex flex-row gap-2'>
+       {/* <button className="text-white py-2 px-6 rounded bg-blue-500 hover:bg-blue-600 transition">
           Follow
         </button>
+        <button className="text-white py-2 px-6 rounded bg-blue-500 hover:bg-blue-600 transition">
+          Followers <span>0</span> 
+        </button> */}
+        </span>
       </div>
     </div>
   );

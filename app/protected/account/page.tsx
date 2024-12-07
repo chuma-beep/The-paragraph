@@ -118,11 +118,11 @@ export default function Profile() {
           </Link>
         </div>
 
-        <div className="flex justify-center mt-8">
+        {/* <div className="flex justify-center mt-8">
           <button className="px-6 py-2 text-white bg-blue-500 rounded-lg shadow hover:bg-blue-600 transition">
             followers
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

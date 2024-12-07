@@ -7,6 +7,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Skeleton } from "@/components/ui/skeleton"; 
 import PostCard from "./PostCard";
 import Image from "next/image";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 
 interface Post {
@@ -135,6 +136,10 @@ export default function PostList() {
   };
 
   return (
+    <>
+
+  <Tabs defaultValue="Feed" className="w-[fit]">
+
     <div data-testid="PostList" className="">
       {posts.length === 0 && loading && (
         <div className="flex flex-col items-center gap-6">
@@ -165,20 +170,35 @@ export default function PostList() {
         </div>
       )}
       <div className="grid grid-cols-1 gap-4 w-full min-w-[300px]">
+
+      {/* <Tabs defaultValue="Feed" className="w-[400px]"> */}
+
+
+        <TabsList className="bg-transparent">
+          {/* <TabsTrigger value="Feed">Feed</TabsTrigger> */}
+          {/* <TabsTrigger value="Following">Following</TabsTrigger> */}
+        </TabsList>
+
+        <TabsContent value="Feed">
+
         {posts.map((post, index) => (
           <PostCard
-            key={post.id}
-            post={post}
-            comments={comments}
-            bookmarks={bookmarks}
-            onToggleBookmark={handleToggleBookmark}
-            lastPostElementRef={lastPostElementRef}
-            isLast={posts.length === index + 1}
+          key={post.id}
+          post={post}
+          comments={comments}
+          bookmarks={bookmarks}
+          onToggleBookmark={handleToggleBookmark}
+          lastPostElementRef={lastPostElementRef}
+          isLast={posts.length === index + 1}
           />
         ))}
+        </TabsContent>
+        <TabsContent value="Following" className="w-[80vw]">
+        </TabsContent>
+        {/* </Tabs> */}
       </div>
       {loading && posts.length > 0 && (
-        <div className="flex flex-col items-center gap-4 mt-4">
+        <div className="flex flex-col items-center gap-4 mt-0">
           <Card className="w-full max-w-full min-w-[35vw] mx-auto mb-6 p-4">
            <CardHeader className="p-0">
                 <Skeleton className="h-[200px] w-full" /> 
@@ -197,5 +217,7 @@ export default function PostList() {
         </div>
       )}
     </div>
+      </Tabs>
+  </>
   );
 }
