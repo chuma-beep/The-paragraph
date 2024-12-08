@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { TrendingUp } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { RadialChartCard } from "./RadialBarChart";
+import dayjs from "dayjs"
 
 
 
@@ -18,7 +19,8 @@ import
   PolarGrid, 
   PolarRadiusAxis,
   RadialBar,
-  RadialBarChart  
+  RadialBarChart,  
+  ResponsiveContainer
 } from "recharts";
 
 import 
@@ -54,6 +56,7 @@ import { toast, ToastContainer } from "react-toastify";
 import LatestComments from "./comments";
 
 interface AnalyticsData {
+  created_at: any;
   post_id: string;
   post_title: string;
   total_views: number;
@@ -68,7 +71,7 @@ interface AnalyticsData {
 export default function Analytics() {
   const [analyticsData, setAnalyticsData] = useState<AnalyticsData[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedDataType, setSelectedDataType] = useState<'views' | 'likes' | 'comments'>('views');
+  const [selectedDataType, setSelectedDataType] = useState<'views' | 'likes' | 'comments' | 'bookmarks'>('views');
 
 
   useEffect(() => {
@@ -81,11 +84,23 @@ export default function Analytics() {
         if (userError || !user) throw new Error("User not authenticated");
   
         const { data, error } = await supabase.rpc("get_user_post_analytics", { user_id: user.id });
+        if (error) {
+          console.error("Supabase RPC error:", error);
+          throw error;
+        }
+
 
         if (error) throw error;
   
         if (Array.isArray(data)) {
-          setAnalyticsData(data);
+          // const formattedData = data.map((item: AnalyticsData) => ({
+          //   ...item,
+          //   recent_views: dayjs(item.recent_views).format('MMMM D, YYYY'), // Format the 'recent_views' date
+          //   created_at: item.created_at ? dayjs(item.created_at).format('MMMM D, YYYY') : null, // Format 'created_at' if exists
+          // }));
+  
+          // setAnalyticsData(formattedData);
+          setAnalyticsData(data)
         } else {
           // console.error("Unexpected RPC response:", data);
           toast.error("Error fetching data")
@@ -114,6 +129,7 @@ export default function Analytics() {
       { value: "views", label: "views Card" },
       { value: "comments", label: "comments Card" },
       { value: "likes", label: "likes Card" },
+      {value: "bookmarks", label: "bookmarks Card"}
      ]
 
 
@@ -131,6 +147,10 @@ export default function Analytics() {
     views:{
       label: "total_views",
       color: "hsl(var(--chart-3))",
+    },
+    bookmarks:{
+      label: "total_bookmarks",
+      color: "hsl(var(--chart-4))",
     }
   } satisfies ChartConfig;
 
@@ -152,70 +172,11 @@ export default function Analytics() {
             {/* Blog Analytics */}
             <Card className="flex flex-col">
               <CardHeader>
-                <CardDescription>Blog Performance</CardDescription>
-                <CardTitle>Trend of  Activities</CardTitle>
-              </CardHeader>
-              <CardContent >
-                {loading ? (
-                  <SkeletonChart />
-                ) : (
-                 <ChartContainer config={ChartConfig} >
-                   <LineChart
-                   accessibilityLayer
-                   data={analyticsData}
-                   margin={{
-                     left: 12,
-                     right: 12,
-                   }}
-                   >
-                    <CartesianGrid vertical={false}/>
-                    <XAxis
-                     dataKey="post_title"
-                     tickLine={false}
-                     axisLine={false}
-                     tickMargin={8}
-                     tickFormatter={(value) => value.slice(0, 10) + '...'}
-                     />
-                     <ChartTooltip
-                     cursor={false}
-                     content={<ChartTooltipContent indicator="dot" />}
-                     />
-                     <Line
-                     dataKey="total_comments"
-                     type="natural"
-                     fill="var(--color-comments)"
-                     fillOpacity={0.4}
-                     stroke="var(--color-comments)"
-                     strokeWidth={2}
-                     />
-                     <Line
-                      dataKey="total_likes"
-                      type="natural"
-                      fill="var(--color-likes)"
-                      fillOpacity={0.4}
-                      stroke="var(--color-likes)"
-                     />
-                     <Line
-                     dataKey="total_views"
-                     type="natural"
-                     fill="var(--color-views)"
-                     fillOpacity={0.4}
-                     stroke="var(--color-views)"
-                     />
-                   </LineChart>
-                 </ChartContainer>
-                )}
-              </CardContent>
-            </Card>
-
-                 {/* Radial Chart Card */}
-            <Card className="flex flex-col">
-              <CardHeader>
                 <CardDescription>Data Distribution</CardDescription>
                 <CardTitle>Select Data Type</CardTitle>
               </CardHeader>
               <CardContent>
-                <Select onValueChange={(value) => setSelectedDataType(value as 'views' | 'likes' | 'comments')} defaultValue={selectedDataType}>
+                <Select onValueChange={(value) => setSelectedDataType(value as 'views' | 'likes' | 'comments' | 'bookmarks')} defaultValue={selectedDataType}>
                   <SelectTrigger>
                     <SelectValue placeholder="Select a data type" />
                   </SelectTrigger>
@@ -250,6 +211,73 @@ export default function Analytics() {
             </Card>
           </div>
         </div>
+          <Card className="flex flex-col">
+            <CardHeader>
+              <CardDescription>Blog Performance</CardDescription>
+              <CardTitle>Trend of Activities</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {loading ? (
+                <SkeletonChart />
+              ) : (
+                <ChartContainer config={ChartConfig} className="w-full h-96">
+                  <ResponsiveContainer width="100%" height={200} >
+                    <LineChart
+                      data={analyticsData}
+                      margin={{
+                        top: 10,
+                        left: 10,
+                        right: 10,
+                        bottom: 10,
+                      }}
+                    >
+                      <CartesianGrid vertical={false} strokeDasharray="3 3" />
+                      <XAxis
+                        // dataKey="post_title"
+                        dataKey="created_at"
+                        tickLine={false}
+                        axisLine={false}
+                        tickMargin={8}
+                        // tickFormatter={(value) => value.slice(0, 15) + '...'}
+                        tickFormatter={(value) => value.slice(0, 19)}
+                      />
+                      <ChartTooltip
+                        cursor={false}
+                        content={<ChartTooltipContent indicator="dot" />}
+                      />
+                      {/* Lines with reduced line height */}
+                      <Line
+                        dataKey="total_comments"
+                        type="monotone"
+                        stroke="var(--color-comments)"
+                        strokeWidth={1}
+                      />
+                      <Line
+                        dataKey="total_likes"
+                        type="monotone"
+                        stroke="var(--color-likes)"
+                        strokeWidth={1}
+                      />
+                      <Line
+                        dataKey="total_views"
+                        type="monotone"
+                        stroke="var(--color-views)"
+                        strokeWidth={1}
+                      />
+                      <Line
+                        dataKey="total_bookmarks"
+                        type="monotone"
+                        stroke="var(--color-bookmarks)"
+                        strokeWidth={1} 
+                      />
+                    </LineChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+              )}
+            </CardContent>
+          </Card>
+
+
       </main>
     </div>
   );

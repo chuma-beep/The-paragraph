@@ -160,6 +160,42 @@ export type Database = {
           },
         ]
       }
+      follows: {
+        Row: {
+          created_at: string | null
+          follower_id: string
+          following_id: string
+          id: number
+        }
+        Insert: {
+          created_at?: string | null
+          follower_id: string
+          following_id: string
+          id?: number
+        }
+        Update: {
+          created_at?: string | null
+          follower_id?: string
+          following_id?: string
+          id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follows_follower_id_fkey"
+            columns: ["follower_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "follows_following_id_fkey"
+            columns: ["following_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       likes: {
         Row: {
           comment_id: string | null
@@ -369,7 +405,52 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      follower_count: {
+        Row: {
+          count: number | null
+          following_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follows_following_id_fkey"
+            columns: ["following_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      following_count: {
+        Row: {
+          count: number | null
+          follower_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "follows_follower_id_fkey"
+            columns: ["follower_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      get_user_post_analytics: {
+        Row: {
+          post_count: number | null
+          unique_posts: number | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "posts_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       fetch_analytics: {
@@ -383,7 +464,9 @@ export type Database = {
           total_likes: number
           total_comments: number
           total_bookmarks: number
+          top_comments: Json
           recent_views: string
+          created_at: string
         }[]
       }
       get_latest_comments:
@@ -434,10 +517,12 @@ export type Database = {
           post_id: string
           post_title: string
           total_views: number
-          recent_views: number
           total_comments: number
-          recent_comments: number
+          total_bookmarks: number
           total_likes: number
+          created_at: string
+          month: string
+          year: string
         }[]
       }
       hello_world: {
