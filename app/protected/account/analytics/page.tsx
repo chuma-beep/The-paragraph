@@ -159,7 +159,7 @@ export default function Analytics() {
   return (
     <div className="flex min-h-screen w-full flex-col bg-muted/40">
       <ToastContainer/>
-      <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4">
+      <header className="top-0 flex h-14 items-center gap-4 border-b bg-background px-4">
         <span className="lg:hidden">
           <MdOutlineAnalytics className="w-6 h-6" />
           <span className="sr-only">Home</span>
