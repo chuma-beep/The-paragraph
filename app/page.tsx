@@ -11,6 +11,8 @@ import { ModeToggle } from "@/components/toggle-theme";
 // import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip"
 import * as Tooltip from "@radix-ui/react-tooltip"
 import Write from './protected/account/write/page';
+import LandingPage from "../components/LandingPage";
+
 
 // import { Tooltip } from "@/components/ui/tooltip";
 
@@ -89,6 +91,7 @@ export default function Index() {
           <PostList />
           </span>
         </main>
+
       </div>
       <div>
         <MainFooter />
