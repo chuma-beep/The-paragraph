@@ -138,13 +138,13 @@ export default function Drafts() {
   return (
     <div className="w-full max-w-4xl mx-auto py-8 px-4 md:px-6">
       <ToastContainer />
+      <Card className="flex flex-col p-2 pt-4 w-full">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold">Drafts</h1>
+        <h1 className="text-2xl font-bold ml-6">Your Drafts</h1>
         {/* <Button size="sm">Add New</Button> */}
       </div>
-      <div className="grid gap-4">
         {drafts.map((draft) => (
-          <Card
+          <CardContent
             key={draft.id}
             className="transition-transform transform hover:scale-105 hover:shadow-lg"
           >
@@ -153,7 +153,7 @@ export default function Drafts() {
                 <img
                   src={draft.cover_image_url}
                   alt={draft.title || "Cover Image"}
-                  className="object-cover w-full h-full"
+                  className="object-cover w-full h-full rounded-md"
                 />
               </div>
             )}
@@ -197,9 +197,9 @@ export default function Drafts() {
                 Delete
               </Button>
             </CardFooter>
-          </Card>
+          </CardContent>
         ))}
-      </div>
+      </Card>
     </div>
   );
 }
