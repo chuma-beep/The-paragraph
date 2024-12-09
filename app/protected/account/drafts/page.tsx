@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { createClient as createClientComponentClient } from '@/utils/supabase/client';
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardContent, CardFooter } from "@/components/ui/card";
 import { marked } from "marked";
 import DOMPurify from 'dompurify';
 import { toast, ToastContainer } from 'react-toastify';
@@ -141,6 +141,7 @@ export default function Drafts() {
       <Card className="flex flex-col p-2 pt-4 w-full">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold ml-6">Your Drafts</h1>
+        <CardDescription>Your saved articles for later writing</CardDescription>
         {/* <Button size="sm">Add New</Button> */}
       </div>
         {drafts.map((draft) => (

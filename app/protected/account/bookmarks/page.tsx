@@ -141,15 +141,15 @@ export default function BookmarkComponent() {
             bookmarks.map((bookmark) => (
               <Card
               key={bookmark.id}
-              className="transition-transform transform hover:scale-105 hover:shadow-lg"
-            >
+              className="transition-transform transform hover:scale-105 hover:shadow-lg">
+                
                 <Link href={`/protected/account/bookmarks/view/${bookmark.id}`} passHref>
                 {bookmark.cover_image_url && (
               <div className="relative h-48">
                 <img
                   src={bookmark.cover_image_url}
                   alt={bookmark.title || "Cover Image"}
-                  className="object-cover w-full h-full"
+                  className="object-cover w-full h-full rounded-md"
                 />
               </div>
             )}
