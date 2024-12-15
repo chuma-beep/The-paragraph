@@ -93,7 +93,7 @@ export default function Profile() {
                 alt="Profile Avatar"
                 width={192}
                 height={400}
-                className="object-fill"
+                className="object-cover"
               />
             </div>
           </div>
