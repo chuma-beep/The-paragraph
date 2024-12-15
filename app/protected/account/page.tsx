@@ -87,12 +87,12 @@ export default function Profile() {
       <div className="bg-transparent shadow rounded-md">
         <div className="flex flex-col items-center space-y-6 mt-8">
           <div className="relative">
-            <div className="w-48 h-48 rounded-full">
+            <div className="w-48 h-48 rounded-full overflow-hidden">
               <Image
                 src={avatarUrl || '/placeholder-user.jpg'}
                 alt="Profile Avatar"
                 width={192}
-                height={192}
+                height={400}
                 className="object-cover"
               />
             </div>
