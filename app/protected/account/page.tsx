@@ -91,8 +91,9 @@ export default function Profile() {
               <Image
                 src={avatarUrl || '/placeholder-user.jpg'}
                 alt="Profile Avatar"
-                width={192}
+                width={400}
                 height={400}
+                className="object-contain"
               />
             </div>
           </div>
