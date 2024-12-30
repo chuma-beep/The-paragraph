@@ -12,6 +12,7 @@ import * as Tooltip from "@radix-ui/react-tooltip";
 import { Button } from "./ui/button";
 import CommunityIcon from "../components/CommunityIcon"
 import { BiDownArrow } from "react-icons/bi";
+import Link from "next/link";
 
 
 
@@ -207,8 +208,15 @@ export default function LandingPage() {
       <span className="relative z-10 block px-6 py-3 rounded-xl bg-blue-800">
         <div className="relative z-10 flex items-center space-x-2">
           <span className="transition-all duration-500 group-hover:translate-x-1"
-            >Let's get started</span
-          >
+            >
+              <Link
+              //  href="/login"
+              href={'/login'}
+              >
+
+              Let's get started
+            </Link>
+              </span>
           <svg
             className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
             data-slot="icon"

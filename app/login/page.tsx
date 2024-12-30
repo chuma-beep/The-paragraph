@@ -9,6 +9,7 @@ import { encodedRedirect } from "@/utils/utils";
 import GithubAuthenticate from "./github/GithubAuth";
 import GoogleAuthenticate from "./google/GoogleAuthButton";
 import Image from "next/image";
+import { useSession } from 'next-auth/react'
 
 
 
