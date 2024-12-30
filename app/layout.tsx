@@ -31,11 +31,12 @@ export default function RootLayout({
       </head>
       <body
         className={cn(
-          "min-h-screen bg-background font-sans antialiased",
+          "min-w-[100%] bg-background font-sans antialiased w-[100%]",
           fontSans.variable
         )}
       >
-        <main className="min-h-screen flex flex-col items-center">
+
+        <main className="min-h-screen flex flex-col items-center justify-center w-[100%]">
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
