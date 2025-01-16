@@ -93,7 +93,6 @@ export default function AuthButton() {
       </DropdownMenuContent>
     </DropdownMenu>
   ) : (
-
     <DropdownMenu>
     <DropdownMenuTrigger asChild>
       <Button variant="ghost" size="icon">
