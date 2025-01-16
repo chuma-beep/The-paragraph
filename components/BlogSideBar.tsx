@@ -84,7 +84,7 @@ export function ComponentsBlogSidebar() {
             </CardContent>
           </Card>
 
-          <Card>
+          {/* <Card>
             <CardHeader>
               <CardTitle>Top Posts This Week</CardTitle>
             </CardHeader>
@@ -102,7 +102,7 @@ export function ComponentsBlogSidebar() {
                 </ul>
               </ScrollArea>
             </CardContent>
-          </Card>
+          </Card> */}
         </div>
       </aside>
 
