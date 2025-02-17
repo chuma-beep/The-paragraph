@@ -14,7 +14,8 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { PiPackageDuotone } from "react-icons/pi";
 import { LuPanelLeftOpen } from "react-icons/lu";
 import { TiPencil } from "react-icons/ti";
-import { SiHomebridge } from "react-icons/si";
+// import { SiHomebridge } from "react-icons/si";
+import { GiPagoda } from "react-icons/gi";
 
 
 
@@ -150,7 +151,8 @@ export default function SideNav() {
                   className="flex items-center gap-4 px-2.5 text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   prefetch={false}
                 >
-                  <SiHomebridge className="h-5 w-5" />
+                  {/* <SiHomebridge className="h-5 w-5" /> */}
+                  <GiPagoda className="h-5 w-5"/>
                   <span className="sr-only">Home</span>
 
                 </Link>
