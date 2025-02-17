@@ -174,7 +174,7 @@ export default function EditPage() {
   if (error) {
     return (
       <div className="w-full flex flex-col items-center justify-center">
-        <Image src="/404.png" alt="404" width={400} height={400} />
+        <Image src="/404.jpg" alt="404" width={400} height={400} />
         <p className="text-red-500 mt-4">{error}</p>
       </div>
     );

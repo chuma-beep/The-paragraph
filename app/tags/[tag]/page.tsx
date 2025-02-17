@@ -140,7 +140,7 @@ export default function TagsPostsPage() {
      width={800}
      height={800}
      alt="Error Image"
-     src={"/404.png"}
+     src={"/404.jpg"}
       />
   <p>
      Not Found
@@ -157,7 +157,7 @@ export default function TagsPostsPage() {
          width={800}
          height={800}
          alt="Error Image"
-         src={"/404.png"}
+         src={"/404.jpg"}
           />
       <p>
          Not Found

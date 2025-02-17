@@ -164,7 +164,7 @@ export default function PostList() {
       )}
       {!loading && error && (
         <div className="text-red-500 w-full align-middle flex flex-col justify-center min-h-full">
-          <Image src="/404.png" width={400} height={400} alt="Error" />
+          <Image src="/404.jpg" width={400} height={400} alt="Error" />
 
           <p className="text-center">Sorry, please try again.</p>
         </div>

@@ -96,7 +96,6 @@ const PostCard: React.FC<PostCardProps> = ({ post, comments, bookmarks, onToggle
             <BlogBookmarkButton postId={post.id} />
             </div>
           </div>
-
           <div className="flex flex-row items-center space-x-2">
             <Link href={`/profile/${post.profiles?.id}`} passHref>
               <span className="flex items-center space-x-2 hover:underline">
