@@ -1,31 +1,66 @@
+// import { type NextRequest } from "next/server";
+// import { updateSession } from "@/utils/supabase/middleware";
+// import { NextResponse } from "next/server";
+// import { createClient } from "./utils/supabase/client";
+// import { supabase } from './services/supabaseClient';
+
+// export async function middleware(request: NextRequest) {
+//     return await updateSession(request);
+// }
+
+// export const config = {
+//   matcher: [
+//     /*
+//      * Match all request paths except:
+//      * - _next/static (static files)
+//      * - _next/image (image optimization files)
+//      * - favicon.ico (favicon file)
+//      * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
+//      * Feel free to modify this pattern to include more paths.
+//      */
+//     '/',
+//     '/protected',
+//     '/login',
+//     '/profile',
+//     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+//   ],
+// };
+
+
+
+
+
 import { type NextRequest } from "next/server";
 import { updateSession } from "@/utils/supabase/middleware";
 import { NextResponse } from "next/server";
 import { createClient } from "./utils/supabase/client";
-import { supabase } from './services/supabaseClient';
+import { supabase } from "./services/supabaseClient";
+import { getToken } from "next-auth/jwt";
 
 export async function middleware(request: NextRequest) {
-  return await updateSession(request);
+  // Retrieve the session using NextAuth's getToken
+  const session = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+
+  // If a session exists and the user is on the landing page, redirect them to '/dashboard'
+  if (session && request.nextUrl.pathname === "/") {
+    // Optionally update the session if needed:
+    // await updateSession(request);
+    return NextResponse.redirect(new URL("/dashboard", request.url));
+  }
+
+  // Otherwise, continue as normal.
+  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
-    /*
-     * Match all request paths except:
-     * - _next/static (static files)
-     * - _next/image (image optimization files)
-     * - favicon.ico (favicon file)
-     * - images - .svg, .png, .jpg, .jpeg, .gif, .webp
-     * Feel free to modify this pattern to include more paths.
-     */
-    '/',
-    '/protected',
-    '/login',
-    '/profile',
+    "/",
+    "/protected",
+    "/login",
+    "/profile",
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
   ],
 };
-
 
 
 

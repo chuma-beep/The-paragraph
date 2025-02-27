@@ -8,6 +8,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PostCard from "./PostCard";
 import Image from "next/image";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { motion } from "framer-motion";
+import { Grid, Rows } from "lucide-react"
 
 
 interface Post {

@@ -1,7 +1,9 @@
+// import {getSession } from "next-auth/react";
 import { ThemeProvider } from "@/components/theme-provider"
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+
 
 const fontSans = FontSans({
   subsets: ["latin"],
