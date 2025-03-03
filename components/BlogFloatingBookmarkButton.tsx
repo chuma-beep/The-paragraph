@@ -5,6 +5,7 @@ import { Bookmark } from 'lucide-react';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { createClient } from '@/utils/supabase/client';
 import {toast, ToastContainer} from 'react-toastify'
+import "react-toastify/dist/ReactToastify.css";
 
 interface BlogBookmarkButtonProps {
   postId: string;
@@ -54,8 +55,8 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
       const { data: userData, error: userError } = await supabase.auth.getUser();
   
       if (userError) {
-        console.error('Error fetching user:', userError.message);
-        toast.error('Failed to fetch user information.');
+        // console.error('Error fetching user:', userError.message);
+        toast.error('login to bookmark post');
         return;
       }
   
@@ -110,6 +111,7 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
 
 
   return (
+  <>
     <div className="inline-block">
       <TooltipProvider>
         <Tooltip>
@@ -134,5 +136,8 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
         </Tooltip>
       </TooltipProvider>
     </div>
+      {/* <ToastContainer /> */}
+        {/* <ToastContainer position="top-right" autoClose={3000} /> */}
+      </>
   );
 }
