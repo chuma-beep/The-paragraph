@@ -169,36 +169,6 @@ export default function PostList() {
 
   return (
     <>
-      <Tabs defaultValue="Feed" className="w-[fit]">
-        <div data-testid="PostList" className="">
-          {posts.length === 0 && loading && (
-            <div className="flex flex-col items-center gap-6">
-              {Array.from({ length: 6 }).map((_, index) => (
-                <Card key={index} className="w-full max-w-full min-w-[35vw] mx-auto mb-6 p-4">
-                  <CardHeader className="p-0">
-                    <Skeleton className=" h-[200px] w-full" />
-                  </CardHeader>
-                  <CardContent className="p-4">
-                    <Skeleton className="h-8 w-4/5 mb-4" />
-                    <Skeleton className="h-5 mb-2" />
-                    <Skeleton className="h-5 mb-2" />
-                    <Skeleton className="h-5" />
-                  </CardContent>
-                  <CardFooter className="flex justify-between items-center p-4">
-                    <Skeleton className="h-4 w-12" />
-                    <Skeleton className="h-4 w-12" />
-                  </CardFooter>
-                </Card>
-              ))}
-            </div>
-          )}
-          {!loading && error && (
-            <div className="text-red-500 w-full align-middle flex flex-col justify-center min-h-full">
-              <Image src="/404.jpg" width={400} height={400} alt="Error" />
-              <p className="text-center">Sorry, please try again.</p>
-            </div>
-          )}
-          <div className="grid grid-cols-1 gap-4 w-full min-w-[300px]">
         <span className="flex justify-end hidden lg:block w-2" >
                   <TooltipProvider>
                     <Tooltip>
@@ -211,6 +181,42 @@ export default function PostList() {
                     </Tooltip>
                   </TooltipProvider>
               </span>
+      <Tabs defaultValue="Feed" className="w-[fit]">
+        <div data-testid="PostList" className="">
+          {posts.length === 0 && loading && (
+                            <div
+                className={`grid ${
+                  isGrid
+                    ? "grid-cols-1 gap-4"
+                    : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6"
+                } mt-6`}
+              >
+                {Array.from({ length: 6 }).map((_, index) => (
+                  <Card key={index} className="w-full p-4">
+                    <CardHeader className="p-0">
+                      <Skeleton className="h-[200px] w-full" />
+                    </CardHeader>
+                    <CardContent className="p-4">
+                      <Skeleton className="h-8 w-4/5 mb-4" />
+                      <Skeleton className="h-5 w-full mb-2" />
+                      <Skeleton className="h-5 w-full mb-2" />
+                      <Skeleton className="h-5 w-3/4" />
+                    </CardContent>
+                    <CardFooter className="flex justify-between items-center p-4">
+                      <Skeleton className="h-4 w-12" />
+                      <Skeleton className="h-4 w-12" />
+                    </CardFooter>
+                  </Card>
+                ))}
+              </div>
+          )}
+          {!loading && error && (
+            <div className="text-red-500 w-full align-middle flex flex-col justify-center min-h-full">
+              <Image src="/404.jpg" width={400} height={400} alt="Error" />
+              <p className="text-center">Sorry, please try again.</p>
+            </div>
+          )}
+          <div className="grid grid-cols-1 gap-4 w-full min-w-[300px]">
           <TabsList className="bg-transparent"></TabsList>
 
             <TabsContent value="Feed">
@@ -244,7 +250,7 @@ export default function PostList() {
             <TabsContent value="Following" className="w-[80vw]"></TabsContent>
           </div>
 
-{loading && (
+{/* {loading && (
   <div
     className={`grid ${
       isGrid
@@ -271,7 +277,7 @@ export default function PostList() {
     ))}
   </div>
 )}
-
+ */}
 
 
         </div>
