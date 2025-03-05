@@ -3,6 +3,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import { Providers } from "./providers";
 
 
 const fontSans = FontSans({
@@ -39,14 +40,17 @@ export default function RootLayout({
       >
 
         <main className="min-h-screen flex flex-col items-center justify-center w-[100%]">
+        <Providers>
+
         <ThemeProvider
             attribute="class"
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-          >
+            >
             {children}
           </ThemeProvider>
+            </Providers>
         </main>
       </body>
     </html>
