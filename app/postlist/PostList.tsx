@@ -169,7 +169,7 @@ export default function PostList() {
 
   return (
     <>
-        <span className="flex justify-end hidden md:block w-2" >
+        <span className="flex justify-end hidden md:block w-2 mt-8" >
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
@@ -249,37 +249,6 @@ export default function PostList() {
             </TabsContent>
             <TabsContent value="Following" className="w-[80vw]"></TabsContent>
           </div>
-
-{/* {loading && (
-  <div
-    className={`grid ${
-      isGrid
-        ? "grid-cols-1 gap-4"
-        : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6"
-    } mt-6`}
-  >
-    {Array.from({ length: 6 }).map((_, index) => (
-      <Card key={index} className="w-full p-4">
-        <CardHeader className="p-0">
-          <Skeleton className="h-[200px] w-full" />
-        </CardHeader>
-        <CardContent className="p-4">
-          <Skeleton className="h-8 w-4/5 mb-4" />
-          <Skeleton className="h-5 w-full mb-2" />
-          <Skeleton className="h-5 w-full mb-2" />
-          <Skeleton className="h-5 w-3/4" />
-        </CardContent>
-        <CardFooter className="flex justify-between items-center p-4">
-          <Skeleton className="h-4 w-12" />
-          <Skeleton className="h-4 w-12" />
-        </CardFooter>
-      </Card>
-    ))}
-  </div>
-)}
- */}
-
-
         </div>
       </Tabs>
     </>
