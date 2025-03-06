@@ -169,7 +169,7 @@ export default function PostList() {
 
   return (
     <>
-        <span className="flex justify-end hidden lg:block w-2" >
+        <span className="flex justify-end hidden md:block w-2" >
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
