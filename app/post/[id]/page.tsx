@@ -20,6 +20,7 @@ import CommentsLikeButton from "@/components/CommentsLikeButton";
 import PostLikeButton from "@/components/PostLikeButton";
 import { PostTagsComponent } from '@/components/TagsComponent';
 import Link from "next/link";
+
 // import * as Card  from "@/components/ui/card";
 // import Markdown from 'markdown-to-jsx'
 
@@ -94,7 +95,7 @@ export default function PostPage() {
       const { error } = await supabase.from("views").insert({ post_id: postId });
 
       if (error) {
-        console.error("Error logging view:", error);
+        // console.error("Error logging view:", error);
       } else {
         localStorage.setItem("viewedPosts", JSON.stringify([...viewedPosts, postId]));
       }
@@ -108,6 +109,7 @@ export default function PostPage() {
   const fetchPost = async () => {
     if (!postId) {
       setError("Post ID is undefined");
+      // Toast.Error("Post ID is undefined");
       return;
     }
 
@@ -130,7 +132,7 @@ export default function PostPage() {
         .single();
 
       if (postError) {
-        if (postError.code === 'PGRST116') { // Handle 'Post not found' error
+        if (postError.code === 'PGRST116') {
           setError("Post not found");
         } else {
           throw postError;
@@ -139,12 +141,6 @@ export default function PostPage() {
       }
 
       setPost(postData as Post);
-
-      //analytics
-
-  
-
-
 
       // Fetch comments for the post
       const { data: commentsData, error: commentsError } = await supabase
@@ -192,7 +188,7 @@ export default function PostPage() {
 
   // Fetch post data when 'postId' changes and is valid
   useEffect(() => {
-    console.log("Post ID:", postId); // Debugging line
+    // console.log("Post ID:", postId); // Debugging line
     if (postId && isValidUuid(postId)) {
       fetchPost();
     } else if (postId) { // If 'postId' exists but is invalid
@@ -293,7 +289,7 @@ export default function PostPage() {
         .single();
 
       if (profileError) {
-        console.error("Profile Error: ", profileError.message);
+        // console.error("Profile Error: ", profileError.message);
         toast.error("Error fetching user profile");
         return;
       }
@@ -320,7 +316,7 @@ export default function PostPage() {
         .select("id, content, profile_id, profiles(username, avatar_url)");
 
       if (error) {
-        console.error("Insert Error: ", error.message);
+        // console.error("Insert Error: ", error.message);
         toast.error("Error submitting comment");
       } else {
         setComments((prevComments: Comment[]) => [
@@ -427,7 +423,7 @@ export default function PostPage() {
   useEffect(() => {
     if (postId) {
       fetchPost();
-      logView(postId);
+      // logView(postId);
     }
   }, [postId]);
     

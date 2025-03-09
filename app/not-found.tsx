@@ -1,27 +1,3 @@
-// // import Link from 'next/link';
-// "use client";
-// import { useEffect } from 'react';
-// import { useRouter } from 'next/navigation';
-// import Image from 'next/image';
-
-
-// export default function NotFound() {
-//   const router = useRouter();
-//   useEffect(() => {
-//     setTimeout(() => {
-//       router.back();
-//     }, 10000);
-//   }, []);
-//   return (
-//     <div>
-//       <Image  src="/not-found.jpg" alt="Page Not Found" width={400} height={400} />
-//       <h1>404 - Page Not Found</h1>
-//       <p>Redirecting to Previous Page in 3seconds.....</p>
-//     </div>
-//   );
-// }
-
-
 "use client";
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -33,7 +9,7 @@ export default function NotFound() {
   useEffect(() => {
     const timer = setTimeout(() => {
       router.back();
-    }, 3000); // redirect after 3 seconds
+    }, 3000); 
     return () => clearTimeout(timer);
   }, [router]);
 
