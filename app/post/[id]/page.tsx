@@ -571,11 +571,11 @@ export default function PostPage() {
                 {/* Optionally add delete button if user is authorized */}
 
                 </div>
-                <button
-                 className="self-end"
-                onClick={() => handleDeleteComment(comment.id)}>
-                  <MdOutlineDelete />
-                </button>
+                      {currentUser?.id === comment.profiles?.id && (
+                    <button onClick={() => handleDeleteComment(comment.id)} className="delete-button">
+                      <MdOutlineDelete size={20} />
+                    </button>
+                  )}
                 </div>
                
               </div>
