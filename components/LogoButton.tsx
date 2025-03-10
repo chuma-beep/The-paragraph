@@ -11,7 +11,10 @@ export default function LogoButton() {
             <ParagraphLogo />
           </span>
         </div>
-        <h1 className="text-xs sm:text-lg font-semibold text-blue-400 text-center">The Paragraph</h1>
+        {/* <h1 className="text-xs sm:text-lg font-semibold text-blue-400 text-center lg:display-none">The Paragraph</h1> */}
+        <h1 className="hidden sm:block text-xs sm:text-lg font-semibold text-blue-400 text-center">
+          The Paragraph
+        </h1> 
               </div>
     </div>
       
