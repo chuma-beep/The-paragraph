@@ -1,5 +1,3 @@
-
-
 "use client"
 
 import type React from "react"
@@ -221,9 +219,7 @@ export default function PostList() {
 
             <TabsContent value="Feed">
               <div
-                className={`w-full ${isGrid ? "flex flex-col" : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"}`}
-                  //  "flex flex-col space-y-4"}
-              >
+                className={`w-full ${isGrid ? "flex flex-col" : "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"}`}>
                 {posts.map((post, index) => (
                   <motion.div
                   key={post.id}

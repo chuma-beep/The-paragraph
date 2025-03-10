@@ -340,10 +340,21 @@ export default function PostPage() {
     }
   };
 
-  /**
-   * Handles the deletion of a comment.
-   * @param commentId - The ID of the comment to delete.
-   */
+
+   //
+   useEffect(() => {
+    const fetchUser = async () => {
+      const {data: userData, error } = await supabase.auth.getUser();
+
+      if (!error && userData?.user ){
+        setCurrentUser({ id: userData.user.id });
+      }
+    }
+
+  fetchUser();
+  }, []);
+
+
   const handleDeleteComment = async (commentId: string) => {
     try {
       const { data: userData, error: userError } = await supabase.auth.getUser();
