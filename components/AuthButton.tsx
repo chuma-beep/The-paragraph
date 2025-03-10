@@ -100,20 +100,20 @@ export default function AuthButton() {
         <span className="sr-only">Toggle auth menu</span>
       </Button>
     </DropdownMenuTrigger>
-    <DropdownMenuContent align="end">
-      <DropdownMenuItem >
+    <DropdownMenuContent align="center" className="w-4 border-none p-0">
         <Link href={'/login'}
          className="flex flex-row flex-nowrap text-center" >
-        <LogIn className="mr-2 h-4 w-4" />
-        Login
-        </Link>
-      </DropdownMenuItem>
       <DropdownMenuItem >
-        <Link href={'/signup'} className="flex flex-row flex-nowrap text-center" >
-        <LogOut className="mr-2 h-4 w-4" />
-        Signup
-        </Link>
+        <LogIn className="mr-2 h-4 w-12" />
+         Login
       </DropdownMenuItem>
+        </Link>
+        <Link href={'/signup'} className="flex flex-row flex-nowrap text-center">
+      <DropdownMenuItem>
+        <LogOut className="mr-2 h-4 w-12" />
+         Signup
+      </DropdownMenuItem>
+        </Link>
     </DropdownMenuContent>
   </DropdownMenu>
   );
