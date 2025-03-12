@@ -34,7 +34,7 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
         .maybeSingle();
 
       if (error) {
-        console.error('Error checking bookmark status:', error.message);
+        // console.error('Error checking bookmark status:', error.message);
         return;
       }
 
@@ -62,7 +62,7 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
   
       const userId = userData?.user?.id;
       if (!userId) {
-        console.error('User not logged in');
+        // console.error('User not logged in');
         toast.error('Log in to bookmark');
         return;
       }
@@ -79,7 +79,8 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
           .eq('user_id', userId); // Ensure user-specific deletion
   
         if (deleteError) {
-          console.error('Error removing bookmark:', deleteError.message);
+          // console.error('Error removing bookmark:', deleteError.message);
+          toast.error('Failed to remove bookmark');
           return;
         }
   
@@ -94,7 +95,8 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
           .insert({ post_id: postId, user_id: userId }); // Associate with user
   
         if (insertError) {
-          console.error('Error adding bookmark:', insertError.message);
+          // console.error('Error adding bookmark:', insertError.message);
+          toast.error('Failed to add bookmark');
           return;
         }
   
@@ -104,7 +106,7 @@ export function BlogBookmarkButton({ postId }: BlogBookmarkButtonProps) {
         setIsBookmarked(true);
       }
     } catch (err) {
-      console.error('Unexpected error:', err);
+      // console.error('Unexpected error:', err);
       toast.error('Something went wrong. Please try again.');
     }
   };

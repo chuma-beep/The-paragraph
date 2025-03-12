@@ -71,6 +71,7 @@ export default function PostList() {
   const [bookmarks, setBookmarks] = useState<Record<string, boolean>>({})
   const [isGrid, setIsGrid] = useState(false)
 
+  
   const toggleLayout = () => {
     setIsGrid(!isGrid)
   }
@@ -167,7 +168,7 @@ export default function PostList() {
 
   return (
     <>
-        <span className="flex justify-end hidden md:block w-2 mt-8" >
+        <span className="justify-end hidden md:block w-2 mt-8" >
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
