@@ -4,22 +4,28 @@ import { Inter as FontSans } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { Providers } from "./providers";
+import { Metadata } from 'next';
+import { template } from "cypress/types/lodash";
+ 
 
+
+
+export const metadata: Metadata = {
+  // metadataBase: new URL(defaultUrl),
+  title:{
+    template: '%s | the-paragraph',
+    default: 'the-paragraph'
+  },
+  description: "Real-time Blogging platform with rich text editing",
+  metadataBase: new URL('https://www.the-paragraph.com/'),
+};
 
 const fontSans = FontSans({
   subsets: ["latin"],
   variable: "--font-sans",
 });
 
-
-const defaultUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-
-
-export const metadata = {
-  metadataBase: new URL(defaultUrl),
-  title: "The Paragraph",
-  description: "Real-time Blogging platform with rich text editing",
-};
+// const defaultUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export default function RootLayout({
   children,

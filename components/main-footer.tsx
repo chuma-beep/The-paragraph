@@ -1,13 +1,29 @@
 import Link from "next/link";
 import { JSX, SVGProps } from "react";
 import DeployButton from "./LogoButton";
+import ParagraphLogo from "./ParagrapghLogo";
 
 export default function MainFooter() {
   return (
     <footer className="bg-transparent py-2 gap-0 md:py-4 md:gap-0 rounded-none md:rounded-full md:w-full ">
       <div className="container mx-auto w-full flex flex-col items-center justify-between gap-4 md:flex-row md:gap-6">
         <div className="flex justify-center md:justify-start">
-          <DeployButton />
+          {/* <DeployButton /> */}
+        
+          <div className="w-full max-w-md mr-2 ml-0">
+      <div className="flex items-center">
+        <div className="flex-shrink-0">
+          <span className="inline-flex items-center justify-center w-12 h-12 rounded-full transition-colors duration-200 cursor-pointer hover:border-blue-400">
+            <ParagraphLogo />
+          </span>
+        </div>
+        {/* <h1 className="text-xs sm:text-lg font-semibold text-blue-400 text-center lg:display-none">The Paragraph</h1> */}
+        <h1 className="text-xs sm:text-lg font-semibold text-blue-400 text-center">
+          The Paragraph
+        </h1> 
+              </div>
+    </div>
+        
         </div>
         <p className="text-sm text-muted-foreground text-center md:text-left">&copy; 2024 TheParagraph Inc. All rights reserved.</p>
         <div className="flex items-center gap-4">
