@@ -35,7 +35,8 @@ async function uploadFile(file: File) {
     .upload(filePath, file);
 
   if (error) {
-    console.error('Error uploading file:', error);
+    // console.error('Error uploading file:', error);
+    toast.error("Error uploading file");
     throw error;
   }
 
@@ -133,7 +134,7 @@ const Editor: React.FC<EditorProps> = ({
     const fetchUser = async () => {
       const { data: { user }, error } = await supabase.auth.getUser();
       if (error) {
-        console.error('Error fetching user:', error);
+        // console.error('Error fetching user:', error);
         toast.error('Error authenticating user');
         setUserId(null);
       } else if (user) {
@@ -198,8 +199,10 @@ const Editor: React.FC<EditorProps> = ({
       .maybeSingle<Tag>();
   
     if (getTagError) {
-      console.error('Error fetching tag:', getTagError);
+      // console.error('Error fetching tag:', getTagError);
+      toast.error('Error fetching tag');
       return;
+
     }
   
     let tagId: string;
@@ -215,7 +218,8 @@ const Editor: React.FC<EditorProps> = ({
         .single<Tag>();
   
       if (insertTagError) {
-        console.error('Error inserting tag:', insertTagError.message);
+        // console.error('Error inserting tag:', insertTagError.message);
+        toast.error("Error adding tag")
         return;
       }
   
@@ -236,7 +240,8 @@ const Editor: React.FC<EditorProps> = ({
         .insert([{ post_id: postId, tag_id: tagId }]);
   
       if (insertPostTagError) {
-        console.error('Error associating tag with post:', insertPostTagError.message);
+        // console.error('Error associating tag with post:', insertPostTagError.message);
+        toast.error("Error adding tag")
         return;
       }
     }
@@ -295,7 +300,7 @@ const sendPost = async () => {
       setCoverImageUrl(null);
     }
       else {
-      console.error('Error saving post:', error, error.details);
+      // console.error('Error saving post:', error, error.details);
          toast.error('Please fill in all required fields');
     }
   
@@ -333,7 +338,7 @@ const sendPost = async () => {
       setTags([]);
       setCoverImageUrl(null);
     } else{
-      console.error('Error saving draft:', error, error.details);
+      // console.error('Error saving draft:', error, error.details);
       toast.error('Error saving draft');
     }
   
@@ -370,10 +375,10 @@ const sendPost = async () => {
 
     
     if (error) {
-      console.error('Error updating post:', error);
+      // console.error('Error updating post:', error);
       toast.error('Error updating post');
     } else {
-      console.log('Post updated:', data);
+      // console.log('Post updated:', data);
       toast.success('Post updated successfully!');
     }
     setLoading(false);
@@ -398,10 +403,10 @@ const sendPost = async () => {
       }
 
     if (error) {
-      console.log('Error updating draft:', error);
+      // console.log('Error updating draft:', error);
       toast.error('Error updating draft');
     } else {
-      console.log('Draft updated:', data);
+      // console.log('Draft updated:', data);
       toast.success('Draft updated successfully!');
     }
     setLoading(false);
@@ -425,7 +430,7 @@ const sendPost = async () => {
     const fetchedTags = data.post_tags.map((postTag: any) => postTag.tags.name);
     setTags(fetchedTags);
     } else {
-      console.error(`Error fetching ${table}:`, error);
+      // console.error(`Error fetching ${table}:`, error);
       toast.error(`Error fetching ${table}`);
     }
     setLoading(false);
