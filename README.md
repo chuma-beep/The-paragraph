@@ -51,7 +51,7 @@ This README serves as a guide for developers and contributors to understand the 
 ## Contribution
 
 
-- ** npm install **
+- ** pnpm install **
 
 Create a new issue.
 Please use a clear and descriptive title that summarizes the issue.
