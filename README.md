@@ -44,7 +44,7 @@ The Paragraph is a multi-functional platform designed for authors and readers wh
 theparagrapgh aims to:
 - Create a vibrant platform for text-focused content creators and readers.
 - Provide an engaging experience with personalized recommendations, social interactions, and detailed analytics.
-- open source so users can ship features and bug fixes 
+- open source so users can ship features and make bug fixes 
 ---
 
 This README serves as a guide for developers and contributors to understand the structure and goals of the project.
